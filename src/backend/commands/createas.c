@@ -24,8 +24,9 @@
  */
 #include "postgres.h"
 
-#include "access/heapam.h"
 #include "access/reloptions.h"
+#include "access/heapam.h"
+#include "access/hio.h"
 #include "access/htup_details.h"
 #include "access/sysattr.h"
 #include "access/tableam.h"
@@ -43,26 +44,15 @@
 #include "nodes/nodeFuncs.h"
 #include "parser/parse_clause.h"
 #include "rewrite/rewriteHandler.h"
+#include "storage/bufmgr.h"
 #include "storage/smgr.h"
 #include "tcop/tcopprot.h"
 #include "utils/builtins.h"
 #include "utils/lsyscache.h"
+#include "utils/resowner_private.h"
 #include "utils/rel.h"
 #include "utils/rls.h"
 #include "utils/snapmgr.h"
-
-
-typedef struct
-{
-	DestReceiver pub;			/* publicly-known function pointers */
-	IntoClause *into;			/* target relation specification */
-	/* These fields are filled by intorel_startup: */
-	Relation	rel;			/* relation to write to */
-	ObjectAddress reladdr;		/* address of rel, for ExecCreateTableAs */
-	CommandId	output_cid;		/* cmin to insert in output tuples */
-	int			ti_options;		/* table_tuple_insert performance options */
-	BulkInsertState bistate;	/* bulk insert state */
-} DR_intorel;
 
 /* utility functions for CTAS definition creation */
 static ObjectAddress create_ctas_internal(List *attrList, IntoClause *into);
@@ -74,6 +64,7 @@ static bool intorel_receive(TupleTableSlot *slot, DestReceiver *self);
 static void intorel_shutdown(DestReceiver *self);
 static void intorel_destroy(DestReceiver *self);
 
+/* We move the definition of DR_intorel to the createas.h*/
 
 /*
  * create_ctas_internal

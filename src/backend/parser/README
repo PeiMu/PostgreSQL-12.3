@@ -26,6 +26,7 @@ parse_relation.c support routines for tables and column handling
 parse_target.c	handle the result list of the query
 parse_type.c	support routines for data type handling
 parse_utilcmd.c	parse analysis for utility commands (done at execution time)
+query_split.c   newly added in QuerySplit paper.
 
 See also src/common/keywords.c, which contains the table of standard
 keywords and the keyword lookup function.  We separated that out because

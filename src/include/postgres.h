@@ -51,6 +51,31 @@
  *				Section 1:	variable-length datatypes (TOAST support)
  * ----------------------------------------------------------------
  */
+#ifndef None
+#define None 0
+#endif
+
+#ifndef Minsubquery
+#define Minsubquery 1
+#endif
+
+#ifndef RelationshipCenter
+#define RelationshipCenter 2
+#endif
+
+#ifndef EntityCenter
+#define EntityCenter 3
+#endif
+
+#define only_cost 0
+#define only_row 1
+#define hybrid_row 2
+#define hybrid_sqrt 3
+#define hybrid_log 4
+#define global_view 5
+
+extern int query_splitting_algorithm;
+extern int order_decision;
 
 /*
  * struct varatt_external is a traditional "TOAST pointer", that is, the

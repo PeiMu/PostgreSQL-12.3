@@ -14,6 +14,7 @@
 #ifndef CREATEAS_H
 #define CREATEAS_H
 
+#include "access/heapam.h"
 #include "catalog/objectaddress.h"
 #include "nodes/params.h"
 #include "nodes/parsenodes.h"
@@ -23,6 +24,18 @@
 
 extern ObjectAddress ExecCreateTableAs(CreateTableAsStmt *stmt, const char *queryString,
 									   ParamListInfo params, QueryEnvironment *queryEnv, char *completionTag);
+/* We move the definition of DR_intorel from createas.c to here */
+typedef struct
+{
+	DestReceiver pub;			/* publicly-known function pointers */
+	IntoClause* into;			/* target relation specification */
+	/* These fields are filled by intorel_startup: */
+	Relation	rel;			/* relation to write to */
+	ObjectAddress reladdr;		/* address of rel, for ExecCreateTableAs */
+	CommandId	output_cid;		/* cmin to insert in output tuples */
+	int			ti_options;		/* table_tuple_insert performance options */
+	BulkInsertState bistate;	/* bulk insert state */
+} DR_intorel;
 
 extern int	GetIntoRelEFlags(IntoClause *intoClause);
 
