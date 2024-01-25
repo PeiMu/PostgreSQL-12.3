@@ -1,7 +1,7 @@
 ## How to Compile
 
 ```bash
-source ../conf.sh
+source ./conf.sh
 mkdir build && cd build
 
 ../configure --prefix=$PREFIX
