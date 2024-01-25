@@ -1,3 +1,17 @@
+source ../conf.sh
+mkdir build && cd build
+
+../configure --prefix=$PREFIX
+make -j32
+make check
+make install
+```
+
+Reference: https://www.postgresql.org/docs/16/install-make.html#CONFIGURE-OPTIONS
+
+----------------------------------------------------
+
+
 PostgreSQL Database Management System
 =====================================
 
