@@ -1008,7 +1008,7 @@ exec_simple_query(const char* query_string)
 		query_splitting_algorithm = None;
 	else if (strcmp(query_string, "switch to minsubquery;") == 0)
 		query_splitting_algorithm = Minsubquery;
-	else if(strcmp(query_string, "switch to relationshipcenter;") == 0)
+	else if(strcmp(query_string, "switch to relationshipcenter;") == 0) // best
 		query_splitting_algorithm = RelationshipCenter;
 	else if(strcmp(query_string, "switch to entitycenter;") == 0)
 		query_splitting_algorithm = EntityCenter;
@@ -1017,7 +1017,7 @@ exec_simple_query(const char* query_string)
 		order_decision = only_cost;
 	if (strcmp(query_string, "switch to or;") == 0)
 		order_decision = only_row;
-	else if (strcmp(query_string, "switch to c_r;") == 0)
+	else if (strcmp(query_string, "switch to c_r;") == 0) // best
 		order_decision = hybrid_row;
 	else if (strcmp(query_string, "switch to c_rsq;") == 0)
 		order_decision = hybrid_sqrt;
