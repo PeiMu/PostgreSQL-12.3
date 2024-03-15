@@ -24,8 +24,8 @@
 #include "utils/memutils.h"
 #include "utils/resowner_private.h"
 
-
-/*#define LBDEBUG*/
+/* zhaojy20 add it here */
+#define USE_ASSERT_CHECKING
 
 /* entry for buffer lookup hashtable */
 typedef struct

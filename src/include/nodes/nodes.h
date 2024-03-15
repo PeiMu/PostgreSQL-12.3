@@ -81,6 +81,7 @@ typedef enum NodeTag
 	T_Gather,
 	T_GatherMerge,
 	T_Hash,
+	T_Map,
 	T_SetOp,
 	T_LockRows,
 	T_Limit,
@@ -137,6 +138,7 @@ typedef enum NodeTag
 	T_GatherState,
 	T_GatherMergeState,
 	T_HashState,
+	T_MapState,
 	T_SetOpState,
 	T_LockRowsState,
 	T_LimitState,
@@ -512,7 +514,9 @@ typedef enum NodeTag
 	T_SupportRequestSelectivity,	/* in nodes/supportnodes.h */
 	T_SupportRequestCost,		/* in nodes/supportnodes.h */
 	T_SupportRequestRows,		/* in nodes/supportnodes.h */
-	T_SupportRequestIndexCondition	/* in nodes/supportnodes.h */
+	T_SupportRequestIndexCondition,	/* in nodes/supportnodes.h */
+	T_myList,
+	T_History
 } NodeTag;
 
 /*

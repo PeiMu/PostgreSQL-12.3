@@ -652,16 +652,25 @@ static List* Prepare4Next(Query* global_query, Index* transfer_array, DR_intorel
 	foreach(lc, global_query->targetList)
 	{
 		TargetEntry* tar = (TargetEntry*)lfirst(lc);
-		Var* vtar;
+		Var* vtar = NULL;
 		if (tar->expr->type == T_Aggref)
 		{
 			TargetEntry* te = lfirst(((Aggref*)tar->expr)->args->head);
-			vtar = te->expr;
+			if (te->expr->type == T_Var)
+				vtar = te->expr;
+			else if (te->expr->type == T_RelabelType)
+				vtar = (Var*)((RelabelType*)te->expr)->arg;
 		}
-		else
+		else if (tar->expr->type == T_RelabelType)
+		{
+			vtar = (Var*)((RelabelType*)tar->expr)->arg;
+		}
+		else if(tar->expr->type == T_Var)
 		{
 			vtar = (Var*)tar->expr;
 		}
+		if (vtar == NULL)
+			continue;
 		if (transfer_array[vtar->varnoold - 1] != 0)
 		{
 			tar->resorigtbl = relid;
@@ -1166,17 +1175,23 @@ static List* settargetlist(const List* global_rtable, List* local_rtable, Comman
 		bool reserved = false;
 		TargetEntry* tar = (TargetEntry*)lfirst(lc);
 		ListCell* lc1;
-		if (tar->expr->type != T_Var)
+		if (tar->expr->type == T_Aggref)
 		{
 			continue;
 		}
 		foreach(lc1, local_rtable)
 		{
 			RangeTblEntry* rte = (RangeTblEntry*)lfirst(lc1);
-			RangeTblEntry* rte_1 = list_nth(global_rtable, ((Var*)tar->expr)->varno - 1);
+			Var* vtar = NULL;
+			if(tar->expr->type == T_Var)
+				vtar = (Var*)tar->expr;
+			else if (tar->expr->type == T_RelabelType)
+				vtar = (Var*)((RelabelType*)tar->expr)->arg;
+			if (vtar == NULL)
+				continue;
+			RangeTblEntry* rte_1 = list_nth(global_rtable, vtar->varno - 1);
 			if (rte->relid == rte_1->relid)
 			{
-				Var* vtar = (Var*)tar->expr;
 				vtar->varno = transfer_array[vtar->varno - 1];
 				vtar->varnoold = vtar->varno;
 				reserved = true;
@@ -1422,6 +1437,11 @@ List* removeAggref(List* targetList)
 		if (old_tar->expr->type == T_Aggref)
 		{
 			TargetEntry* tar = lfirst(((Aggref*)old_tar->expr)->args->head);
+			if (tar->expr->type == T_RelabelType)
+			{
+				if (((RelabelType*)tar->expr)->relabelformat == COERCE_IMPLICIT_CAST)
+					tar->expr = ((RelabelType*)tar->expr)->arg;
+			}
 			tar->resname = old_tar->resname;
 			resList = lappend(resList, tar);
 		}

@@ -478,7 +478,7 @@ ExplainOnePlan(PlannedStmt *plannedstmt, IntoClause *into, ExplainState *es,
 
 	if (es->analyze && es->timing)
 		instrument_option |= INSTRUMENT_TIMER;
-	else if (es->analyze)
+	else if (es->analyze || query_splitting_algorithm == Optimal)
 		instrument_option |= INSTRUMENT_ROWS;
 
 	if (es->buffers)
@@ -513,7 +513,7 @@ ExplainOnePlan(PlannedStmt *plannedstmt, IntoClause *into, ExplainState *es,
 								dest, params, queryEnv, instrument_option);
 
 	/* Select execution options */
-	if (es->analyze)
+	if (es->analyze || query_splitting_algorithm == Optimal)
 		eflags = 0;				/* default run-to-completion flags */
 	else
 		eflags = EXEC_FLAG_EXPLAIN_ONLY;
@@ -524,7 +524,7 @@ ExplainOnePlan(PlannedStmt *plannedstmt, IntoClause *into, ExplainState *es,
 	ExecutorStart(queryDesc, eflags);
 
 	/* Execute the plan for statistics if asked for */
-	if (es->analyze)
+	if (es->analyze || query_splitting_algorithm == Optimal)
 	{
 		ScanDirection dir;
 
@@ -557,7 +557,7 @@ ExplainOnePlan(PlannedStmt *plannedstmt, IntoClause *into, ExplainState *es,
 	}
 
 	/* Print info about runtime of triggers */
-	if (es->analyze)
+	if (es->analyze || query_splitting_algorithm == Optimal)
 		ExplainPrintTriggers(es, queryDesc);
 
 	/*
@@ -566,7 +566,7 @@ ExplainOnePlan(PlannedStmt *plannedstmt, IntoClause *into, ExplainState *es,
 	 * depending on build options.  Might want to separate that out from COSTS
 	 * at a later stage.
 	 */
-	if (es->costs)
+	if (es->costs && query_splitting_algorithm != Optimal)
 		ExplainPrintJITSummary(es, queryDesc);
 
 	/*

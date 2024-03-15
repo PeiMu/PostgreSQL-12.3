@@ -12,16 +12,23 @@
  *
  *-------------------------------------------------------------------------
  */
+/*
+* Edited by zhaojy20 in line 82, 253-256, 756-780, 1730-1794.
+*/
 #include "postgres.h"
 
 #include <math.h>
 
+#include "access/table.h"
 #include "executor/executor.h"
 #include "foreign/fdwapi.h"
 #include "optimizer/cost.h"
+#include "optimizer/optimizer.h"
 #include "optimizer/pathnode.h"
 #include "optimizer/paths.h"
 #include "optimizer/planmain.h"
+#include "utils/selfuncs.h"
+#include "utils/rel.h"
 
 /* Hook for plugins to get control in add_paths_to_joinrel() */
 set_join_pathlist_hook_type set_join_pathlist_hook = NULL;
@@ -89,6 +96,7 @@ static void generate_mergejoin_paths(PlannerInfo *root,
 									 List *merge_pathkeys,
 									 bool is_partial);
 
+extern CommandDest mydest;
 
 /*
  * add_paths_to_joinrel

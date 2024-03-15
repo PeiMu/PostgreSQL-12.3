@@ -65,6 +65,7 @@
 #include "utils/ruleutils.h"
 #include "utils/snapmgr.h"
 
+#include "optimizer/lfh.h"
 
 /* Hooks for plugins to get control in ExecutorStart/Run/Finish/End */
 ExecutorStart_hook_type ExecutorStart_hook = NULL;
@@ -371,7 +372,8 @@ standard_ExecutorRun(QueryDesc *queryDesc,
 					dest,
 					execute_once);
 	}
-
+	if(query_splitting_algorithm == Optimal)
+		learnSelectivity(queryDesc, queryDesc->planstate);
 	/*
 	 * shutdown tuple receiver, if we started it
 	 */

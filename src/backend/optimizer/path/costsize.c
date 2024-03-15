@@ -69,6 +69,9 @@
  *-------------------------------------------------------------------------
  */
 
+/*
+* Edited by zhaojy20 in line 3320-3480.
+*/
 #include "postgres.h"
 
 #include <math.h>
@@ -96,6 +99,7 @@
 #include "utils/spccache.h"
 #include "utils/tuplesort.h"
 
+#include "optimizer/lfh.h"
 
 #define LOG2(x)  (log(x) / 0.693147180559945)
 
@@ -166,7 +170,7 @@ static double calc_joinrel_size_estimate(PlannerInfo *root,
 										 double inner_rows,
 										 SpecialJoinInfo *sjinfo,
 										 List *restrictlist);
-static Selectivity get_foreign_key_join_selectivity(PlannerInfo *root,
+Selectivity get_foreign_key_join_selectivity(PlannerInfo *root,
 													Relids outer_relids,
 													Relids inner_relids,
 													SpecialJoinInfo *sjinfo,
@@ -4407,7 +4411,12 @@ set_baserel_size_estimates(PlannerInfo *root, RelOptInfo *rel)
 
 	/* Should only be applied to base relations */
 	Assert(rel->relid > 0);
-
+	if (query_splitting_algorithm == Optimal)
+	{
+		rel->rows = learn_from_history(root, rel, NULL, NULL, NULL, NULL);
+	}
+	else
+	{
 	nrows = rel->tuples *
 		clauselist_selectivity(root,
 							   rel->baserestrictinfo,
@@ -4416,7 +4425,7 @@ set_baserel_size_estimates(PlannerInfo *root, RelOptInfo *rel)
 							   NULL);
 
 	rel->rows = clamp_row_est(nrows);
-
+	}
 	cost_qual_eval(&rel->baserestrictcost, rel->baserestrictinfo, root);
 
 	set_rel_width(root, rel);
@@ -4487,7 +4496,10 @@ set_joinrel_size_estimates(PlannerInfo *root, RelOptInfo *rel,
 						   SpecialJoinInfo *sjinfo,
 						   List *restrictlist)
 {
-	rel->rows = calc_joinrel_size_estimate(root,
+	if(query_splitting_algorithm == Optimal)
+		rel->rows = learn_from_history(root, rel, outer_rel, inner_rel, restrictlist, sjinfo);
+	else
+		rel->rows = calc_joinrel_size_estimate(root,
 										   rel,
 										   outer_rel,
 										   inner_rel,
@@ -4530,7 +4542,10 @@ get_parameterized_joinrel_size(PlannerInfo *root, RelOptInfo *rel,
 	 * on the pair of input paths provided, though ideally we'd get the same
 	 * estimate for any pair with the same parameterization.
 	 */
-	nrows = calc_joinrel_size_estimate(root,
+	if (query_splitting_algorithm == Optimal)
+		nrows = learn_from_history(root, rel, outer_path->parent, inner_path->parent, restrict_clauses, sjinfo);
+	else
+		nrows = calc_joinrel_size_estimate(root,
 									   rel,
 									   outer_path->parent,
 									   inner_path->parent,
@@ -4705,7 +4720,7 @@ calc_joinrel_size_estimate(PlannerInfo *root,
  * able to get a better answer when the pg_statistic stats are missing or out
  * of date.
  */
-static Selectivity
+Selectivity
 get_foreign_key_join_selectivity(PlannerInfo *root,
 								 Relids outer_relids,
 								 Relids inner_relids,

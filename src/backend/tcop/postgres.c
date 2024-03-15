@@ -83,9 +83,11 @@
 #include "utils/timestamp.h"
 #include "mb/pg_wchar.h"
 
+//int query_splitting_algorithm = RelationshipCenter;
 int query_splitting_algorithm = None;
-int order_decision = hybrid_sqrt;
+int order_decision = hybrid_row;
 
+extern double factor;
 /* ----------------
  *		global variables
  * ----------------
@@ -1012,6 +1014,8 @@ exec_simple_query(const char* query_string)
 		query_splitting_algorithm = RelationshipCenter;
 	else if(strcmp(query_string, "switch to entitycenter;") == 0)
 		query_splitting_algorithm = EntityCenter;
+	else if (strcmp(query_string, "switch to Optimal;") == 0)
+		query_splitting_algorithm = Optimal;
 
 	if (strcmp(query_string, "switch to oc;") == 0)
 		order_decision = only_cost;
@@ -1025,7 +1029,16 @@ exec_simple_query(const char* query_string)
 		order_decision = hybrid_log;
 	else if (strcmp(query_string, "switch to global;") == 0)
 		order_decision = global_view;
-
+	char* substr = strstr(query_string, "set factor to ");
+	if (substr != NULL)
+	{
+		int len = strlen(substr + 14);
+		char* str = malloc(len);
+		strcpy(str, substr + 14);
+		str[len - 1] = '\0';
+		factor = atof(str);
+		free(str);
+	}
 	parsetree_list = pg_parse_query(query_string);
 	if (check_log_statement(parsetree_list))
 	{
@@ -1059,7 +1072,7 @@ exec_simple_query(const char* query_string)
 			PushActiveSnapshot(GetTransactionSnapshot());
 			snapshot_set = true;
 		}
-		if(query_splitting_algorithm == None)
+		if(query_splitting_algorithm == None || query_splitting_algorithm == Optimal)
 		{
 			oldcontext = MemoryContextSwitchTo(MessageContext);
 			querytree_list = pg_analyze_and_rewrite(parsetree, query_string, NULL, 0, NULL);
