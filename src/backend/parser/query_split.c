@@ -238,7 +238,8 @@ static void Recon(char* query_string, char* commandTag, Node* pstmt, Query* ori_
 	transfer_array = (Index*)palloc(length * sizeof(Index));
 	while (plannedstmt = QSOptimizer(global_query, graph, transfer_array, length))
 	{
-		queryId++;
+        printf("subquery optimized plan: %s\n", nodeToString(plannedstmt));
+        queryId++;
 		char* relname = NULL;
 		//Should we output the result or save it as a temporary table
 		if (mydest == DestIntoRel)
@@ -631,7 +632,7 @@ static List* Prepare4Next(Query* global_query, Index* transfer_array, DR_intorel
 		}
 		fkOptInfo->ref_relid -= before;
 	}
-	//子查询涉及的全局relation
+	//锟接诧拷询锟芥及锟斤拷全锟斤拷relation
 	for (int i = length - 1; i > X; i--)
 	{
 		if (transfer_array[i] != 0)
@@ -894,7 +895,7 @@ static List* getRT_2(List* prtable, bool* graph, int length, int i, Index* trans
 	return rtable;
 }
 
-//找到global出口
+//锟揭碉拷global锟斤拷锟斤拷
 static List* findvarlist(List* joinlist, Index* transfer_array, int length)
 {
 	ListCell* lc;
@@ -908,7 +909,7 @@ static List* findvarlist(List* joinlist, Index* transfer_array, int length)
 			NodeTag type = ((Node*)lfirst(opexpr->args->head))->type;
 			Var* var1 = lfirst(opexpr->args->head);
 			Var* var2 = (Var*)lfirst(opexpr->args->head->next);
-			//当前query到外围
+			//锟斤拷前query锟斤拷锟斤拷围
 			if (transfer_array[var1->varno - 1] != 0 && transfer_array[var2->varno - 1] == 0)
 			{
 				ListCell* lc1;
@@ -1218,13 +1219,13 @@ static List* settargetlist(const List* global_rtable, List* local_rtable, Comman
 				tar->resno = targetlist->length + 1;
 			else
 				tar->resno = 1;
-			//该变量所在的表直接参与此次join
+			//锟矫憋拷锟斤拷锟斤拷锟节的憋拷直锟接诧拷锟斤拷舜锟絡oin
 			if (transfer_array[var->varno - 1] != 0)
 			{
 				var->varno = transfer_array[var->varno - 1];
 				var->varnoold = var->varno;
 			}
-			//该变量所在的表间接参与此次join
+			//锟矫憋拷锟斤拷锟斤拷锟节的憋拷锟接诧拷锟斤拷舜锟絡oin
 			else
 			{
 				for (int i = 0; i < length; i++)

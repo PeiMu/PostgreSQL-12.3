@@ -84,6 +84,9 @@
 #include "utils/timestamp.h"
 #include "mb/pg_wchar.h"
 
+#include <sys/stat.h>
+#include <sys/types.h>
+
 //int query_splitting_algorithm = RelationshipCenter;
 int query_splitting_algorithm = None;
 int order_decision = hybrid_row;
@@ -885,6 +888,32 @@ pg_plan_query(Query *querytree, int cursorOptions, ParamListInfo boundParams)
 
 	/* call the optimizer */
 	plan = planner(querytree, cursorOptions, boundParams);
+
+    const char *dir_path = "/home/pei/Project/duckdb/measure/postgres_plan";
+    struct stat st = {0};
+    if (stat(dir_path, &st) == -1) {
+        if (mkdir(dir_path, 0700) != 0) {
+            printf("Error: create directory postgres_plan failed!!!");
+            exit(-1);
+        }
+    }
+
+    char file_name[100];
+    printf("query id: %llu\n", plan->queryId);
+    sprintf(file_name, "%s%s", dir_path, "/postgres_plan");
+    FILE *file = fopen(file_name, "w");
+    if (NULL == file) {
+        printf("Error: failed to open file!!!");
+        exit(-1);
+    }
+
+    if (fputs(nodeToString(plan), file) == EOF) {
+        printf("Error: failed to write to file!!!");
+        fclose(file);
+        exit(-1);
+    }
+    fclose(file);
+//    printf("whole query optimized plan: %s\n", nodeToString(plan));
 
 	if (log_planner_stats)
 		ShowUsage("PLANNER STATISTICS");
