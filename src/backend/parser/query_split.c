@@ -238,7 +238,31 @@ static void Recon(char* query_string, char* commandTag, Node* pstmt, Query* ori_
 	transfer_array = (Index*)palloc(length * sizeof(Index));
 	while (plannedstmt = QSOptimizer(global_query, graph, transfer_array, length))
 	{
-        printf("subquery optimized plan: %s\n", nodeToString(plannedstmt));
+        const char *dir_path = "/home/pei/Project/duckdb/measure/postgres_plan";
+        struct stat st = {0};
+        if (stat(dir_path, &st) == -1) {
+            if (mkdir(dir_path, 0700) != 0) {
+                printf("Error: create directory postgres_plan failed!!!");
+                exit(-1);
+            }
+        }
+
+        char file_name[100];
+        sprintf(file_name, "%s%s", dir_path, "/postgres_plan");
+        FILE *file = fopen(file_name, "a");
+        if (NULL == file) {
+            printf("Error: failed to open file!!!");
+            exit(-1);
+        }
+
+        if (fputs(nodeToString(plannedstmt), file) == EOF) {
+            printf("Error: failed to write to file!!!");
+            fclose(file);
+            exit(-1);
+        }
+        fputs("\n", file);
+        fclose(file);
+//        printf("subquery optimized plan: %s\n", nodeToString(plannedstmt));
         queryId++;
 		char* relname = NULL;
 		//Should we output the result or save it as a temporary table

@@ -899,7 +899,6 @@ pg_plan_query(Query *querytree, int cursorOptions, ParamListInfo boundParams)
     }
 
     char file_name[100];
-    printf("query id: %llu\n", plan->queryId);
     sprintf(file_name, "%s%s", dir_path, "/postgres_plan");
     FILE *file = fopen(file_name, "w");
     if (NULL == file) {
@@ -1200,6 +1199,7 @@ exec_simple_query(const char *query_string)
 			PushActiveSnapshot(GetTransactionSnapshot());
 			snapshot_set = true;
 		}
+        remove("/home/pei/Project/duckdb/measure/postgres_plan/postgres_plan");
 		if(query_splitting_algorithm == None || query_splitting_algorithm == Optimal)
 		{
 
