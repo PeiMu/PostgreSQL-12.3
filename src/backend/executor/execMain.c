@@ -67,6 +67,8 @@
 
 #include "optimizer/lfh.h"
 
+//#define PrintResult
+
 /* Hooks for plugins to get control in ExecutorStart/Run/Finish/End */
 ExecutorStart_hook_type ExecutorStart_hook = NULL;
 ExecutorRun_hook_type ExecutorRun_hook = NULL;
@@ -309,10 +311,16 @@ ExecutorRun(QueryDesc *queryDesc,
 		standard_ExecutorRun(queryDesc, direction, count, execute_once);
 }
 
+#ifdef PrintResult
+TupleDesc	g_tupDesc;
+#endif
 void
 standard_ExecutorRun(QueryDesc *queryDesc,
 					 ScanDirection direction, uint64 count, bool execute_once)
 {
+#ifdef PrintResult
+    g_tupDesc = queryDesc->tupDesc;
+#endif
 	EState	   *estate;
 	CmdType		operation;
 	DestReceiver *dest;
@@ -1587,6 +1595,49 @@ ExecEndPlan(PlanState *planstate, EState *estate)
 	ExecCleanUpTriggerState(estate);
 }
 
+char *tuple_to_string(HeapTuple tuple)
+{
+    StringInfoData buf;
+    initStringInfo(&buf);  // Initialize the string buffer
+
+    for (int i = 0; i < g_tupDesc->natts; i++)  // Iterate over all attributes
+    {
+        bool isnull;
+        Datum value;
+
+        if (TupleDescAttr(g_tupDesc, i)->attisdropped) // Skip dropped columns
+            continue;
+
+        // Fetch the attribute (column value) from the tuple
+        value = heap_getattr(tuple, i + 1, g_tupDesc, &isnull);
+
+        if (isnull)
+        {
+            appendStringInfo(&buf, "NULL");
+        }
+        else
+        {
+            Oid typoutput;
+            bool typisvarlena;
+
+            // Get the type output function for the current attribute
+            getTypeOutputInfo(TupleDescAttr(g_tupDesc, i)->atttypid, &typoutput, &typisvarlena);
+
+            // Convert Datum to a C string
+            char *outputstr = OidOutputFunctionCall(typoutput, value);
+
+            // Append the string to the buffer
+            appendStringInfo(&buf, "%s", outputstr);
+        }
+
+        // Separate columns by a comma
+        if (i < g_tupDesc->natts - 1)
+            appendStringInfo(&buf, ", ");
+    }
+
+    return buf.data;  // Return the string representation of the tuple
+}
+
 /* ----------------------------------------------------------------
  *		ExecutePlan
  *
@@ -1646,6 +1697,13 @@ ExecutePlan(EState *estate,
 		 * Execute the plan and obtain a tuple
 		 */
 		slot = ExecProcNode(planstate);
+#ifdef PrintResult
+        if (!TupIsNull(slot))
+        {
+            HeapTuple tuple = ExecFetchSlotHeapTuple(slot, false, NULL);
+            elog(INFO, "Fetched tuple: %s", tuple_to_string(tuple));
+        }
+#endif
 
 		/*
 		 * if the tuple is null, then we assume there is nothing more to
