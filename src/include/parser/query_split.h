@@ -84,4 +84,9 @@
 
 void doQSparse(const char* query_string, const char* commandTag, Node* pstmt, Query* querytree, char* completionTag);
 
+typedef struct timespec timespec;
+timespec diff(timespec start, timespec end);
+timespec tic( );
+void toc( timespec* start_time, const char* prefix );
+
 #endif

@@ -86,6 +86,44 @@ static int queryId = 0;
 CommandDest mydest;
 Index* transfer_array = NULL;
 
+timespec diff(timespec start, timespec end)
+{
+    timespec temp;
+    if ((end.tv_nsec-start.tv_nsec)<0) {
+        temp.tv_sec = end.tv_sec-start.tv_sec-1;
+        temp.tv_nsec = 1000000000+end.tv_nsec-start.tv_nsec;
+    } else {
+        temp.tv_sec = end.tv_sec-start.tv_sec;
+        temp.tv_nsec = end.tv_nsec-start.tv_nsec;
+    }
+    return temp;
+}
+
+timespec tic( )
+{
+    timespec start_time;
+    if (-1 == clock_gettime(CLOCK_REALTIME, &start_time)) {
+        elog(ERROR, "Could not get clock time!");
+        D_ASSERT(false);
+    }
+    return start_time;
+}
+
+void printTimeSpec(timespec t, const char* prefix) {
+    elog(INFO, "%s: %d.%09d\n", prefix, (int)t.tv_sec, (int)t.tv_nsec);
+}
+
+void toc( timespec* start_time, const char* prefix )
+{
+    timespec current_time;
+    if (-1 == clock_gettime(CLOCK_REALTIME, &current_time)) {
+        elog(ERROR, "Could not get clock time!");
+        D_ASSERT(false);
+    }
+    printTimeSpec( diff( *start_time, current_time ), prefix );
+    *start_time = current_time;
+}
+
 //The interface
 void doQSparse(const char* query_string, const char* commandTag, Node* pstmt, Query* querytree, char* completionTag)
 {
@@ -238,6 +276,7 @@ static void Recon(char* query_string, char* commandTag, Node* pstmt, Query* ori_
 	transfer_array = (Index*)palloc(length * sizeof(Index));
 	while (plannedstmt = QSOptimizer(global_query, graph, transfer_array, length))
 	{
+/*
         const char *dir_path = "/home/pei/Project/duckdb/measure/postgres_plan";
         struct stat st = {0};
         if (stat(dir_path, &st) == -1) {
@@ -263,6 +302,7 @@ static void Recon(char* query_string, char* commandTag, Node* pstmt, Query* ori_
         fputs("\n", file);
         fclose(file);
 //        printf("subquery optimized plan: %s\n", nodeToString(plannedstmt));
+*/
         queryId++;
 		char* relname = NULL;
 		//Should we output the result or save it as a temporary table
@@ -526,13 +566,13 @@ static List* QSExecutor(char* query_string, const char* commandTag, Node* pstmt,
 		receiver = CreateIntoRelDestReceiver(into);
 	}
 	MemoryContextSwitchTo(oldcontext);
+//    timespec portal_run_begin = tic();
 	//Executor
 	(void)PortalRun(portal, FETCH_ALL, true, true, receiver, receiver, completionTag);
-	if (dest == DestIntoRel)
-		FKlist = Prepare4Next(querytree, transfer_array, (DR_intorel*)receiver, plannedstmt, relname, FKlist);
+//    toc(&portal_run_begin, "Query Split portal run time is");
 	receiver->rDestroy(receiver);
 	PortalDrop(portal, false);
-	EndCommand(completionTag, dest);
+//	EndCommand(completionTag, dest);
 	return FKlist;
 }
 
@@ -656,7 +696,7 @@ static List* Prepare4Next(Query* global_query, Index* transfer_array, DR_intorel
 		}
 		fkOptInfo->ref_relid -= before;
 	}
-	//�Ӳ�ѯ�漰��ȫ��relation
+	// The global relation involved in the subquery
 	for (int i = length - 1; i > X; i--)
 	{
 		if (transfer_array[i] != 0)
@@ -919,7 +959,7 @@ static List* getRT_2(List* prtable, bool* graph, int length, int i, Index* trans
 	return rtable;
 }
 
-//�ҵ�global����
+// Find the global exit
 static List* findvarlist(List* joinlist, Index* transfer_array, int length)
 {
 	ListCell* lc;
@@ -933,7 +973,7 @@ static List* findvarlist(List* joinlist, Index* transfer_array, int length)
 			NodeTag type = ((Node*)lfirst(opexpr->args->head))->type;
 			Var* var1 = lfirst(opexpr->args->head);
 			Var* var2 = (Var*)lfirst(opexpr->args->head->next);
-			//��ǰquery����Χ
+			// Current query to the periphery
 			if (transfer_array[var1->varno - 1] != 0 && transfer_array[var2->varno - 1] == 0)
 			{
 				ListCell* lc1;
@@ -1243,13 +1283,13 @@ static List* settargetlist(const List* global_rtable, List* local_rtable, Comman
 				tar->resno = targetlist->length + 1;
 			else
 				tar->resno = 1;
-			//�ñ������ڵı�ֱ�Ӳ���˴�join
+			// The table where the variable is located directly participates in this join
 			if (transfer_array[var->varno - 1] != 0)
 			{
 				var->varno = transfer_array[var->varno - 1];
 				var->varnoold = var->varno;
 			}
-			//�ñ������ڵı��Ӳ���˴�join
+			// The table where the variable is located indirectly participates in this join
 			else
 			{
 				for (int i = 0; i < length; i++)

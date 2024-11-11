@@ -889,6 +889,7 @@ pg_plan_query(Query *querytree, int cursorOptions, ParamListInfo boundParams)
 	/* call the optimizer */
 	plan = planner(querytree, cursorOptions, boundParams);
 
+/*
     const char *dir_path = "/home/pei/Project/duckdb/measure/postgres_plan";
     struct stat st = {0};
     if (stat(dir_path, &st) == -1) {
@@ -906,6 +907,42 @@ pg_plan_query(Query *querytree, int cursorOptions, ParamListInfo boundParams)
         exit(-1);
     }
 
+//    ListCell   *lc;
+//    foreach(lc, querytree->rtable) {
+//        RangeTblEntry *rte = (RangeTblEntry *) lfirst(lc);
+//        if (rte->rtekind == RTE_RELATION)
+//        {
+//            // use rte->eref->aliasname to get the alias (if present)
+//            const char *alias_name = strcat(rte->eref->aliasname, ":");
+////            elog(INFO, "Alias (if any): %s", alias_name);
+//            if (fputs(alias_name, file) == EOF) {
+//                printf("Error: failed to write to file!!!");
+//                fclose(file);
+//                exit(-1);
+//            }
+//
+//            // Get the relation name using the relid
+//            const char *table_name = strcat(get_rel_name(rte->relid), "\n");
+//            if (table_name)
+//            {
+//                // You now have the table name
+////                elog(INFO, "Table Name: %s", table_name);
+//                if (fputs(table_name, file) == EOF) {
+//                    printf("Error: failed to write to file!!!");
+//                    fclose(file);
+//                    exit(-1);
+//                }
+//            }
+//        }
+//    }
+//
+//    const char *end_table_alias = "---end---\n";
+//    if (fputs(end_table_alias, file) == EOF) {
+//        printf("Error: failed to write to file!!!");
+//        fclose(file);
+//        exit(-1);
+//    }
+
     if (fputs(nodeToString(plan), file) == EOF) {
         printf("Error: failed to write to file!!!");
         fclose(file);
@@ -913,6 +950,8 @@ pg_plan_query(Query *querytree, int cursorOptions, ParamListInfo boundParams)
     }
     fclose(file);
 //    printf("whole query optimized plan: %s\n", nodeToString(plan));
+    exit(0);
+*/
 
 	if (log_planner_stats)
 		ShowUsage("PLANNER STATISTICS");
@@ -1203,6 +1242,7 @@ exec_simple_query(const char *query_string)
 		if(query_splitting_algorithm == None || query_splitting_algorithm == Optimal)
 		{
 
+//            timespec original_pg_begin = tic();
 		/*
 		 * OK to analyze, rewrite, and plan this query.
 		 *
@@ -1283,6 +1323,7 @@ exec_simple_query(const char *query_string)
 		 */
 		MemoryContextSwitchTo(oldcontext);
 
+//        timespec portal_run_begin = tic();
 		/*
 		 * Run the portal to completion, and then drop it (and the receiver).
 		 */
@@ -1293,18 +1334,22 @@ exec_simple_query(const char *query_string)
 						 receiver,
 						 receiver,
 						 completionTag);
+//        toc(&portal_run_begin, "Original Postgres portal run time is");
 
 		receiver->rDestroy(receiver);
 
 		PortalDrop(portal, false);
+//            toc(&original_pg_begin, "Original Postgres planner time is");
 
 		}
 		else
 		{
+//            timespec query_split_begin = tic();
 			querytree_list = pg_analyze_and_rewrite(parsetree, query_string, NULL, 0, NULL);
 			if (snapshot_set)
 				PopActiveSnapshot();
 			doQSparse(query_string, commandTag, parsetree->stmt, querytree_list->head->data.ptr_value, completionTag);
+//            toc(&query_split_begin, "Query Split planner time is");
 		}
 
 		if (lnext(parsetree_item) == NULL)

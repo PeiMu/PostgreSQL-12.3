@@ -1595,6 +1595,7 @@ ExecEndPlan(PlanState *planstate, EState *estate)
 	ExecCleanUpTriggerState(estate);
 }
 
+#ifdef PrintResult
 char *tuple_to_string(HeapTuple tuple)
 {
     StringInfoData buf;
@@ -1637,6 +1638,8 @@ char *tuple_to_string(HeapTuple tuple)
 
     return buf.data;  // Return the string representation of the tuple
 }
+
+#endif
 
 /* ----------------------------------------------------------------
  *		ExecutePlan
