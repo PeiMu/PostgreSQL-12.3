@@ -87,6 +87,8 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
+#define DumpQueryString false
+
 //int query_splitting_algorithm = RelationshipCenter;
 int query_splitting_algorithm = None;
 int order_decision = hybrid_row;
@@ -889,7 +891,7 @@ pg_plan_query(Query *querytree, int cursorOptions, ParamListInfo boundParams)
 	/* call the optimizer */
 	plan = planner(querytree, cursorOptions, boundParams);
 
-/*
+#if DumpQueryString
     const char *dir_path = "/home/pei/Project/duckdb/measure/postgres_plan";
     struct stat st = {0};
     if (stat(dir_path, &st) == -1) {
@@ -951,7 +953,7 @@ pg_plan_query(Query *querytree, int cursorOptions, ParamListInfo boundParams)
     fclose(file);
 //    printf("whole query optimized plan: %s\n", nodeToString(plan));
     exit(0);
-*/
+#endif
 
 	if (log_planner_stats)
 		ShowUsage("PLANNER STATISTICS");

@@ -21,6 +21,8 @@
 #define NEWBETTER 1
 #define OLDBETTER 2
 
+#define DumpSubQueryString false
+
 //Create a local query
 static Query* createQuery(const Query* querytree, CommandDest dest, List* rtable, Index* transfer_array, int length);
 //change the RangeTblEntry relid to the new one
@@ -276,7 +278,7 @@ static void Recon(char* query_string, char* commandTag, Node* pstmt, Query* ori_
 	transfer_array = (Index*)palloc(length * sizeof(Index));
 	while (plannedstmt = QSOptimizer(global_query, graph, transfer_array, length))
 	{
-/*
+#if DumpSubQueryString
         const char *dir_path = "/home/pei/Project/duckdb/measure/postgres_plan";
         struct stat st = {0};
         if (stat(dir_path, &st) == -1) {
@@ -302,7 +304,7 @@ static void Recon(char* query_string, char* commandTag, Node* pstmt, Query* ori_
         fputs("\n", file);
         fclose(file);
 //        printf("subquery optimized plan: %s\n", nodeToString(plannedstmt));
-*/
+#endif
         queryId++;
 		char* relname = NULL;
 		//Should we output the result or save it as a temporary table
@@ -569,6 +571,9 @@ static List* QSExecutor(char* query_string, const char* commandTag, Node* pstmt,
 //    timespec portal_run_begin = tic();
 	//Executor
 	(void)PortalRun(portal, FETCH_ALL, true, true, receiver, receiver, completionTag);
+    if (dest == DestIntoRel) {
+        FKlist = Prepare4Next(querytree, transfer_array, (DR_intorel*)receiver, plannedstmt, relname, FKlist);
+    }
 //    toc(&portal_run_begin, "Query Split portal run time is");
 	receiver->rDestroy(receiver);
 	PortalDrop(portal, false);
