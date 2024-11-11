@@ -21,7 +21,22 @@
 #define NEWBETTER 1
 #define OLDBETTER 2
 
-#define DumpSubQueryString false
+#define DumpSubQueryString  false
+#define MANUAL_ANALYZE      false
+#define DEBUG_TOTAL_SIZE    false
+
+double total_size = 0.0;
+//long long optimize_time = 0;
+//long long execution_time = 0;
+//long long materialization_time = 0;
+
+#define half_rounded(x) (((x) + ((x) < 0 ? 0 : 1)) / 2)
+
+List* rel2relids = NIL;
+
+Datum pg_relation_size(PG_FUNCTION_ARGS);
+
+static double getMatSize(Oid relid);
 
 //Create a local query
 static Query* createQuery(const Query* querytree, CommandDest dest, List* rtable, Index* transfer_array, int length);
@@ -318,6 +333,9 @@ static void Recon(char* query_string, char* commandTag, Node* pstmt, Query* ori_
 		//finish_xact_command();
 		if (mydest == DestRemote)
 		{
+#if DEBUG_TOTAL_SIZE
+            elog(INFO, "%d\t%lf\n", queryId - 1, total_size);
+#endif
 			break;
 		}
 		switch (global_query->jointree->quals->type)
@@ -571,10 +589,34 @@ static List* QSExecutor(char* query_string, const char* commandTag, Node* pstmt,
 //    timespec portal_run_begin = tic();
 	//Executor
 	(void)PortalRun(portal, FETCH_ALL, true, true, receiver, receiver, completionTag);
-    if (dest == DestIntoRel) {
-        FKlist = Prepare4Next(querytree, transfer_array, (DR_intorel*)receiver, plannedstmt, relname, FKlist);
-    }
 //    toc(&portal_run_begin, "Query Split portal run time is");
+    if (dest == DestIntoRel) {
+#if MANUAL_ANALYZE
+        VacuumParams params;
+        params.index_cleanup = VACOPT_TERNARY_DEFAULT;
+        params.truncate = VACOPT_TERNARY_DEFAULT;
+        params.options = VACOPT_ANALYZE;
+        params.freeze_min_age = -1;
+        params.freeze_table_age = -1;
+        params.multixact_freeze_min_age = -1;
+        params.multixact_freeze_table_age = -1;
+        params.is_wraparound = false;
+        params.log_min_duration = -1;
+        Oid relid = RangeVarGetRelid(((DR_intorel*)receiver)->into->rel, NoLock, true);
+        analyze_rel(relid, ((DR_intorel*)receiver)->into->rel, &params, NIL, false, NULL);
+        MemoryContext context = MemoryContextSwitchTo(MessageContext);
+#endif
+
+        FKlist = Prepare4Next(querytree, transfer_array, (DR_intorel*)receiver, plannedstmt, relname, FKlist);
+
+#if MANUAL_ANALYZE
+        #if DEBUG_TOTAL_SIZE
+        double s = getMatSize(relid);
+        total_size += s;
+        #endif
+        MemoryContextSwitchTo(context);
+#endif
+    }
 	receiver->rDestroy(receiver);
 	PortalDrop(portal, false);
 //	EndCommand(completionTag, dest);
@@ -1710,4 +1752,36 @@ int tarfunc(Index* rels, PlannedStmt* new, PlannedStmt* old)
 			return OLDBETTER;
 		return NEWBETTER;
 	}
+    return NEWBETTER;
+}
+
+// has bug with `MANUAL_ANALYZE`
+static double getMatSize(Oid relid)
+{
+    int64 size = DatumGetInt64(DirectFunctionCall2Coll(pg_relation_size, 0, relid, (Datum)cstring_to_text("main")));
+    if (Abs(size) < 10 * 1024)
+        return (double)size / 1000000.0;
+    else
+    {
+        size >>= 9;
+        if (Abs(size) < 20 * 1024 - 1)
+            return (double)half_rounded(size) / 1000.0;
+        else
+        {
+            size >>= 10;
+            if (Abs(size) < 20 * 1024 - 1)
+                return (double)half_rounded(size);
+            else
+            {
+                size >>= 10;
+                if (Abs(size) < 20 * 1024 - 1)
+                    return (double)half_rounded(size) * 1000.0;
+                else
+                {
+                    size >>= 10;
+                    return (double)half_rounded(size) * 1000000.0;
+                }
+            }
+        }
+    }
 }
