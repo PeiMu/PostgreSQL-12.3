@@ -18,6 +18,8 @@
 #include <signal.h>
 #include <unistd.h>
 #include <sys/socket.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 #ifdef HAVE_SYS_SELECT_H
 #include <sys/select.h>
 #endif
@@ -81,5 +83,10 @@
 #include "mb/pg_wchar.h"
 
 void doQSparse(const char* query_string, const char* commandTag, Node* pstmt, Query* querytree, char* completionTag);
+
+typedef struct timespec timespec;
+timespec diff(timespec start, timespec end);
+timespec tic( );
+void toc( timespec* start_time, const char* prefix );
 
 #endif

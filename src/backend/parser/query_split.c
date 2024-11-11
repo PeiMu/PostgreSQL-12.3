@@ -21,6 +21,8 @@
 #define NEWBETTER 1
 #define OLDBETTER 2
 
+#define DumpSubQueryString false
+
 //Create a local query
 static Query* createQuery(const Query* querytree, CommandDest dest, List* rtable, Index* transfer_array, int length);
 //change the RangeTblEntry relid to the new one
@@ -85,6 +87,44 @@ static int queryId = 0;
 //where to send the result, to the client end or temporary table
 CommandDest mydest;
 Index* transfer_array = NULL;
+
+timespec diff(timespec start, timespec end)
+{
+    timespec temp;
+    if ((end.tv_nsec-start.tv_nsec)<0) {
+        temp.tv_sec = end.tv_sec-start.tv_sec-1;
+        temp.tv_nsec = 1000000000+end.tv_nsec-start.tv_nsec;
+    } else {
+        temp.tv_sec = end.tv_sec-start.tv_sec;
+        temp.tv_nsec = end.tv_nsec-start.tv_nsec;
+    }
+    return temp;
+}
+
+timespec tic( )
+{
+    timespec start_time;
+    if (-1 == clock_gettime(CLOCK_REALTIME, &start_time)) {
+        elog(ERROR, "Could not get clock time!");
+        D_ASSERT(false);
+    }
+    return start_time;
+}
+
+void printTimeSpec(timespec t, const char* prefix) {
+    elog(INFO, "%s: %d.%09d\n", prefix, (int)t.tv_sec, (int)t.tv_nsec);
+}
+
+void toc( timespec* start_time, const char* prefix )
+{
+    timespec current_time;
+    if (-1 == clock_gettime(CLOCK_REALTIME, &current_time)) {
+        elog(ERROR, "Could not get clock time!");
+        D_ASSERT(false);
+    }
+    printTimeSpec( diff( *start_time, current_time ), prefix );
+    *start_time = current_time;
+}
 
 //The interface
 void doQSparse(const char* query_string, const char* commandTag, Node* pstmt, Query* querytree, char* completionTag)
@@ -238,7 +278,34 @@ static void Recon(char* query_string, char* commandTag, Node* pstmt, Query* ori_
 	transfer_array = (Index*)palloc(length * sizeof(Index));
 	while (plannedstmt = QSOptimizer(global_query, graph, transfer_array, length))
 	{
-		queryId++;
+#if DumpSubQueryString
+        const char *dir_path = "/home/pei/Project/duckdb/measure/postgres_plan";
+        struct stat st = {0};
+        if (stat(dir_path, &st) == -1) {
+            if (mkdir(dir_path, 0700) != 0) {
+                printf("Error: create directory postgres_plan failed!!!");
+                exit(-1);
+            }
+        }
+
+        char file_name[100];
+        sprintf(file_name, "%s%s", dir_path, "/postgres_plan");
+        FILE *file = fopen(file_name, "a");
+        if (NULL == file) {
+            printf("Error: failed to open file!!!");
+            exit(-1);
+        }
+
+        if (fputs(nodeToString(plannedstmt), file) == EOF) {
+            printf("Error: failed to write to file!!!");
+            fclose(file);
+            exit(-1);
+        }
+        fputs("\n", file);
+        fclose(file);
+//        printf("subquery optimized plan: %s\n", nodeToString(plannedstmt));
+#endif
+        queryId++;
 		char* relname = NULL;
 		//Should we output the result or save it as a temporary table
 		if (mydest == DestIntoRel)
@@ -501,13 +568,16 @@ static List* QSExecutor(char* query_string, const char* commandTag, Node* pstmt,
 		receiver = CreateIntoRelDestReceiver(into);
 	}
 	MemoryContextSwitchTo(oldcontext);
+//    timespec portal_run_begin = tic();
 	//Executor
 	(void)PortalRun(portal, FETCH_ALL, true, true, receiver, receiver, completionTag);
-	if (dest == DestIntoRel)
-		FKlist = Prepare4Next(querytree, transfer_array, (DR_intorel*)receiver, plannedstmt, relname, FKlist);
+    if (dest == DestIntoRel) {
+        FKlist = Prepare4Next(querytree, transfer_array, (DR_intorel*)receiver, plannedstmt, relname, FKlist);
+    }
+//    toc(&portal_run_begin, "Query Split portal run time is");
 	receiver->rDestroy(receiver);
 	PortalDrop(portal, false);
-	EndCommand(completionTag, dest);
+//	EndCommand(completionTag, dest);
 	return FKlist;
 }
 
@@ -631,7 +701,7 @@ static List* Prepare4Next(Query* global_query, Index* transfer_array, DR_intorel
 		}
 		fkOptInfo->ref_relid -= before;
 	}
-	//子查询涉及的全局relation
+	// The global relation involved in the subquery
 	for (int i = length - 1; i > X; i--)
 	{
 		if (transfer_array[i] != 0)
@@ -894,7 +964,7 @@ static List* getRT_2(List* prtable, bool* graph, int length, int i, Index* trans
 	return rtable;
 }
 
-//找到global出口
+// Find the global exit
 static List* findvarlist(List* joinlist, Index* transfer_array, int length)
 {
 	ListCell* lc;
@@ -908,7 +978,7 @@ static List* findvarlist(List* joinlist, Index* transfer_array, int length)
 			NodeTag type = ((Node*)lfirst(opexpr->args->head))->type;
 			Var* var1 = lfirst(opexpr->args->head);
 			Var* var2 = (Var*)lfirst(opexpr->args->head->next);
-			//当前query到外围
+			// Current query to the periphery
 			if (transfer_array[var1->varno - 1] != 0 && transfer_array[var2->varno - 1] == 0)
 			{
 				ListCell* lc1;
@@ -1218,13 +1288,13 @@ static List* settargetlist(const List* global_rtable, List* local_rtable, Comman
 				tar->resno = targetlist->length + 1;
 			else
 				tar->resno = 1;
-			//该变量所在的表直接参与此次join
+			// The table where the variable is located directly participates in this join
 			if (transfer_array[var->varno - 1] != 0)
 			{
 				var->varno = transfer_array[var->varno - 1];
 				var->varnoold = var->varno;
 			}
-			//该变量所在的表间接参与此次join
+			// The table where the variable is located indirectly participates in this join
 			else
 			{
 				for (int i = 0; i < length; i++)
