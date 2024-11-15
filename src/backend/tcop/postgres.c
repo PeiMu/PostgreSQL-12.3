@@ -87,7 +87,8 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
-#define DumpQueryString false
+#define DumpQueryString true
+#define ReadQueryString false
 
 //int query_splitting_algorithm = RelationshipCenter;
 int query_splitting_algorithm = None;
@@ -896,16 +897,17 @@ pg_plan_query(Query *querytree, int cursorOptions, ParamListInfo boundParams)
     struct stat st = {0};
     if (stat(dir_path, &st) == -1) {
         if (mkdir(dir_path, 0700) != 0) {
-            printf("Error: create directory postgres_plan failed!!!");
+            elog(ERROR, "Error: create directory postgres_plan failed!!!");
             exit(-1);
         }
     }
 
     char file_name[100];
     sprintf(file_name, "%s%s", dir_path, "/postgres_plan");
+    remove(file_name);
     FILE *file = fopen(file_name, "w");
     if (NULL == file) {
-        printf("Error: failed to open file!!!");
+        elog(ERROR, "Error: failed to open file!!!");
         exit(-1);
     }
 
@@ -918,7 +920,7 @@ pg_plan_query(Query *querytree, int cursorOptions, ParamListInfo boundParams)
 //            const char *alias_name = strcat(rte->eref->aliasname, ":");
 ////            elog(INFO, "Alias (if any): %s", alias_name);
 //            if (fputs(alias_name, file) == EOF) {
-//                printf("Error: failed to write to file!!!");
+//                elog(ERROR, "Error: failed to write to file!!!");
 //                fclose(file);
 //                exit(-1);
 //            }
@@ -930,7 +932,7 @@ pg_plan_query(Query *querytree, int cursorOptions, ParamListInfo boundParams)
 //                // You now have the table name
 ////                elog(INFO, "Table Name: %s", table_name);
 //                if (fputs(table_name, file) == EOF) {
-//                    printf("Error: failed to write to file!!!");
+//                    elog(ERROR, "Error: failed to write to file!!!");
 //                    fclose(file);
 //                    exit(-1);
 //                }
@@ -940,19 +942,72 @@ pg_plan_query(Query *querytree, int cursorOptions, ParamListInfo boundParams)
 //
 //    const char *end_table_alias = "---end---\n";
 //    if (fputs(end_table_alias, file) == EOF) {
-//        printf("Error: failed to write to file!!!");
+//        elog(ERROR, "Error: failed to write to file!!!");
 //        fclose(file);
 //        exit(-1);
 //    }
 
-    if (fputs(nodeToString(plan), file) == EOF) {
-        printf("Error: failed to write to file!!!");
+    char *plan_str = nodeToString(plan);
+    if (fputs(plan_str, file) == EOF) {
+        elog(ERROR, "Error: failed to write to file!!!");
         fclose(file);
         exit(-1);
     }
     fclose(file);
-//    printf("whole query optimized plan: %s\n", nodeToString(plan));
+//    elog(ERROR, "whole query optimized plan: %s\n", nodeToString(plan));
+//    plan = stringToNode(plan_str);
+//    pfree(plan_str);
     exit(0);
+#endif
+
+#if ReadQueryString
+//    elog(INFO, "start ReadQueryString");
+    const char *dir_path = "/home/pei/Project/duckdb/measure/postgres_plan";
+    char file_name[100];
+    sprintf(file_name, "%s%s", dir_path, "/postgres_plan");
+    FILE *file = fopen(file_name, "r");
+    if (NULL == file) {
+        elog(ERROR, "Error: failed to open file!!!");
+        exit(-1);
+    }
+
+    size_t buffer_size = 10240;
+    size_t length = 0;
+    char *string_buffer = malloc(buffer_size);
+    if (NULL == string_buffer) {
+        elog(ERROR, "Error: Unbale to allocate buffer");
+        exit(-1);
+    }
+
+    while (fgets(string_buffer + length, buffer_size - length, file)) {
+        length += strlen(string_buffer + length);
+
+        if (feof(file)) {
+            break;
+        }
+
+        buffer_size *= 2;
+        char *temp_buffer = realloc(string_buffer, buffer_size);
+        if (NULL == temp_buffer) {
+            free(string_buffer);
+            elog(ERROR, "Error: Unbale to re-allocate buffer");
+            exit(-1);
+        }
+
+        string_buffer = temp_buffer;
+    }
+
+    char *result_buffer = realloc(string_buffer, length + 1);
+    if (NULL == result_buffer) {
+        free(string_buffer);
+        elog(ERROR, "Error: Unbale to resize buffer");
+            exit(-1);
+    }
+//    elog(INFO, "get result buffer");
+//    printf("\n%s\n", result_buffer);
+
+    plan = stringToNode(result_buffer);
+    free(result_buffer);
 #endif
 
 	if (log_planner_stats)
@@ -1240,7 +1295,7 @@ exec_simple_query(const char *query_string)
 			PushActiveSnapshot(GetTransactionSnapshot());
 			snapshot_set = true;
 		}
-        remove("/home/pei/Project/duckdb/measure/postgres_plan/postgres_plan");
+
 		if(query_splitting_algorithm == None || query_splitting_algorithm == Optimal)
 		{
 
@@ -1325,7 +1380,7 @@ exec_simple_query(const char *query_string)
 		 */
 		MemoryContextSwitchTo(oldcontext);
 
-//        timespec portal_run_begin = tic();
+        timespec portal_run_begin = tic();
 		/*
 		 * Run the portal to completion, and then drop it (and the receiver).
 		 */
@@ -1336,7 +1391,7 @@ exec_simple_query(const char *query_string)
 						 receiver,
 						 receiver,
 						 completionTag);
-//        toc(&portal_run_begin, "Original Postgres portal run time is");
+        toc(&portal_run_begin, "Original Postgres portal run time is");
 
 		receiver->rDestroy(receiver);
 
