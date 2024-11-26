@@ -87,7 +87,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
-#define DumpQueryString true
+#define DumpQueryString false
 #define ReadQueryString false
 
 //int query_splitting_algorithm = RelationshipCenter;

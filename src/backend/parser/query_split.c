@@ -21,7 +21,7 @@
 #define NEWBETTER 1
 #define OLDBETTER 2
 
-#define DumpSubQueryString  true
+#define DumpSubQueryString  false
 #define MANUAL_ANALYZE      false
 #define DEBUG_TOTAL_SIZE    false
 
@@ -305,6 +305,7 @@ static void Recon(char* query_string, char* commandTag, Node* pstmt, Query* ori_
     sprintf(file_name, "%s%s", dir_path, "/postgres_plan");
     remove(file_name);
 #endif
+//    PlannedStmt* whole_plan;
 	while (plannedstmt = QSOptimizer(global_query, graph, transfer_array, length))
 	{
 #if DumpSubQueryString
@@ -323,6 +324,10 @@ static void Recon(char* query_string, char* commandTag, Node* pstmt, Query* ori_
         fclose(file);
 //        printf("subquery optimized plan: %s\n", nodeToString(plannedstmt));
 #endif
+        printf("subquery optimized plan: %s\n", nodeToString(plannedstmt));
+//        if (0 == queryId) {
+//            whole_plan = copyObjectImpl(plannedstmt);
+//        }
         queryId++;
 		char* relname = NULL;
 		//Should we output the result or save it as a temporary table
@@ -331,6 +336,11 @@ static void Recon(char* query_string, char* commandTag, Node* pstmt, Query* ori_
 			relname = palloc(7 * sizeof(char));
 			sprintf(relname, "temp%d", queryId);
 		}
+
+        // todo: merge sub plan back to the whole plan
+        // todo: replace the "temp%" table with the previous sub plan
+        // todo: replace the `rtable`
+
 		//Execute the subquery and do some change for next subquery creation
 		FKlist = QSExecutor(query_string, commandTag, pstmt, plannedstmt, mydest, relname, completionTag, global_query, transfer_array, FKlist, oldcontext);
 		//finish_xact_command();
