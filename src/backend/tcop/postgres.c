@@ -1379,8 +1379,9 @@ exec_simple_query(const char *query_string)
 		 * Switch back to transaction context for execution.
 		 */
 		MemoryContextSwitchTo(oldcontext);
-
+#if TimeMeasure
         timespec portal_run_begin = tic();
+#endif
 		/*
 		 * Run the portal to completion, and then drop it (and the receiver).
 		 */
@@ -1391,7 +1392,9 @@ exec_simple_query(const char *query_string)
 						 receiver,
 						 receiver,
 						 completionTag);
+#if TimeMeasure
         toc(&portal_run_begin, "Original Postgres portal run time is");
+#endif
 
 		receiver->rDestroy(receiver);
 

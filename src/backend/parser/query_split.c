@@ -324,7 +324,6 @@ static void Recon(char* query_string, char* commandTag, Node* pstmt, Query* ori_
         fclose(file);
 //        printf("subquery optimized plan: %s\n", nodeToString(plannedstmt));
 #endif
-        printf("subquery optimized plan: %s\n", nodeToString(plannedstmt));
 //        if (0 == queryId) {
 //            whole_plan = copyObjectImpl(plannedstmt);
 //        }
@@ -599,10 +598,14 @@ static List* QSExecutor(char* query_string, const char* commandTag, Node* pstmt,
 		receiver = CreateIntoRelDestReceiver(into);
 	}
 	MemoryContextSwitchTo(oldcontext);
+#if TimeMeasure
     timespec portal_run_begin = tic();
+#endif
 	//Executor
 	(void)PortalRun(portal, FETCH_ALL, true, true, receiver, receiver, completionTag);
+#if TimeMeasure
     toc(&portal_run_begin, "Query Split portal run time is");
+#endif
     if (dest == DestIntoRel) {
 #if MANUAL_ANALYZE
         VacuumParams params;

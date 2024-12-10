@@ -82,6 +82,8 @@
 #include "utils/timestamp.h"
 #include "mb/pg_wchar.h"
 
+#define TimeMeasure false
+
 void doQSparse(const char* query_string, const char* commandTag, Node* pstmt, Query* querytree, char* completionTag);
 
 typedef struct timespec timespec;
