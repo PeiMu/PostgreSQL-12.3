@@ -24,6 +24,7 @@
 #define DumpSubQueryString  false
 #define MANUAL_ANALYZE      false
 #define DEBUG_TOTAL_SIZE    false
+#define MERGE_SUB_PLANS     true
 
 double total_size = 0.0;
 //long long optimize_time = 0;
@@ -243,6 +244,466 @@ static void rRj(Query* querytree)
 	return;
 }
 
+Oid locateTempId(PlannedStmt *currentPlannedStmt)
+{
+    // Check for temp table references in the RTEs of the currentPlannedStmt
+    List *current_rtable = currentPlannedStmt->rtable;
+
+    Oid temp_table_id = 1;
+    ListCell *lc;
+    // fixme: have bugs when more than one `temp` table
+    foreach(lc, current_rtable) {
+        RangeTblEntry *rte = (RangeTblEntry *)lfirst(lc);
+        if (rte->eref && rte->eref->aliasname && 0 == strncmp(rte->eref->aliasname, "temp", 4)) {
+//            elog(LOG, "found the temp table in rte! index = %d", temp_table_id);
+            break;
+        } else {
+            temp_table_id++;
+        }
+    }
+
+    if (current_rtable->length+1 == temp_table_id) {
+        elog(ERROR, "couldn't find the temp rte table!");
+    } else {
+        return temp_table_id;
+    }
+}
+
+void ReplaceTempScanNode(Plan **dest_tree, Plan *source_tree, Oid temp_table_id)
+{
+    if (dest_tree == NULL || *dest_tree == NULL) {
+        elog(ERROR, "dest tree is null!");
+    }
+
+    // Check if the dest_tree node references the temp table
+    if (T_SeqScan == nodeTag(*dest_tree))
+    {
+        Scan *scanNode = (Scan *)*dest_tree;
+        if (scanNode->scanrelid == temp_table_id)
+        {
+//            elog(LOG, "found the temp RTE id in the dest_tree!");
+            // Generate a SubqueryScan node, including a scan wrapper and a subplan node
+            SubqueryScan *subquery_scan = makeNode(SubqueryScan);
+            // the scan wrapper is the scanNode
+            subquery_scan->scan.plan.type = T_SubqueryScan;
+            subquery_scan->scan.plan.startup_cost = scanNode->plan.startup_cost;
+            subquery_scan->scan.plan.total_cost = scanNode->plan.total_cost;
+            subquery_scan->scan.plan.plan_rows = scanNode->plan.plan_rows;
+            subquery_scan->scan.plan.plan_width = scanNode->plan.plan_width;
+            subquery_scan->scan.plan.parallel_aware = scanNode->plan.parallel_aware;
+            subquery_scan->scan.plan.parallel_safe = scanNode->plan.parallel_safe;
+            subquery_scan->scan.plan.plan_node_id = scanNode->plan.plan_node_id;
+            subquery_scan->scan.plan.targetlist = copyObjectImpl(scanNode->plan.targetlist);
+            subquery_scan->scan.plan.qual = copyObjectImpl(scanNode->plan.qual);
+            subquery_scan->scan.plan.initPlan = copyObjectImpl(scanNode->plan.initPlan);
+            subquery_scan->scan.plan.extParam = bms_copy(scanNode->plan.extParam);
+            subquery_scan->scan.plan.allParam = bms_copy(scanNode->plan.allParam);
+
+            subquery_scan->scan.scanrelid = scanNode->scanrelid;
+            // the subplan node is the source_tree
+            subquery_scan->subplan = copyObjectImpl(source_tree);
+            *dest_tree = subquery_scan;
+            return;
+        }
+    }
+
+    // Recursively check left and right subtrees
+    if ((*dest_tree)->lefttree)
+        ReplaceTempScanNode(&(*dest_tree)->lefttree, source_tree, temp_table_id);
+
+    if ((*dest_tree)->righttree)
+        ReplaceTempScanNode(&(*dest_tree)->righttree, source_tree, temp_table_id);
+}
+
+void UpdatePrevTreeIndex(Plan **planTree, int current_rte_length, int current_param_num)
+{
+    if (planTree == NULL || *planTree == NULL) {
+        elog(ERROR, "Plan tree is null!");
+    }
+
+    // Check and update the left subtree
+    if ((*planTree)->lefttree) {
+        UpdatePrevTreeIndex(&(*planTree)->lefttree, current_rte_length, current_param_num);
+    }
+
+    // Check and update the right subtree
+    if ((*planTree)->righttree) {
+        UpdatePrevTreeIndex(&(*planTree)->righttree, current_rte_length, current_param_num);
+    }
+
+    // todo: update plan_node_id
+
+    // update targetlist
+//    elog(LOG, "update targetlist");
+    ListCell *lc;
+    foreach(lc, (*planTree)->targetlist) {
+        TargetEntry *te = (TargetEntry *) lfirst(lc);
+        if (IsA(te->expr, Var)) {
+            Var *var = (Var *) te->expr;
+            Index new_index = var->varnoold + current_rte_length;
+            // also update varno if it equals to varnoold
+            if (var->varno == var->varnoold) {
+                var->varno = new_index;
+            }
+            var->varnoold = new_index;
+        }
+        if (IsA(te->expr, Aggref)) {
+            Aggref *aggref = (Aggref *)te->expr;
+            ListCell *arg_lc;
+            foreach(arg_lc, aggref->args) {
+                TargetEntry *te = (TargetEntry *) lfirst(arg_lc);
+                if (IsA(te->expr, Var)) {
+                    Var *var = (Var *) te->expr;
+                    Index new_index = var->varnoold + current_rte_length;
+                    // also update varno if it equals to varnoold
+                    if (var->varno == var->varnoold) {
+                        var->varno = new_index;
+                    }
+                    var->varnoold = new_index;
+                } else if (IsA(te->expr, Param)) {
+                    // update Param - paramid
+                    Param *param = (Param *) te->expr;
+                    param->paramid += current_param_num;
+                }
+            }
+        }
+
+//        // adjust the removed resorigtbl, resorigcol to index_pairs[resorigcol].varnoold, index_pairs[resorigcol].varoattno
+//        if (te->resorigtbl == removed_relation_oid) {
+//            int pair_index = te->resorigcol-1;
+//            int oid_index = index_pairs[pair_index].varnoold;
+//            if(oid_index > removed_index) {
+//                oid_index -= 1;
+//            }
+//            // count from 0
+//            te->resorigtbl = list_nth_oid(prev_oids, oid_index-1);
+//            te->resorigcol = index_pairs[pair_index].varoattno;
+//        }
+    }
+
+    // update qual
+//    elog(LOG, "update qual: %s", nodeToString((*planTree)->qual));
+    if (NULL != (*planTree)->qual) {
+        ListCell *qual_lc;
+        foreach(qual_lc, (*planTree)->qual) {
+            Node *qual_node = (Node *) lfirst(qual_lc);
+            if (IsA(qual_node, OpExpr)) {
+                OpExpr *qual_expr = (OpExpr *) qual_node;
+                ListCell *arg_lc;
+                foreach(arg_lc, qual_expr->args) {
+                    Node *var_node = (Node *) lfirst(arg_lc);
+                    if (IsA(var_node, Var)) {
+                        Var *var = (Var *) var_node;
+                        Index new_index = var->varnoold + current_rte_length;
+                        // also update varno if it equals to varnoold
+                        if (var->varno == var->varnoold) {
+                            var->varno = new_index;
+                        }
+                        var->varnoold = new_index;
+                    } else if (IsA(var_node, Param)) {
+                        // update Param - paramid
+                        Param *param = (Param *) var_node;
+                        param->paramid += current_param_num;
+                    }
+                }
+            }
+            else if (IsA(qual_node, ScalarArrayOpExpr)) {
+                ScalarArrayOpExpr *qual_expr = (ScalarArrayOpExpr *) qual_node;
+                ListCell *arg_lc;
+                foreach(arg_lc, qual_expr->args) {
+                    Node *var_node = (Node *) lfirst(arg_lc);
+                    if (IsA(var_node, Var)) {
+                        Var *var = (Var *) var_node;
+                        Index new_index = var->varnoold + current_rte_length;
+                        // also update varno if it equals to varnoold
+                        if (var->varno == var->varnoold) {
+                            var->varno = new_index;
+                        }
+                        var->varnoold = new_index;
+                    } else if (IsA(var_node, Param)) {
+                        // update Param - paramid
+                        Param *param = (Param *) var_node;
+                        param->paramid += current_param_num;
+                    }
+                }
+            }
+        }
+    }
+
+    // update extParam, allParam
+    if (NULL != (*planTree)->extParam) {
+//        elog(LOG, "update extParam, allParam");
+        Bitmapset *new_extParam = NULL;
+        int ext_param_val = -1;
+        while ((ext_param_val = bms_next_member((*planTree)->extParam, ext_param_val)) >= 0) {
+//            elog(LOG, "ext_param_id=%d", ext_param_val);
+            new_extParam = bms_add_member(new_extParam, ext_param_val+current_param_num);
+        }
+        bms_free((*planTree)->extParam);
+        (*planTree)->extParam = new_extParam;
+
+        Bitmapset *new_allParam = NULL;
+        int all_param_val = -1;
+        while ((all_param_val = bms_next_member((*planTree)->allParam, all_param_val)) >= 0) {
+//            elog(LOG, "all_param_val=%d", all_param_val);
+            new_allParam = bms_add_member(new_allParam, all_param_val+current_param_num);
+        }
+        bms_free((*planTree)->allParam);
+        (*planTree)->allParam = new_allParam;
+    }
+
+    // update Scan
+    if (IsA((*planTree), SeqScan)) {
+//        elog(LOG, "update Scan");
+        Scan *scan_node = (Scan *)(*planTree);
+        scan_node->scanrelid += current_rte_length;
+    }
+
+    // update BitmapIndexScan
+//    elog(LOG, "update BitmapIndexScan");
+    if (IsA((*planTree), BitmapIndexScan)) {
+        BitmapIndexScan *bmi_scan = (BitmapIndexScan *)(*planTree);
+        // update Scan
+        Scan *scan_node = &bmi_scan->scan;
+        scan_node->scanrelid += current_rte_length;
+        // update qual
+        ListCell *qual_lc;
+        foreach(qual_lc, bmi_scan->indexqual) {
+            Node *qual_node = (Node *) lfirst(qual_lc);
+            if (IsA(qual_node, OpExpr)) {
+                OpExpr *op_expr = (OpExpr *) qual_node;
+                ListCell *arg_lc;
+                foreach(arg_lc, op_expr->args) {
+                    Node *var_node = (Node *) lfirst(arg_lc);
+                    if (IsA(var_node, Var)) {
+                        Var *var = (Var *) var_node;
+                        Index new_index = var->varnoold + current_rte_length;
+                        // also update varno if it equals to varnoold
+                        if (var->varno == var->varnoold) {
+                            var->varno = new_index;
+                        }
+                        var->varnoold = new_index;
+                    } else if (IsA(var_node, Param)) {
+                        // update Param - paramid
+                        Param *param = (Param *) var_node;
+                        param->paramid += current_param_num;
+                    }
+                }
+            }
+        }
+        ListCell *qualorig_lc;
+        foreach(qualorig_lc, bmi_scan->indexqualorig) {
+            Node *qualorig_node = (Node *) lfirst(qualorig_lc);
+            if (IsA(qualorig_node, OpExpr)) {
+                OpExpr *op_expr = (OpExpr *) qualorig_node;
+                ListCell *arg_lc;
+                foreach(arg_lc, op_expr->args) {
+                    Node *var_node = (Node *) lfirst(arg_lc);
+                    if (IsA(var_node, Var)) {
+                        Var *var = (Var *) var_node;
+                        Index new_index = var->varnoold + current_rte_length;
+                        // also update varno if it equals to varnoold
+                        if (var->varno == var->varnoold) {
+                            var->varno = new_index;
+                        }
+                        var->varnoold = new_index;
+                    } else if (IsA(var_node, Param)) {
+                        // update Param - paramid
+                        Param *param = (Param *) var_node;
+                        param->paramid += current_param_num;
+                    }
+                }
+            }
+        }
+    }
+
+    // update BitmapHeapScan
+//    elog(LOG, "update BitmapHeapScan");
+    if (IsA((*planTree), BitmapHeapScan)) {
+        BitmapHeapScan *bmh_scan = (BitmapHeapScan *)(*planTree);
+        // update Scan
+        Scan *scan_node = &bmh_scan->scan;
+        scan_node->scanrelid += current_rte_length;
+        // update qual
+        ListCell *qualorig_lc;
+        foreach(qualorig_lc, bmh_scan->bitmapqualorig) {
+            Node *qualorig_node = (Node *) lfirst(qualorig_lc);
+            if (IsA(qualorig_node, OpExpr)) {
+                OpExpr *op_expr = (OpExpr *) qualorig_node;
+                ListCell *arg_lc;
+                foreach(arg_lc, op_expr->args) {
+                    Node *var_node = (Node *) lfirst(arg_lc);
+                    if (IsA(var_node, Var)) {
+                        Var *var = (Var *) var_node;
+                        Index new_index = var->varnoold + current_rte_length;
+                        // also update varno if it equals to varnoold
+                        if (var->varno == var->varnoold) {
+                            var->varno = new_index;
+                        }
+                        var->varnoold = new_index;
+                    } else if (IsA(var_node, Param)) {
+                        // update Param - paramid
+                        Param *param = (Param *) var_node;
+                        param->paramid += current_param_num;
+                    }
+                }
+            }
+        }
+    }
+
+    // update IndexScan
+//    elog(LOG, "update IndexScan");
+    if (IsA((*planTree), IndexScan)) {
+        IndexScan *index_scan = (IndexScan *)(*planTree);
+        // update Scan
+        Scan *scan_node = &index_scan->scan;
+        scan_node->scanrelid += current_rte_length;
+        // update qual
+        ListCell *qual_lc;
+        foreach(qual_lc, index_scan->indexqual) {
+            Node *qual_node = (Node *) lfirst(qual_lc);
+            if (IsA(qual_node, OpExpr)) {
+                OpExpr *op_expr = (OpExpr *) qual_node;
+                ListCell *arg_lc;
+                foreach(arg_lc, op_expr->args) {
+                    Node *var_node = (Node *) lfirst(arg_lc);
+                    if (IsA(var_node, Var)) {
+                        Var *var = (Var *) var_node;
+                        Index new_index = var->varnoold + current_rte_length;
+                        // also update varno if it equals to varnoold
+                        if (var->varno == var->varnoold) {
+                            var->varno = new_index;
+                        }
+                        var->varnoold = new_index;
+                    } else if (IsA(var_node, Param)) {
+                        // update Param - paramid
+                        Param *param = (Param *) var_node;
+                        param->paramid += current_param_num;
+                    }
+                }
+            }
+        }
+        ListCell *qualorig_lc;
+        foreach(qualorig_lc, index_scan->indexqualorig) {
+            Node *qualorig_node = (Node *) lfirst(qualorig_lc);
+            if (IsA(qualorig_node, OpExpr)) {
+                OpExpr *op_expr = (OpExpr *) qualorig_node;
+                ListCell *arg_lc;
+                foreach(arg_lc, op_expr->args) {
+                    Node *var_node = (Node *) lfirst(arg_lc);
+                    if (IsA(var_node, Var)) {
+                        Var *var = (Var *) var_node;
+                        Index new_index = var->varnoold + current_rte_length;
+                        // also update varno if it equals to varnoold
+                        if (var->varno == var->varnoold) {
+                            var->varno = new_index;
+                        }
+                        var->varnoold = new_index;
+                    } else if (IsA(var_node, Param)) {
+                        // update Param - paramid
+                        Param *param = (Param *) var_node;
+                        param->paramid += current_param_num;
+                    }
+                }
+            }
+        }
+    }
+
+    // update NestLoop
+//    elog(LOG, "update NestLoop");
+    if (IsA((*planTree), NestLoop)) {
+        NestLoop *nest_loop = (NestLoop *)(*planTree);
+        ListCell *nest_param_lc;
+        foreach(nest_param_lc, nest_loop->nestParams) {
+            Node *nest_param_node = (Node *) lfirst(nest_param_lc);
+            if (IsA(nest_param_node, NestLoopParam)) {
+                NestLoopParam *nest_loop_param = (NestLoopParam *) nest_param_node;
+                // update paramno
+                nest_loop_param->paramno += current_param_num;
+                if (IsA(nest_loop_param->paramval, Var)) {
+                    Var *var = (Var *) nest_loop_param->paramval;
+                    Index new_index = var->varnoold + current_rte_length;
+                    // also update varno if it equals to varnoold
+                    if (var->varno == var->varnoold) {
+                        var->varno = new_index;
+                    }
+                    var->varnoold = new_index;
+                }
+            }
+        }
+    }
+
+    // update Hash
+//    elog(LOG, "update Hash");
+    if (IsA((*planTree), Hash)) {
+        Hash *hash = (Hash *)(*planTree);
+        ListCell *hash_lc;
+        foreach(hash_lc, hash->hashkeys) {
+            Node *hashkey_node = (Node *) lfirst(hash_lc);
+            if (IsA(hashkey_node, Var)) {
+                Var *var = (Var *) hashkey_node;
+                Index new_index = var->varnoold + current_rte_length;
+                // also update varno if it equals to varnoold
+                if (var->varno == var->varnoold) {
+                    var->varno = new_index;
+                }
+                var->varnoold = new_index;
+            }
+        }
+        // todo: update skewTable, skewColumn
+//        if (hash->skewTable == removed_relation_oid) {
+//            elog(LOG, "update skewTable, skewColumn");
+//            int real_table_index = index_pairs[hash->skewColumn-1].varnoold;
+//            hash->skewColumn = index_pairs[hash->skewColumn-1].varoattno;
+//            // count from 0
+//            hash->skewTable = list_nth_oid(prev_oids, real_table_index-1);
+//        }
+    }
+
+    // update HashJoin
+//    elog(LOG, "update HashJoin");
+    if (IsA((*planTree), HashJoin)) {
+        HashJoin *hash_join = (HashJoin *)(*planTree);
+        ListCell *hashclauses_lc;
+        foreach(hashclauses_lc, hash_join->hashclauses) {
+            Node *hashclauses_node = (Node *) lfirst(hashclauses_lc);
+            if (IsA(hashclauses_node, OpExpr)) {
+                OpExpr *op_expr = (OpExpr *) hashclauses_node;
+                ListCell *arg_lc;
+                foreach(arg_lc, op_expr->args) {
+                    Node *var_node = (Node *) lfirst(arg_lc);
+                    if (IsA(var_node, Var)) {
+                        Var *var = (Var *) var_node;
+                        Index new_index = var->varnoold + current_rte_length;
+                        // also update varno if it equals to varnoold
+                        if (var->varno == var->varnoold) {
+                            var->varno = new_index;
+                        }
+                        var->varnoold = new_index;
+                    } else if (IsA(var_node, Param)) {
+                        // update Param - paramid
+                        Param *param = (Param *) var_node;
+                        param->paramid += current_param_num;
+                    }
+                }
+            }
+        }
+        ListCell *hashkey_lc;
+        foreach(hashkey_lc, hash_join->hashkeys) {
+            Node *hashkey_node = (Node *) lfirst(hashkey_lc);
+            if (IsA(hashkey_node, Var)) {
+                Var *var = (Var *) hashkey_node;
+                Index new_index = var->varnoold + current_rte_length;
+                // also update varno if it equals to varnoold
+                if (var->varno == var->varnoold) {
+                    var->varno = new_index;
+                }
+                var->varnoold = new_index;
+            }
+        }
+    }
+}
+
 static void Recon(char* query_string, char* commandTag, Node* pstmt, Query* ori_query, char* completionTag)
 {
 	MemoryContext oldcontext = MemoryContextSwitchTo(MessageContext);
@@ -305,7 +766,7 @@ static void Recon(char* query_string, char* commandTag, Node* pstmt, Query* ori_
     sprintf(file_name, "%s%s", dir_path, "/postgres_plan");
     remove(file_name);
 #endif
-//    PlannedStmt* whole_plan;
+    PlannedStmt *mergedStmt = makeNode(PlannedStmt);
 	while (plannedstmt = QSOptimizer(global_query, graph, transfer_array, length))
 	{
 #if DumpSubQueryString
@@ -324,10 +785,68 @@ static void Recon(char* query_string, char* commandTag, Node* pstmt, Query* ori_
         fclose(file);
 //        printf("subquery optimized plan: %s\n", nodeToString(plannedstmt));
 #endif
-//        if (0 == queryId) {
-//            whole_plan = copyObjectImpl(plannedstmt);
-//        }
         queryId++;
+#if MERGE_SUB_PLANS
+//        elog(LOG, "%dth plannedstmt: %s", queryId, nodeToString(plannedstmt));
+        // Merge planTree if applicable (custom logic may be needed)
+        if (mergedStmt->planTree == NULL) {
+            mergedStmt->planTree = copyObjectImpl(plannedstmt->planTree);
+        } else {
+            Oid temp_table_id = locateTempId(plannedstmt);
+            int current_rte_length = plannedstmt->rtable->length;
+            int current_param_num = plannedstmt->paramExecTypes->length;
+            UpdatePrevTreeIndex(&mergedStmt->planTree, current_rte_length, current_param_num);
+            ReplaceTempScanNode(&plannedstmt->planTree, mergedStmt->planTree, temp_table_id);
+            mergedStmt->planTree = copyObjectImpl(plannedstmt->planTree);
+
+            ListCell *rt_lc;
+            Oid rt_index = 1;
+            foreach(rt_lc, plannedstmt->rtable) {
+                RangeTblEntry *rte = (RangeTblEntry *) lfirst(rt_lc);
+                if (rt_index == temp_table_id) {
+                    RangeTblEntry *new_rte = makeNode(RangeTblEntry);
+                    new_rte->alias = copyObjectImpl(rte->alias);
+                    new_rte->alias->aliasname = rte->eref->aliasname;
+                    new_rte->eref = copyObjectImpl(rte->eref);
+                    new_rte->rtekind = RTE_SUBQUERY;
+                    new_rte->security_barrier = false;
+                    new_rte->lateral = false;
+                    new_rte->inh = false;
+                    new_rte->inFromCl = false;
+                    new_rte->requiredPerms = 0;
+                    new_rte->checkAsUser = 0;
+                    rt_lc->data.ptr_value = new_rte;
+                    break;
+                }
+                rt_index++;
+            }
+        }
+        mergedStmt->type = plannedstmt->type;
+        mergedStmt->commandType = plannedstmt->commandType;
+        mergedStmt->queryId = plannedstmt->queryId;
+        mergedStmt->hasReturning = plannedstmt->hasReturning;
+        mergedStmt->hasModifyingCTE = plannedstmt->hasModifyingCTE;
+        mergedStmt->canSetTag = plannedstmt->canSetTag;
+        mergedStmt->transientPlan = plannedstmt->transientPlan;
+        mergedStmt->dependsOnRole = plannedstmt->dependsOnRole;
+        mergedStmt->parallelModeNeeded = plannedstmt->parallelModeNeeded;
+        mergedStmt->jitFlags = plannedstmt->jitFlags;
+
+        mergedStmt->rtable = list_concat(copyObjectImpl(plannedstmt->rtable), mergedStmt->rtable);
+        mergedStmt->resultRelations = list_concat(copyObjectImpl(plannedstmt->resultRelations), mergedStmt->resultRelations);
+        mergedStmt->subplans = list_concat(copyObjectImpl(plannedstmt->subplans), mergedStmt->subplans);
+        mergedStmt->relationOids = list_concat(copyObjectImpl(plannedstmt->relationOids), mergedStmt->relationOids);
+        mergedStmt->invalItems = list_concat(copyObjectImpl(plannedstmt->invalItems), mergedStmt->invalItems);
+        mergedStmt->paramExecTypes = list_concat(copyObjectImpl(plannedstmt->paramExecTypes), mergedStmt->paramExecTypes);
+
+        // Merge Bitmapsets using union
+        mergedStmt->rewindPlanIDs = bms_union(copyObjectImpl(plannedstmt->rewindPlanIDs), mergedStmt->rewindPlanIDs);
+
+//        elog(LOG, "%dth mergedStmt: %s", queryId, nodeToString(mergedStmt));
+        // replace stmt
+        plannedstmt = mergedStmt;
+#endif
+
 		char* relname = NULL;
 		//Should we output the result or save it as a temporary table
 		if (mydest == DestIntoRel)
@@ -335,10 +854,6 @@ static void Recon(char* query_string, char* commandTag, Node* pstmt, Query* ori_
 			relname = palloc(7 * sizeof(char));
 			sprintf(relname, "temp%d", queryId);
 		}
-
-        // todo: merge sub plan back to the whole plan
-        // todo: replace the "temp%" table with the previous sub plan
-        // todo: replace the `rtable`
 
 		//Execute the subquery and do some change for next subquery creation
 		FKlist = QSExecutor(query_string, commandTag, pstmt, plannedstmt, mydest, relname, completionTag, global_query, transfer_array, FKlist, oldcontext);
