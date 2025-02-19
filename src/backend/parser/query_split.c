@@ -25,7 +25,9 @@
 #define MANUAL_ANALYZE      false
 #define DEBUG_TOTAL_SIZE    false
 #define MERGE_SUB_PLANS     true
-#define DEBUG_MERGE_SUB_PLANS true
+#define DEBUG_MERGE_SUB_PLANS false
+
+#define SUBQUERIES_NUM      5
 
 double total_size = 0.0;
 //long long optimize_time = 0;
@@ -245,7 +247,7 @@ static void rRj(Query* querytree)
 	return;
 }
 
-Oid locateTempId(PlannedStmt *currentPlannedStmt)
+void locateTempId(PlannedStmt *currentPlannedStmt, Oid *current_temp_table_id)
 {
     // Check for temp table references in the RTEs of the currentPlannedStmt
     List *current_rtable = currentPlannedStmt->rtable;
@@ -256,23 +258,17 @@ Oid locateTempId(PlannedStmt *currentPlannedStmt)
 
     Oid temp_table_id = 1;
     ListCell *lc;
-    // fixme: have bugs when more than one `temp` table
+    int index = 0;
     foreach(lc, current_rtable) {
         RangeTblEntry *rte = (RangeTblEntry *)lfirst(lc);
         if (rte->eref && rte->eref->aliasname && 0 == strncmp(rte->eref->aliasname, "temp", 4)) {
 #if DEBUG_MERGE_SUB_PLANS
-            elog(LOG, "found the temp table in rte! index = %d", temp_table_id);
+            elog(LOG, "found the temp table in rte! temp_table_id = %d", temp_table_id);
 #endif
-            break;
-        } else {
-            temp_table_id++;
+            current_temp_table_id[index] = temp_table_id;
+            index++;
         }
-    }
-
-    if (current_rtable->length+1 == temp_table_id) {
-        elog(ERROR, "couldn't find the temp rte table!");
-    } else {
-        return temp_table_id;
+        temp_table_id++;
     }
 }
 
@@ -289,7 +285,7 @@ void ReplaceTempScanNode(Plan **dest_tree, Plan *source_tree, Oid temp_table_id)
         if (scanNode->scanrelid == temp_table_id)
         {
 #if DEBUG_MERGE_SUB_PLANS
-            elog(LOG, "found the temp RTE id in the dest_tree!");
+            elog(LOG, "found the temp RTE id %d in the dest_tree!", temp_table_id);
 #endif
             // Generate a SubqueryScan node, including a scan wrapper and a subplan node
             SubqueryScan *subquery_scan = makeNode(SubqueryScan);
@@ -324,6 +320,123 @@ void ReplaceTempScanNode(Plan **dest_tree, Plan *source_tree, Oid temp_table_id)
         ReplaceTempScanNode(&(*dest_tree)->righttree, source_tree, temp_table_id);
 }
 
+void ModifyRtable(List **rtable, Oid temp_table_id) {
+    ListCell *rt_lc;
+    Oid rt_index = 1;
+    foreach(rt_lc, (*rtable)) {
+        RangeTblEntry *rte = (RangeTblEntry *) lfirst(rt_lc);
+        if (rt_index == temp_table_id) {
+            RangeTblEntry *new_rte = makeNode(RangeTblEntry);
+            new_rte->alias = copyObjectImpl(rte->alias);
+            new_rte->alias->aliasname = rte->eref->aliasname;
+            new_rte->eref = copyObjectImpl(rte->eref);
+            new_rte->rtekind = RTE_SUBQUERY;
+            new_rte->security_barrier = false;
+            new_rte->lateral = false;
+            new_rte->inh = false;
+            new_rte->inFromCl = false;
+            new_rte->requiredPerms = 0;
+            new_rte->checkAsUser = 0;
+            rt_lc->data.ptr_value = new_rte;
+            return;
+        }
+        rt_index++;
+    }
+}
+
+// update varno, varnoold
+void UpdateVarNodeIndex(Var **var, int current_rte_length) {
+    Index new_index = (*var)->varnoold + current_rte_length;
+    // also update varno if it equals to varnoold
+    if ((*var)->varno == (*var)->varnoold) {
+        (*var)->varno = new_index;
+    }
+    (*var)->varnoold = new_index;
+}
+
+// update paramid
+void UpdateParamNodeIndex(Param **param, int current_param_num) {
+    (*param)->paramid += current_param_num;
+}
+
+void UpdateRelabelTypeIndex(RelabelType **relabel_type, int current_rte_length) {
+    if (IsA((*relabel_type)->arg, Var)) {
+        Var *relabel_type_arg = (Var *)(*relabel_type)->arg;
+        UpdateVarNodeIndex(&relabel_type_arg, current_rte_length);
+    } else if (IsA((*relabel_type)->arg, Const)) {
+        return;
+    } else {
+        elog(ERROR, "Unsupported relabel_type->arg type: %d in qual OpExpr RelabelType!", (*relabel_type)->arg->type);
+    }
+}
+
+void UpdateOpExprIndex(OpExpr **qual_expr, int current_rte_length, int current_param_num) {
+    ListCell *arg_lc;
+    foreach(arg_lc, (*qual_expr)->args) {
+        Node *arg_lc_node = (Node *) lfirst(arg_lc);
+        if (IsA(arg_lc_node, Var)) {
+            Var *var_node = (Var *)arg_lc_node;
+            UpdateVarNodeIndex(&var_node, current_rte_length);
+        } else if (IsA(arg_lc_node, Param)) {
+            Param *param_node = (Param *)arg_lc_node;
+            UpdateParamNodeIndex(&param_node, current_param_num);
+        } else if (IsA(arg_lc_node, RelabelType)) {
+            RelabelType *relabel_type_node = (RelabelType *)arg_lc_node;
+            UpdateRelabelTypeIndex(&relabel_type_node, current_rte_length);
+        } else if (IsA(arg_lc_node, Const)) {
+            continue;
+        } else {
+            elog(ERROR, "Unsupported arg_lc_node type: %d in qual OpExpr!", arg_lc_node->type);
+        }
+    }
+}
+
+void UpdateScalarArrayOpExprIndex(ScalarArrayOpExpr **qual_expr, int current_rte_length, int current_param_num) {
+    ListCell *arg_lc;
+    foreach(arg_lc, (*qual_expr)->args) {
+        Node *arg_lc_node = (Node *) lfirst(arg_lc);
+        if (IsA(arg_lc_node, Var)) {
+            Var *var_node = (Var *)arg_lc_node;
+            UpdateVarNodeIndex(&var_node, current_rte_length);
+        } else if (IsA(arg_lc_node, Param)) {
+            Param *param_node = (Param *)arg_lc_node;
+            UpdateParamNodeIndex(&param_node, current_param_num);
+        } else if (IsA(arg_lc_node, RelabelType)) {
+            RelabelType *relabel_type_node = (RelabelType *)arg_lc_node;
+            UpdateRelabelTypeIndex(&relabel_type_node, current_rte_length);
+        } else if (IsA(arg_lc_node, Const)) {
+            continue;
+        } else {
+            elog(ERROR, "Unsupported arg_lc_node type: %d in qual ScalarArrayOpExpr!", arg_lc_node->type);
+        }
+    }
+}
+
+void UpdateBoolExprIndex(BoolExpr **bool_expr, int current_rte_length, int current_param_num) {
+    ListCell *qual_lc;
+    foreach(qual_lc, (*bool_expr)->args) {
+        Node *qual_lc_node = (Node *) lfirst(qual_lc);
+        if (IsA(qual_lc_node, OpExpr)) {
+            OpExpr *op_expr_node = (OpExpr *)qual_lc_node;
+            UpdateOpExprIndex(&op_expr_node, current_rte_length, current_param_num);
+        } else if (IsA(qual_lc_node, BoolExpr)) {
+            BoolExpr *bool_expr_node = (BoolExpr *)qual_lc_node;
+            UpdateBoolExprIndex(&bool_expr_node, current_rte_length, current_param_num);
+        } else {
+            elog(ERROR, "Unsupported qual_lc_node type: %d in qual BoolExpr!", qual_lc_node->type);
+        }
+    }
+}
+
+void UpdateNullTestIndex(NullTest **null_test, int current_rte_length, int current_param_num) {
+    if (IsA((*null_test)->arg, Var)) {
+        Var *var_node = (Var *)((*null_test)->arg);
+        UpdateVarNodeIndex(&var_node, current_rte_length);
+    } else {
+        elog(ERROR, "Unsupported null_test->arg type: %d in qual NullTest!", (*null_test)->arg->type);
+    }
+}
+
 void UpdatePrevTreeIndex(Plan **planTree, int current_rte_length, int current_param_num)
 {
     if (planTree == NULL || *planTree == NULL) {
@@ -344,40 +457,29 @@ void UpdatePrevTreeIndex(Plan **planTree, int current_rte_length, int current_pa
 
     // update targetlist
 #if DEBUG_MERGE_SUB_PLANS
-    elog(LOG, "update targetlist");
+    elog(LOG, "update targetlist: %s", nodeToString((*planTree)->targetlist));
 #endif
     ListCell *lc;
     foreach(lc, (*planTree)->targetlist) {
         TargetEntry *te = (TargetEntry *) lfirst(lc);
         if (IsA(te->expr, Var)) {
-            Var *var = (Var *) te->expr;
-            Index new_index = var->varnoold + current_rte_length;
-            // also update varno if it equals to varnoold
-            if (var->varno == var->varnoold) {
-                var->varno = new_index;
-            }
-            var->varnoold = new_index;
+            Var *var_node = (Var *)(te->expr);
+            UpdateVarNodeIndex(&var_node, current_rte_length);
         } else if (IsA(te->expr, Aggref)) {
             Aggref *aggref = (Aggref *)te->expr;
             ListCell *arg_lc;
             foreach(arg_lc, aggref->args) {
-                TargetEntry *te = (TargetEntry *) lfirst(arg_lc);
-                if (IsA(te->expr, Var)) {
-                    Var *var = (Var *) te->expr;
-                    Index new_index = var->varnoold + current_rte_length;
-                    // also update varno if it equals to varnoold
-                    if (var->varno == var->varnoold) {
-                        var->varno = new_index;
-                    }
-                    var->varnoold = new_index;
-                } else if (IsA(te->expr, Param)) {
-                    // update Param - paramid
-                    Param *param = (Param *) te->expr;
-                    param->paramid += current_param_num;
-                } else if (IsA(te->expr, Const)) {
+                TargetEntry *agg_te = (TargetEntry *) lfirst(arg_lc);
+                if (IsA(agg_te->expr, Var)) {
+                    Var *var_node = (Var *)(agg_te->expr);
+                    UpdateVarNodeIndex(&var_node, current_rte_length);
+                } else if (IsA(agg_te->expr, Param)) {
+                    Param *param_node = (Param *)(agg_te->expr);
+                    UpdateParamNodeIndex(&param_node, current_param_num);
+                } else if (IsA(agg_te->expr, Const)) {
                     continue;
                 } else {
-                    elog(ERROR, "Unsupported te->expr type: %d in targetlist Aggref!", te->expr->type);
+                    elog(ERROR, "Unsupported agg_te->expr type: %d in targetlist Aggref!", agg_te->expr->type);
                 }
             }
         } else if (IsA(te->expr, Const)) {
@@ -408,143 +510,17 @@ void UpdatePrevTreeIndex(Plan **planTree, int current_rte_length, int current_pa
         foreach(qual_lc, (*planTree)->qual) {
             Node *qual_node = (Node *) lfirst(qual_lc);
             if (IsA(qual_node, OpExpr)) {
-                OpExpr *qual_expr = (OpExpr *) qual_node;
-                ListCell *arg_lc;
-                foreach(arg_lc, qual_expr->args) {
-                    Node *var_node = (Node *) lfirst(arg_lc);
-                    if (IsA(var_node, Var)) {
-                        Var *var = (Var *) var_node;
-                        Index new_index = var->varnoold + current_rte_length;
-                        // also update varno if it equals to varnoold
-                        if (var->varno == var->varnoold) {
-                            var->varno = new_index;
-                        }
-                        var->varnoold = new_index;
-                    } else if (IsA(var_node, Param)) {
-                        // update Param - paramid
-                        Param *param = (Param *) var_node;
-                        param->paramid += current_param_num;
-                    } else if (IsA(var_node, RelabelType)) {
-                        RelabelType *relabel_type = (RelabelType *) var_node;
-                        if (IsA(relabel_type->arg, Var)) {
-                            Var *var = (Var *) relabel_type->arg;
-                            Index new_index = var->varnoold + current_rte_length;
-                            // also update varno if it equals to varnoold
-                            if (var->varno == var->varnoold) {
-                                var->varno = new_index;
-                            }
-                            var->varnoold = new_index;
-                        } else if (IsA(relabel_type->arg, Const)) {
-                            continue;
-                        } else {
-                            elog(ERROR, "Unsupported relabel_type->arg type: %d in qual OpExpr RelabelType!", relabel_type->arg->type);
-                        }
-                    } else if (IsA(var_node, Const)) {
-                        continue;
-                    } else {
-                        elog(ERROR, "Unsupported var_node type: %d in qual OpExpr!", var_node->type);
-                    }
-                }
+                OpExpr *op_expr = (OpExpr *)qual_node;
+                UpdateOpExprIndex(&qual_node, current_rte_length, current_param_num);
             } else if (IsA(qual_node, ScalarArrayOpExpr)) {
-                ScalarArrayOpExpr *qual_expr = (ScalarArrayOpExpr *) qual_node;
-                ListCell *arg_lc;
-                foreach(arg_lc, qual_expr->args) {
-                    Node *var_node = (Node *) lfirst(arg_lc);
-                    if (IsA(var_node, Var)) {
-                        Var *var = (Var *) var_node;
-                        Index new_index = var->varnoold + current_rte_length;
-                        // also update varno if it equals to varnoold
-                        if (var->varno == var->varnoold) {
-                            var->varno = new_index;
-                        }
-                        var->varnoold = new_index;
-                    } else if (IsA(var_node, Param)) {
-                        // update Param - paramid
-                        Param *param = (Param *) var_node;
-                        param->paramid += current_param_num;
-                    } else if (IsA(var_node, RelabelType)) {
-                        RelabelType *relabel_type = (RelabelType *) var_node;
-                        if (IsA(relabel_type->arg, Var)) {
-                            Var *var = (Var *) relabel_type->arg;
-                            Index new_index = var->varnoold + current_rte_length;
-                            // also update varno if it equals to varnoold
-                            if (var->varno == var->varnoold) {
-                                var->varno = new_index;
-                            }
-                            var->varnoold = new_index;
-                        } else if (IsA(relabel_type->arg, Const)) {
-                            continue;
-                        } else {
-                            elog(ERROR, "Unsupported relabel_type->arg type: %d in qual ScalarArrayOpExpr RelabelType!", relabel_type->arg->type);
-                        }
-                    } else if (IsA(var_node, Const)) {
-                        continue;
-                    } else {
-                        elog(ERROR, "Unsupported var_node type: %d in qual ScalarArrayOpExpr!", var_node->type);
-                    }
-                }
+                ScalarArrayOpExpr *scalar_array_op_expr = (ScalarArrayOpExpr *)qual_node;
+                UpdateScalarArrayOpExprIndex(&scalar_array_op_expr, current_rte_length, current_param_num);
             } else if (IsA(qual_node, BoolExpr)) {
-                BoolExpr *bool_expr = (BoolExpr *) qual_node;
-                ListCell *qual_lc;
-                foreach(qual_lc, bool_expr->args) {
-                    Node *expr_node = (Node *) lfirst(qual_lc);
-                    if (IsA(expr_node, OpExpr)) {
-                        OpExpr *op_expr = (OpExpr *) expr_node;
-                        ListCell * arg_lc;
-                        foreach(arg_lc, op_expr->args) {
-                            Node *var_node = (Node *) lfirst(arg_lc);
-                            if (IsA(var_node, Var)) {
-                                Var *var = (Var *) var_node;
-                                Index new_index = var->varnoold + current_rte_length;
-                                // also update varno if it equals to varnoold
-                                if (var->varno == var->varnoold) {
-                                    var->varno = new_index;
-                                }
-                                var->varnoold = new_index;
-                            } else if (IsA(var_node, Param)) {
-                                // update Param - paramid
-                                Param *param = (Param *) var_node;
-                                param->paramid += current_param_num;
-                            } else if (IsA(var_node, RelabelType)) {
-                                RelabelType *relabel_type = (RelabelType *) var_node;
-                                if (IsA(relabel_type->arg, Var)) {
-                                    Var *var = (Var *) relabel_type->arg;
-                                    Index new_index = var->varnoold + current_rte_length;
-                                    // also update varno if it equals to varnoold
-                                    if (var->varno == var->varnoold) {
-                                        var->varno = new_index;
-                                    }
-                                    var->varnoold = new_index;
-                                } else if (IsA(relabel_type->arg, Const)) {
-                                    continue;
-                                } else {
-                                    elog(ERROR, "Unsupported relabel_type->arg type: %d in qual BoolExpr OpExpr RelabelType!", relabel_type->arg->type);
-                                }
-                            } else if (IsA(var_node, Const)) {
-                                continue;
-                            } else {
-                                elog(ERROR, "Unsupported var_node type: %d in qual BoolExpr OpExpr!",
-                                     var_node->type);
-                            }
-                        }
-                    } else {
-                        elog(ERROR, "Unsupported expr_node type: %d in qual BoolExpr!", expr_node->type);
-                    }
-                }
+                BoolExpr *bool_expr = (BoolExpr *)qual_node;
+                UpdateBoolExprIndex(&bool_expr, current_rte_length, current_param_num);
             } else if (IsA(qual_node, NullTest)) {
-                NullTest *null_test = (NullTest *) qual_node;
-                if (IsA(null_test->arg, Var)) {
-                    Var *var = (Var *)(null_test->arg);
-                    Index new_index = var->varnoold + current_rte_length;
-                    // also update varno if it equals to varnoold
-                    if (var->varno == var->varnoold) {
-                        var->varno = new_index;
-                    }
-                    var->varnoold = new_index;
-                } else {
-                    elog(ERROR, "Unsupported null_test->arg type: %d in qual NullTest!",
-                         null_test->arg->type);
-                }
+                NullTest *null_test = (NullTest *)qual_node;
+                UpdateNullTestIndex(&null_test, current_rte_length, current_param_num);
             } else {
                 elog(ERROR, "Unsupported qual_node type: %d in qual!", qual_node->type);
             }
@@ -553,20 +529,18 @@ void UpdatePrevTreeIndex(Plan **planTree, int current_rte_length, int current_pa
 
     // update extParam, allParam
     if (NULL != (*planTree)->extParam) {
-#if DEBUG_MERGE_SUB_PLANS
-        elog(LOG, "update extParam, allParam");
-#endif
         Bitmapset *new_extParam = NULL;
         int ext_param_val = -1;
         while ((ext_param_val = bms_next_member((*planTree)->extParam, ext_param_val)) >= 0) {
 #if DEBUG_MERGE_SUB_PLANS
             elog(LOG, "ext_param_id=%d", ext_param_val);
 #endif
-            new_extParam = bms_add_member(new_extParam, ext_param_val+current_param_num);
+            new_extParam = bms_add_member(new_extParam, ext_param_val + current_param_num);
         }
         bms_free((*planTree)->extParam);
         (*planTree)->extParam = new_extParam;
-
+    }
+    if (NULL != (*planTree)->allParam) {
         Bitmapset *new_allParam = NULL;
         int all_param_val = -1;
         while ((all_param_val = bms_next_member((*planTree)->allParam, all_param_val)) >= 0) {
@@ -582,7 +556,7 @@ void UpdatePrevTreeIndex(Plan **planTree, int current_rte_length, int current_pa
     // update Scan
     if (IsA((*planTree), SeqScan)) {
 #if DEBUG_MERGE_SUB_PLANS
-        elog(LOG, "update Scan");
+        elog(LOG, "update Scan: %s", nodeToString(*planTree));
 #endif
         Scan *scan_node = (Scan *)(*planTree);
         scan_node->scanrelid += current_rte_length;
@@ -602,28 +576,8 @@ void UpdatePrevTreeIndex(Plan **planTree, int current_rte_length, int current_pa
         foreach(qual_lc, bmi_scan->indexqual) {
             Node *qual_node = (Node *) lfirst(qual_lc);
             if (IsA(qual_node, OpExpr)) {
-                OpExpr *op_expr = (OpExpr *) qual_node;
-                ListCell *arg_lc;
-                foreach(arg_lc, op_expr->args) {
-                    Node *var_node = (Node *) lfirst(arg_lc);
-                    if (IsA(var_node, Var)) {
-                        Var *var = (Var *) var_node;
-                        Index new_index = var->varnoold + current_rte_length;
-                        // also update varno if it equals to varnoold
-                        if (var->varno == var->varnoold) {
-                            var->varno = new_index;
-                        }
-                        var->varnoold = new_index;
-                    } else if (IsA(var_node, Param)) {
-                        // update Param - paramid
-                        Param *param = (Param *) var_node;
-                        param->paramid += current_param_num;
-                    } else if (IsA(var_node, Const)) {
-                        continue;
-                    } else {
-                        elog(ERROR, "Unsupported var_node type: %d in BitmapIndexScan indexqual OpExpr!", var_node->type);
-                    }
-                }
+                OpExpr *op_expr = (OpExpr *)qual_node;
+                UpdateOpExprIndex(&op_expr, current_rte_length, current_param_num);
             } else {
                 elog(ERROR, "Unsupported qual_node type: %d in BitmapIndexScan indexqual!", qual_node->type);
             }
@@ -632,28 +586,8 @@ void UpdatePrevTreeIndex(Plan **planTree, int current_rte_length, int current_pa
         foreach(qualorig_lc, bmi_scan->indexqualorig) {
             Node *qualorig_node = (Node *) lfirst(qualorig_lc);
             if (IsA(qualorig_node, OpExpr)) {
-                OpExpr *op_expr = (OpExpr *) qualorig_node;
-                ListCell *arg_lc;
-                foreach(arg_lc, op_expr->args) {
-                    Node *var_node = (Node *) lfirst(arg_lc);
-                    if (IsA(var_node, Var)) {
-                        Var *var = (Var *) var_node;
-                        Index new_index = var->varnoold + current_rte_length;
-                        // also update varno if it equals to varnoold
-                        if (var->varno == var->varnoold) {
-                            var->varno = new_index;
-                        }
-                        var->varnoold = new_index;
-                    } else if (IsA(var_node, Param)) {
-                        // update Param - paramid
-                        Param *param = (Param *) var_node;
-                        param->paramid += current_param_num;
-                    } else if (IsA(var_node, Const)) {
-                        continue;
-                    } else {
-                        elog(ERROR, "Unsupported qual_node type: %d in BitmapIndexScan indexqualorig OpExpr!", var_node->type);
-                    }
-                }
+                OpExpr *op_expr = (OpExpr *)qualorig_node;
+                UpdateOpExprIndex(&op_expr, current_rte_length, current_param_num);
             } else {
                 elog(ERROR, "Unsupported qual_node type: %d in BitmapIndexScan indexqualorig!", qualorig_node->type);
             }
@@ -674,28 +608,8 @@ void UpdatePrevTreeIndex(Plan **planTree, int current_rte_length, int current_pa
         foreach(qualorig_lc, bmh_scan->bitmapqualorig) {
             Node *qualorig_node = (Node *) lfirst(qualorig_lc);
             if (IsA(qualorig_node, OpExpr)) {
-                OpExpr *op_expr = (OpExpr *) qualorig_node;
-                ListCell *arg_lc;
-                foreach(arg_lc, op_expr->args) {
-                    Node *var_node = (Node *) lfirst(arg_lc);
-                    if (IsA(var_node, Var)) {
-                        Var *var = (Var *) var_node;
-                        Index new_index = var->varnoold + current_rte_length;
-                        // also update varno if it equals to varnoold
-                        if (var->varno == var->varnoold) {
-                            var->varno = new_index;
-                        }
-                        var->varnoold = new_index;
-                    } else if (IsA(var_node, Param)) {
-                        // update Param - paramid
-                        Param *param = (Param *) var_node;
-                        param->paramid += current_param_num;
-                    } else if (IsA(var_node, Const)) {
-                        continue;
-                    } else {
-                        elog(ERROR, "Unsupported var_node type: %d in BitmapHeapScan bitmapqualorig OpExpr!", var_node->type);
-                    }
-                }
+                OpExpr *op_expr = (OpExpr *)qualorig_node;
+                UpdateOpExprIndex(&op_expr, current_rte_length, current_param_num);
             } else {
                 elog(ERROR, "Unsupported qualorig_node type: %d in BitmapHeapScan bitmapqualorig!", qualorig_node->type);
             }
@@ -716,28 +630,8 @@ void UpdatePrevTreeIndex(Plan **planTree, int current_rte_length, int current_pa
         foreach(qual_lc, index_scan->indexqual) {
             Node *qual_node = (Node *) lfirst(qual_lc);
             if (IsA(qual_node, OpExpr)) {
-                OpExpr *op_expr = (OpExpr *) qual_node;
-                ListCell *arg_lc;
-                foreach(arg_lc, op_expr->args) {
-                    Node *var_node = (Node *) lfirst(arg_lc);
-                    if (IsA(var_node, Var)) {
-                        Var *var = (Var *) var_node;
-                        Index new_index = var->varnoold + current_rte_length;
-                        // also update varno if it equals to varnoold
-                        if (var->varno == var->varnoold) {
-                            var->varno = new_index;
-                        }
-                        var->varnoold = new_index;
-                    } else if (IsA(var_node, Param)) {
-                        // update Param - paramid
-                        Param *param = (Param *) var_node;
-                        param->paramid += current_param_num;
-                    } else if (IsA(var_node, Const)) {
-                        continue;
-                    } else {
-                        elog(ERROR, "Unsupported var_node type: %d in IndexScan indexqual OpExpr!", var_node->type);
-                    }
-                }
+                OpExpr *op_expr = (OpExpr *)qual_node;
+                UpdateOpExprIndex(&op_expr, current_rte_length, current_param_num);
             } else {
                 elog(ERROR, "Unsupported qual_node type: %d in IndexScan indexqual!", qual_node->type);
             }
@@ -746,28 +640,8 @@ void UpdatePrevTreeIndex(Plan **planTree, int current_rte_length, int current_pa
         foreach(qualorig_lc, index_scan->indexqualorig) {
             Node *qualorig_node = (Node *) lfirst(qualorig_lc);
             if (IsA(qualorig_node, OpExpr)) {
-                OpExpr *op_expr = (OpExpr *) qualorig_node;
-                ListCell *arg_lc;
-                foreach(arg_lc, op_expr->args) {
-                    Node *var_node = (Node *) lfirst(arg_lc);
-                    if (IsA(var_node, Var)) {
-                        Var *var = (Var *) var_node;
-                        Index new_index = var->varnoold + current_rte_length;
-                        // also update varno if it equals to varnoold
-                        if (var->varno == var->varnoold) {
-                            var->varno = new_index;
-                        }
-                        var->varnoold = new_index;
-                    } else if (IsA(var_node, Param)) {
-                        // update Param - paramid
-                        Param *param = (Param *) var_node;
-                        param->paramid += current_param_num;
-                    } else if (IsA(var_node, Const)) {
-                        continue;
-                    } else {
-                        elog(ERROR, "Unsupported var_node type: %d in IndexScan indexqualorig OpExpr!", var_node->type);
-                    }
-                }
+                OpExpr *op_expr = (OpExpr *)qualorig_node;
+                UpdateOpExprIndex(&op_expr, current_rte_length, current_param_num);
             } else {
                 elog(ERROR, "Unsupported qualorig_node type: %d in IndexScan indexqualorig!", qualorig_node->type);
             }
@@ -805,13 +679,8 @@ void UpdatePrevTreeIndex(Plan **planTree, int current_rte_length, int current_pa
                 // update paramno
                 nest_loop_param->paramno += current_param_num;
                 if (IsA(nest_loop_param->paramval, Var)) {
-                    Var *var = (Var *) nest_loop_param->paramval;
-                    Index new_index = var->varnoold + current_rte_length;
-                    // also update varno if it equals to varnoold
-                    if (var->varno == var->varnoold) {
-                        var->varno = new_index;
-                    }
-                    var->varnoold = new_index;
+                    Var *var_node = (Var *)nest_loop_param->paramval;
+                    UpdateVarNodeIndex(&var_node, current_rte_length);
                 } else if (IsA(nest_loop_param->paramval, Const)) {
                     continue;
                 } else {
@@ -833,13 +702,8 @@ void UpdatePrevTreeIndex(Plan **planTree, int current_rte_length, int current_pa
         foreach(hash_lc, hash->hashkeys) {
             Node *hashkey_node = (Node *) lfirst(hash_lc);
             if (IsA(hashkey_node, Var)) {
-                Var *var = (Var *) hashkey_node;
-                Index new_index = var->varnoold + current_rte_length;
-                // also update varno if it equals to varnoold
-                if (var->varno == var->varnoold) {
-                    var->varno = new_index;
-                }
-                var->varnoold = new_index;
+                Var *var_node = (Var *)hashkey_node;
+                UpdateVarNodeIndex(&var_node, current_rte_length);
             } else if (IsA(hashkey_node, Const)) {
                 continue;
             } else {
@@ -866,28 +730,8 @@ void UpdatePrevTreeIndex(Plan **planTree, int current_rte_length, int current_pa
         foreach(hashclauses_lc, hash_join->hashclauses) {
             Node *hashclauses_node = (Node *) lfirst(hashclauses_lc);
             if (IsA(hashclauses_node, OpExpr)) {
-                OpExpr *op_expr = (OpExpr *) hashclauses_node;
-                ListCell *arg_lc;
-                foreach(arg_lc, op_expr->args) {
-                    Node *var_node = (Node *) lfirst(arg_lc);
-                    if (IsA(var_node, Var)) {
-                        Var *var = (Var *) var_node;
-                        Index new_index = var->varnoold + current_rte_length;
-                        // also update varno if it equals to varnoold
-                        if (var->varno == var->varnoold) {
-                            var->varno = new_index;
-                        }
-                        var->varnoold = new_index;
-                    } else if (IsA(var_node, Param)) {
-                        // update Param - paramid
-                        Param *param = (Param *) var_node;
-                        param->paramid += current_param_num;
-                    } else if (IsA(var_node, Const)) {
-                        continue;
-                    } else {
-                        elog(ERROR, "Unsupported var_node type: %d in HashJoin OpExpr!", var_node->type);
-                    }
-                }
+                OpExpr *op_expr = (OpExpr *)hashclauses_node;
+                UpdateOpExprIndex(&op_expr, current_rte_length, current_param_num);
             } else {
                 elog(ERROR, "Unsupported hashclauses_node type: %d in HashJoin!", hashclauses_node->type);
             }
@@ -896,13 +740,8 @@ void UpdatePrevTreeIndex(Plan **planTree, int current_rte_length, int current_pa
         foreach(hashkey_lc, hash_join->hashkeys) {
             Node *hashkey_node = (Node *) lfirst(hashkey_lc);
             if (IsA(hashkey_node, Var)) {
-                Var *var = (Var *) hashkey_node;
-                Index new_index = var->varnoold + current_rte_length;
-                // also update varno if it equals to varnoold
-                if (var->varno == var->varnoold) {
-                    var->varno = new_index;
-                }
-                var->varnoold = new_index;
+                Var *var_node = (Var *)hashkey_node;
+                UpdateVarNodeIndex(&var_node, current_rte_length);
             } else if (IsA(hashkey_node, Const)) {
                 continue;
             } else {
@@ -974,7 +813,11 @@ static void Recon(char* query_string, char* commandTag, Node* pstmt, Query* ori_
     sprintf(file_name, "%s%s", dir_path, "/postgres_plan");
     remove(file_name);
 #endif
-    PlannedStmt *mergedStmt = makeNode(PlannedStmt);
+//    PlannedStmt *merged_stmt = makeNode(PlannedStmt);
+    // an array to store the unmerged subqueries, index start from 1
+    PlannedStmt *temp_stmts[SUBQUERIES_NUM] = {NULL};
+    // an array to store the index of unmerged subqueries
+    Oid temp_table_id[SUBQUERIES_NUM] = {0};
 	while (plannedstmt = QSOptimizer(global_query, graph, transfer_array, length))
 	{
 #if DumpSubQueryString
@@ -999,66 +842,81 @@ static void Recon(char* query_string, char* commandTag, Node* pstmt, Query* ori_
 #if DEBUG_MERGE_SUB_PLANS
         elog(LOG, "%dth plannedstmt: %s", queryId, nodeToString(plannedstmt));
 #endif
-        // Merge planTree if applicable (custom logic may be needed)
-        if (mergedStmt->planTree == NULL) {
-            mergedStmt->planTree = copyObjectImpl(plannedstmt->planTree);
-        } else {
-            Oid temp_table_id = locateTempId(plannedstmt);
-            int current_rte_length = plannedstmt->rtable->length;
-            int current_param_num = plannedstmt->paramExecTypes ? plannedstmt->paramExecTypes->length : 0;
-            UpdatePrevTreeIndex(&mergedStmt->planTree, current_rte_length, current_param_num);
-            ReplaceTempScanNode(&plannedstmt->planTree, mergedStmt->planTree, temp_table_id);
-            mergedStmt->planTree = copyObjectImpl(plannedstmt->planTree);
-
-            ListCell *rt_lc;
-            Oid rt_index = 1;
-            foreach(rt_lc, plannedstmt->rtable) {
-                RangeTblEntry *rte = (RangeTblEntry *) lfirst(rt_lc);
-                if (rt_index == temp_table_id) {
-                    RangeTblEntry *new_rte = makeNode(RangeTblEntry);
-                    new_rte->alias = copyObjectImpl(rte->alias);
-                    new_rte->alias->aliasname = rte->eref->aliasname;
-                    new_rte->eref = copyObjectImpl(rte->eref);
-                    new_rte->rtekind = RTE_SUBQUERY;
-                    new_rte->security_barrier = false;
-                    new_rte->lateral = false;
-                    new_rte->inh = false;
-                    new_rte->inFromCl = false;
-                    new_rte->requiredPerms = 0;
-                    new_rte->checkAsUser = 0;
-                    rt_lc->data.ptr_value = new_rte;
-                    break;
-                }
-                rt_index++;
+        Oid current_temp_table_id[SUBQUERIES_NUM] = {0};
+        locateTempId(plannedstmt, current_temp_table_id);
+        int current_temp_table_num = 0;
+        for (current_temp_table_num = 0; current_temp_table_num < SUBQUERIES_NUM; current_temp_table_num++) {
+            if (0 == current_temp_table_id[current_temp_table_num]) {
+                break;
             }
         }
-        mergedStmt->type = plannedstmt->type;
-        mergedStmt->commandType = plannedstmt->commandType;
-        mergedStmt->queryId = plannedstmt->queryId;
-        mergedStmt->hasReturning = plannedstmt->hasReturning;
-        mergedStmt->hasModifyingCTE = plannedstmt->hasModifyingCTE;
-        mergedStmt->canSetTag = plannedstmt->canSetTag;
-        mergedStmt->transientPlan = plannedstmt->transientPlan;
-        mergedStmt->dependsOnRole = plannedstmt->dependsOnRole;
-        mergedStmt->parallelModeNeeded = plannedstmt->parallelModeNeeded;
-        mergedStmt->jitFlags = plannedstmt->jitFlags;
-
-        mergedStmt->rtable = list_concat(copyObjectImpl(plannedstmt->rtable), mergedStmt->rtable);
-        mergedStmt->resultRelations = list_concat(copyObjectImpl(plannedstmt->resultRelations), mergedStmt->resultRelations);
-        mergedStmt->subplans = list_concat(copyObjectImpl(plannedstmt->subplans), mergedStmt->subplans);
-        mergedStmt->relationOids = list_concat(copyObjectImpl(plannedstmt->relationOids), mergedStmt->relationOids);
-        mergedStmt->invalItems = list_concat(copyObjectImpl(plannedstmt->invalItems), mergedStmt->invalItems);
-        mergedStmt->paramExecTypes = list_concat(copyObjectImpl(plannedstmt->paramExecTypes), mergedStmt->paramExecTypes);
-
-        // Merge Bitmapsets using union
-        mergedStmt->rewindPlanIDs = bms_union(copyObjectImpl(plannedstmt->rewindPlanIDs), mergedStmt->rewindPlanIDs);
+        for (int i = queryId - 1; i < SUBQUERIES_NUM; i++) {
+            if (0 == temp_table_id[i]) {
+                for (int j = 0; j < current_temp_table_num; j++) {
+                    temp_table_id[i] = current_temp_table_id[j];
+                    i++;
+                }
+                break;
+            }
+        }
 
 #if DEBUG_MERGE_SUB_PLANS
-        elog(LOG, "%dth mergedStmt: %s", queryId, nodeToString(mergedStmt));
+        elog(LOG, "temp_table_id[0]=%d", temp_table_id[0]);
+        elog(LOG, "temp_table_id[1]=%d", temp_table_id[1]);
+        elog(LOG, "temp_table_id[2]=%d", temp_table_id[2]);
 #endif
-        elog(INFO, "%dth subplan", queryId);
-        // replace stmt
-        plannedstmt = mergedStmt;
+
+        // Merge planTree if applicable (custom logic may be needed)
+        if (0 == temp_table_id[0]) {
+            // fixme: it can be improved by `map`
+            if (queryId > SUBQUERIES_NUM) {
+                elog(ERROR, "queryId is out of bound of SUBQUERIES_NUM!");
+            }
+            temp_stmts[queryId] = plannedstmt;
+#if DEBUG_MERGE_SUB_PLANS
+            elog(LOG, "stored temp_stmts[%d]: %s", queryId, nodeToString(temp_stmts[queryId]));
+#endif
+        } else {
+            int current_rte_length = plannedstmt->rtable->length;
+            int current_param_num = plannedstmt->paramExecTypes ? plannedstmt->paramExecTypes->length : 0;
+            for (int i = 0; (i < SUBQUERIES_NUM); i++) {
+                if (0 == temp_table_id[i]) {
+                    // skip if it doesn't have `temp` table
+                    continue;
+                }
+                int table_id = temp_table_id[i];
+                int subquery_id = i + 1;
+
+#if DEBUG_MERGE_SUB_PLANS
+                elog(LOG, "table_id=%d", table_id);
+                elog(LOG, "used temp_stmts[%d]: %s", subquery_id, nodeToString(temp_stmts[subquery_id]));
+#endif
+
+                UpdatePrevTreeIndex(&temp_stmts[subquery_id]->planTree, current_rte_length, current_param_num);
+                ReplaceTempScanNode(&plannedstmt->planTree, temp_stmts[subquery_id]->planTree, table_id);
+                ModifyRtable(&plannedstmt->rtable, table_id);
+
+                plannedstmt->rtable = list_concat(copyObjectImpl(plannedstmt->rtable), temp_stmts[subquery_id]->rtable);
+                plannedstmt->resultRelations = list_concat(copyObjectImpl(plannedstmt->resultRelations), temp_stmts[subquery_id]->resultRelations);
+                plannedstmt->subplans = list_concat(copyObjectImpl(plannedstmt->subplans), temp_stmts[subquery_id]->subplans);
+                plannedstmt->relationOids = list_concat(copyObjectImpl(plannedstmt->relationOids), temp_stmts[subquery_id]->relationOids);
+                plannedstmt->invalItems = list_concat(copyObjectImpl(plannedstmt->invalItems), temp_stmts[subquery_id]->invalItems);
+                plannedstmt->paramExecTypes = list_concat(copyObjectImpl(plannedstmt->paramExecTypes), temp_stmts[subquery_id]->paramExecTypes);
+                plannedstmt->rewindPlanIDs = bms_union(copyObjectImpl(plannedstmt->rewindPlanIDs), temp_stmts[subquery_id]->rewindPlanIDs);
+
+                current_rte_length += temp_stmts[subquery_id]->rtable->length;
+                current_param_num += temp_stmts[subquery_id]->paramExecTypes ? temp_stmts[subquery_id]->paramExecTypes->length : 0;
+
+                // reset once it is used
+                temp_table_id[i] = 0;
+            }
+            temp_stmts[queryId] = plannedstmt;
+        }
+
+#if DEBUG_MERGE_SUB_PLANS
+        elog(LOG, "%dth merged_stmt: %s", queryId, nodeToString(plannedstmt));
+#endif
+
 #endif
 
 		char* relname = NULL;
