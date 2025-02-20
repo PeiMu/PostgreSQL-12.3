@@ -872,7 +872,7 @@ static void Recon(char* query_string, char* commandTag, Node* pstmt, Query* ori_
             if (queryId > SUBQUERIES_NUM) {
                 elog(ERROR, "queryId is out of bound of SUBQUERIES_NUM!");
             }
-            temp_stmts[queryId] = plannedstmt;
+            temp_stmts[queryId] = copyObjectImpl(plannedstmt);
 #if DEBUG_MERGE_SUB_PLANS
             elog(LOG, "stored temp_stmts[%d]: %s", queryId, nodeToString(temp_stmts[queryId]));
 #endif
@@ -910,7 +910,7 @@ static void Recon(char* query_string, char* commandTag, Node* pstmt, Query* ori_
                 // reset once it is used
                 temp_table_id[i] = 0;
             }
-            temp_stmts[queryId] = plannedstmt;
+            temp_stmts[queryId] = copyObjectImpl(plannedstmt);
         }
 
 #if DEBUG_MERGE_SUB_PLANS
