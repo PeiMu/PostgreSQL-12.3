@@ -22,9 +22,9 @@
 #define OLDBETTER 2
 
 #define DumpSubQueryString  false
-#define MANUAL_ANALYZE      false
+//#define MANUAL_ANALYZE      false
 #define DEBUG_TOTAL_SIZE    false
-#define MERGE_SUB_PLANS     true
+//#define MERGE_SUB_PLANS     false
 #define DEBUG_MERGE_SUB_PLANS false
 
 #define SUBQUERIES_NUM      5
@@ -837,7 +837,7 @@ static void Recon(char* query_string, char* commandTag, Node* pstmt, Query* ori_
 //        printf("subquery optimized plan: %s\n", nodeToString(plannedstmt));
 #endif
         queryId++;
-#if MERGE_SUB_PLANS
+#ifdef MERGE_SUB_PLANS
 
 #if DEBUG_MERGE_SUB_PLANS
         elog(LOG, "%dth plannedstmt: %s", queryId, nodeToString(plannedstmt));
@@ -1194,7 +1194,7 @@ static List* QSExecutor(char* query_string, const char* commandTag, Node* pstmt,
     toc(&portal_run_begin, "Query Split portal run time is");
 #endif
     if (dest == DestIntoRel) {
-#if MANUAL_ANALYZE
+#ifdef MANUAL_ANALYZE
         VacuumParams params;
         params.index_cleanup = VACOPT_TERNARY_DEFAULT;
         params.truncate = VACOPT_TERNARY_DEFAULT;
@@ -1212,7 +1212,7 @@ static List* QSExecutor(char* query_string, const char* commandTag, Node* pstmt,
 
         FKlist = Prepare4Next(querytree, transfer_array, (DR_intorel*)receiver, plannedstmt, relname, FKlist);
 
-#if MANUAL_ANALYZE
+#ifdef MANUAL_ANALYZE
         #if DEBUG_TOTAL_SIZE
         double s = getMatSize(relid);
         total_size += s;
