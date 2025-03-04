@@ -1412,7 +1412,7 @@ exec_simple_query(const char *query_string)
                 printf("Error opening file\n");
                 exit(-1);
             }
-            fprintf(file, "%d.%09d, ", (int)execute_time.tv_sec, (int)execute_time.tv_nsec);
+            fprintf(file, "%d.%09d\n", (int)execute_time.tv_sec, (int)execute_time.tv_nsec);
             fclose(file);
         }
 #endif

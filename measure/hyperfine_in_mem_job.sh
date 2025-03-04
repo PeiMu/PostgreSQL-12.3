@@ -14,3 +14,4 @@ for sql in "${dir}"/*.sql; do
 done
 
 mv pg_$1.csv job_result/.
+rm temp.csv

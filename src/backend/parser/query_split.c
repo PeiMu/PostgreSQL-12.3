@@ -126,7 +126,6 @@ timespec tic( )
     timespec start_time;
     if (-1 == clock_gettime(CLOCK_REALTIME, &start_time)) {
         elog(ERROR, "Could not get clock time!");
-        D_ASSERT(false);
     }
     return start_time;
 }
@@ -982,6 +981,15 @@ static void Recon(char* query_string, char* commandTag, Node* pstmt, Query* ori_
         fclose(file);
 #endif
 	}
+#ifdef MEASURE_TIME
+    FILE *file = fopen("time_log.csv", "a");
+        if (NULL == file) {
+            printf("Error opening file\n");
+            exit(-1);
+        }
+        fprintf(file, "\n");
+        fclose(file);
+#endif
 	pfree(transfer_array);
 	pfree(graph);
 	transfer_array = NULL;

@@ -17,10 +17,10 @@ rm_pg_log() {
 
 Official_dir="/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset"
 QuerySplit_dir="/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset"
-iteration=15 # 5 warm up + 10 runs
+iteration=1 # 5 warm up + 10 runs
 
 LOG_NAME=time_log.csv
-rm -rf *${LOG_NAME}
+rm -rf $Project_path/data/*${LOG_NAME}
 
 # without updating statistics
 echo "compile Postgres without updating statistics..."
@@ -28,22 +28,22 @@ cd ../build && make CFLAGS="-DMEASURE_TIME" -j32 && sudo make install && rm_pg_l
 
 echo "Official" 2>&1|tee -a compile.log
 for sql in "${Official_dir}"/*.sql; do
-  echo "execute ${sql}" >> ${LOG_NAME};
+  echo "execute ${sql}" >> $Project_path/data/${LOG_NAME};
   for i in $(eval echo {1.."${iteration}"}); do
     psql -U imdb -d imdb -f "${sql}";
   done
 done
-mv ${LOG_NAME} Official_breakdown_${LOG_NAME}
+mv $Project_path/data/${LOG_NAME} Official_breakdown_${LOG_NAME}
 
 ###### without updating statistics
 echo "QuerySplit wo updating statistics" 2>&1|tee -a compile.log
 for sql in "${QuerySplit_dir}"/*.sql; do
-  echo "execute ${sql}" >> ${LOG_NAME};
+  echo "execute ${sql}" >> $Project_path/data/${LOG_NAME};
   for i in $(eval echo {1.."${iteration}"}); do
     psql -U imdb -d imdb -f "${sql}";
   done
 done
-mv ${LOG_NAME} QuerySplit_wo_stats_breakdown_${LOG_NAME}
+mv $Project_path/data/${LOG_NAME} QuerySplit_wo_stats_breakdown_${LOG_NAME}
 
 pg_stop
 
@@ -54,12 +54,12 @@ cd ../build && make CFLAGS="-MERGE_SUB_PLANS" -j32 && sudo make install && rm_pg
 
 echo "QuerySplit wo updating statistics merge back sub-plans" 2>&1|tee -a compile.log
 for sql in "${QuerySplit_dir}"/*.sql; do
-  echo "execute ${sql}" >> ${LOG_NAME};
+  echo "execute ${sql}" >> $Project_path/data/${LOG_NAME};
   for i in $(eval echo {1.."${iteration}"}); do
     psql -U imdb -d imdb -f "${sql}";
   done
 done
-mv ${LOG_NAME} QuerySplit_whole_plan_wo_stats_breakdown_${LOG_NAME}
+mv $Project_path/data/${LOG_NAME} QuerySplit_whole_plan_wo_stats_breakdown_${LOG_NAME}
 
 pg_stop
 ###### without updating statistics
@@ -71,12 +71,12 @@ cd ../build && make CFLAGS="-DMEASURE_TIME -DMANUAL_ANALYZE" -j32 && sudo make i
 
 echo "QuerySplit with updating statistics" 2>&1|tee -a compile.log
 for sql in "${QuerySplit_dir}"/*.sql; do
-  echo "execute ${sql}" >> ${LOG_NAME};
+  echo "execute ${sql}" >> $Project_path/data/${LOG_NAME};
   for i in $(eval echo {1.."${iteration}"}); do
     psql -U imdb -d imdb -f "${sql}";
   done
 done
-mv ${LOG_NAME} QuerySplit_with_stats_breakdown_${LOG_NAME}
+mv $Project_path/data/${LOG_NAME} QuerySplit_with_stats_breakdown_${LOG_NAME}
 
 pg_stop
 
@@ -87,12 +87,12 @@ cd ../build && make CFLAGS="-MERGE_SUB_PLANS -DMANUAL_ANALYZE" -j32 && sudo make
 
 echo "QuerySplit with updating statistics merge back sub-plans" 2>&1|tee -a compile.log
 for sql in "${QuerySplit_dir}"/*.sql; do
-  echo "execute ${sql}" >> ${LOG_NAME};
+  echo "execute ${sql}" >> $Project_path/data/${LOG_NAME};
   for i in $(eval echo {1.."${iteration}"}); do
     psql -U imdb -d imdb -f "${sql}";
   done
 done
-mv ${LOG_NAME} QuerySplit_whole_plan_breakdown_${LOG_NAME}
+mv $Project_path/data/${LOG_NAME} QuerySplit_whole_plan_breakdown_${LOG_NAME}
 
 pg_stop
 
