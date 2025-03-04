@@ -25,6 +25,8 @@ bash ./hyperfine_in_mem_job.sh Official
 echo "QuerySplit" 2>&1|tee -a compile.log
 bash ./hyperfine_in_mem_job.sh QuerySplit
 
+pg_stop
+
 # with updating statistics
 echo "compile Postgres without updating statistics..."
 cd ../build && make CFLAGS="-DMANUAL_ANALYZE" -j32 && sudo make install && rm_pg_log && pg_start && cd ../measure

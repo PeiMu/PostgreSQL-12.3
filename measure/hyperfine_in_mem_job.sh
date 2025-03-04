@@ -5,7 +5,7 @@ log_name=pg_$1.csv
 rm -rf pg_$1.csv
 
 dir="/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_$1_subset"
-iteration=1
+iteration=10
 
 for sql in "${dir}"/*.sql; do
   #echo "hyperfine run ${sql}" 2>&1|tee -a ${log_name}

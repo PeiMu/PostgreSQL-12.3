@@ -26,6 +26,7 @@
 #define DEBUG_TOTAL_SIZE    false
 //#define MERGE_SUB_PLANS     false
 #define DEBUG_MERGE_SUB_PLANS false
+//#define MEASURE_TIME        false
 
 #define SUBQUERIES_NUM      5
 
@@ -134,15 +135,18 @@ void printTimeSpec(timespec t, const char* prefix) {
     elog(INFO, "%s: %d.%09d\n", prefix, (int)t.tv_sec, (int)t.tv_nsec);
 }
 
-void toc( timespec* start_time, const char* prefix )
+timespec toc( timespec* start_time, const char* prefix, bool print )
 {
     timespec current_time;
     if (-1 == clock_gettime(CLOCK_REALTIME, &current_time)) {
         elog(ERROR, "Could not get clock time!");
         D_ASSERT(false);
     }
-    printTimeSpec( diff( *start_time, current_time ), prefix );
+    timespec time_diff = diff( *start_time, current_time );
+    if (print)
+        printTimeSpec( time_diff, prefix );
     *start_time = current_time;
+    return time_diff;
 }
 
 //The interface
@@ -751,6 +755,8 @@ void UpdatePrevTreeIndex(Plan **planTree, int current_rte_length, int current_pa
     }
 }
 
+timespec aqp_timer;
+
 static void Recon(char* query_string, char* commandTag, Node* pstmt, Query* ori_query, char* completionTag)
 {
 	MemoryContext oldcontext = MemoryContextSwitchTo(MessageContext);
@@ -769,6 +775,10 @@ static void Recon(char* query_string, char* commandTag, Node* pstmt, Query* ori_
 		QSExecutor(query_string, commandTag, pstmt, plannedstmt, DestRemote, NULL, completionTag, NULL, NULL, NIL, oldcontext);
 		return;
 	}
+
+#ifdef MEASURE_TIME
+    aqp_timer = tic();
+#endif
 	List* RClist = NIL;
 	List* Joinlist = NIL;
 	List* WhereClause = NIL;
@@ -960,6 +970,17 @@ static void Recon(char* query_string, char* commandTag, Node* pstmt, Query* ori_
 		}
 		length = global_query->rtable->length;
 		graph = List2Graph(is_relationship, Joinlist, FKlist, length);
+#ifdef MEASURE_TIME
+        timespec post_aqp_time = toc(&aqp_timer, "post-AQP time is", false);
+        // save time to a file
+        FILE *file = fopen("time_log.csv", "a");
+        if (NULL == file) {
+            printf("Error opening file\n");
+            exit(-1);
+        }
+        fprintf(file, "%d.%09d, ", (int)post_aqp_time.tv_sec, (int)post_aqp_time.tv_nsec);
+        fclose(file);
+#endif
 	}
 	pfree(transfer_array);
 	pfree(graph);
@@ -1007,7 +1028,29 @@ static PlannedStmt* QSOptimizer(Query* global_query, bool* graph, Index* transfe
 			char* relname = NULL;
 			//If so, create a subquery
 			Query* local_query = createQuery(global_query, mydest, rtable, transfer_array, length);
+#ifdef MEASURE_TIME
+            timespec pre_time = toc(&aqp_timer, "AQP pre-process time is", false);
+            // save time to a file
+            FILE *file = fopen("time_log.csv", "a");
+            if (NULL == file) {
+                printf("Error opening file\n");
+                exit(-1);
+            }
+            fprintf(file, "%d.%09d, ", (int)pre_time.tv_sec, (int)pre_time.tv_nsec);
+            fclose(file);
+#endif
 			PlannedStmt* candidate_result = planner(local_query, CURSOR_OPT_PARALLEL_OK, NULL);
+#ifdef MEASURE_TIME
+            timespec opt_time = toc(&aqp_timer, "PG optimization time is", false);
+            // save time to a file
+            file = fopen("time_log.csv", "a");
+            if (NULL == file) {
+                printf("Error opening file\n");
+                exit(-1);
+            }
+            fprintf(file, "%d.%09d, ", (int)opt_time.tv_sec, (int)opt_time.tv_nsec);
+            fclose(file);
+#endif
 			if (tarfunc(rels, candidate_result, result) == NEWBETTER)
 			{
 				if(result)
@@ -1055,7 +1098,29 @@ static PlannedStmt* QSOptimizer(Query* global_query, bool* graph, Index* transfe
 				char* relname = NULL;
 				//If so, create a subquery
 				Query* local_query = createQuery(global_query, mydest, rtable, transfer_array, length);
+#ifdef MEASURE_TIME
+                timespec pre_time = toc(&aqp_timer, "AQP pre-process time is", false);
+                // save time to a file
+                FILE *file = fopen("time_log.csv", "a");
+                if (NULL == file) {
+                    printf("Error opening file\n");
+                    exit(-1);
+                }
+                fprintf(file, "%d.%09d, ", (int)pre_time.tv_sec, (int)pre_time.tv_nsec);
+                fclose(file);
+#endif
 				PlannedStmt* candidate_result = planner(local_query, CURSOR_OPT_PARALLEL_OK, NULL);
+#ifdef MEASURE_TIME
+                timespec opt_time = toc(&aqp_timer, "PG optimization time is", false);
+                // save time to a file
+                file = fopen("time_log.csv", "a");
+                if (NULL == file) {
+                    printf("Error opening file\n");
+                    exit(-1);
+                }
+                fprintf(file, "%d.%09d, ", (int)opt_time.tv_sec, (int)opt_time.tv_nsec);
+                fclose(file);
+#endif
 				if (tarfunc(rels, candidate_result, result) == NEWBETTER)
 				{
 					if(result)
@@ -1185,13 +1250,18 @@ static List* QSExecutor(char* query_string, const char* commandTag, Node* pstmt,
 		receiver = CreateIntoRelDestReceiver(into);
 	}
 	MemoryContextSwitchTo(oldcontext);
-#if TimeMeasure
-    timespec portal_run_begin = tic();
-#endif
 	//Executor
 	(void)PortalRun(portal, FETCH_ALL, true, true, receiver, receiver, completionTag);
-#if TimeMeasure
-    toc(&portal_run_begin, "Query Split portal run time is");
+#if defined(MEASURE_TIME) || defined(MERGE_SUB_PLANS)
+    timespec exe_time = toc(&aqp_timer, "Execution time is", false);
+    // save time to a file
+    FILE *file = fopen("time_log.csv", "a");
+    if (NULL == file) {
+        printf("Error opening file\n");
+        exit(-1);
+    }
+    fprintf(file, "%d.%09d, ", (int)exe_time.tv_sec, (int)exe_time.tv_nsec);
+    fclose(file);
 #endif
     if (dest == DestIntoRel) {
 #ifdef MANUAL_ANALYZE
@@ -1208,6 +1278,19 @@ static List* QSExecutor(char* query_string, const char* commandTag, Node* pstmt,
         Oid relid = RangeVarGetRelid(((DR_intorel*)receiver)->into->rel, NoLock, true);
         analyze_rel(relid, ((DR_intorel*)receiver)->into->rel, &params, NIL, false, NULL);
         MemoryContext context = MemoryContextSwitchTo(MessageContext);
+
+#ifdef MEASURE_TIME
+        timespec analyze_time = toc(&aqp_timer, "Analyze time is", false);
+        // save time to a file
+        file = fopen("time_log.csv", "a");
+        if (NULL == file) {
+            printf("Error opening file\n");
+            exit(-1);
+        }
+        fprintf(file, "%d.%09d, ", (int)analyze_time.tv_sec, (int)analyze_time.tv_nsec);
+        fclose(file);
+#endif
+
 #endif
 
         FKlist = Prepare4Next(querytree, transfer_array, (DR_intorel*)receiver, plannedstmt, relname, FKlist);

@@ -1296,10 +1296,11 @@ exec_simple_query(const char *query_string)
 			snapshot_set = true;
 		}
 
+        timespec original_pg_timer = tic();
+        bool execute_plan_timer = T_SelectStmt==parsetree->stmt->type;
+
 		if(query_splitting_algorithm == None || query_splitting_algorithm == Optimal)
 		{
-
-//            timespec original_pg_begin = tic();
 		/*
 		 * OK to analyze, rewrite, and plan this query.
 		 *
@@ -1321,6 +1322,19 @@ exec_simple_query(const char *query_string)
 		/* If we got a cancel signal in analysis or planning, quit */
 		CHECK_FOR_INTERRUPTS();
 
+#ifdef MEASURE_TIME
+        if (execute_plan_timer) {
+            timespec opt_time = toc(&original_pg_timer, "Original optimization time is", false);
+            // save time to a file
+            FILE *file = fopen("time_log.csv", "a");
+            if (NULL == file) {
+                printf("Error opening file\n");
+                exit(-1);
+            }
+            fprintf(file, "%d.%09d, ", (int)opt_time.tv_sec, (int)opt_time.tv_nsec);
+            fclose(file);
+        }
+#endif
 		/*
 		 * Create unnamed portal to run the query or queries in. If there
 		 * already is one, silently drop it.
@@ -1379,9 +1393,6 @@ exec_simple_query(const char *query_string)
 		 * Switch back to transaction context for execution.
 		 */
 		MemoryContextSwitchTo(oldcontext);
-#if TimeMeasure
-        timespec portal_run_begin = tic();
-#endif
 		/*
 		 * Run the portal to completion, and then drop it (and the receiver).
 		 */
@@ -1392,20 +1403,41 @@ exec_simple_query(const char *query_string)
 						 receiver,
 						 receiver,
 						 completionTag);
-#if TimeMeasure
-        toc(&portal_run_begin, "Original Postgres portal run time is");
+#ifdef MEASURE_TIME
+        if (execute_plan_timer) {
+            timespec execute_time = toc(&original_pg_timer, "Original Postgres portal run time is", false);
+            // save time to a file
+            FILE *file = fopen("time_log.csv", "a");
+            if (NULL == file) {
+                printf("Error opening file\n");
+                exit(-1);
+            }
+            fprintf(file, "%d.%09d, ", (int)execute_time.tv_sec, (int)execute_time.tv_nsec);
+            fclose(file);
+        }
 #endif
 
 		receiver->rDestroy(receiver);
 
 		PortalDrop(portal, false);
-//            toc(&original_pg_begin, "Original Postgres planner time is");
 
 		}
 		else
 		{
-//            timespec query_split_begin = tic();
 			querytree_list = pg_analyze_and_rewrite(parsetree, query_string, NULL, 0, NULL);
+#ifdef MEASURE_TIME
+            if (execute_plan_timer) {
+                timespec opt_time = toc(&original_pg_timer, "AQP pre-optimization time is", false);
+                // save time to a file
+                FILE *file = fopen("time_log.csv", "a");
+                if (NULL == file) {
+                    printf("Error opening file\n");
+                    exit(-1);
+                }
+                fprintf(file, "%d.%09d, ", (int)opt_time.tv_sec, (int)opt_time.tv_nsec);
+                fclose(file);
+            }
+#endif
 			if (snapshot_set)
 				PopActiveSnapshot();
 			doQSparse(query_string, commandTag, parsetree->stmt, querytree_list->head->data.ptr_value, completionTag);
