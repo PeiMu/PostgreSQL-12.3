@@ -17,7 +17,7 @@ rm_pg_log() {
 
 Official_dir="/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset"
 QuerySplit_dir="/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset"
-iteration=1 # 5 warm up + 10 runs
+iteration=15 # 5 warm up + 10 runs
 
 LOG_NAME=time_log.csv
 rm -rf $Project_path/data/*${LOG_NAME}
