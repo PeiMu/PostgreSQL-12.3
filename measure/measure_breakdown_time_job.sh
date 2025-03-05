@@ -1,6 +1,5 @@
 #!/bin/bash
 
-rm -rf job_result/
 mkdir -p job_result/
 rm -rf compile.log
 
@@ -24,7 +23,7 @@ rm -rf $Project_path/data/*${LOG_NAME}
 
 # without updating statistics
 echo "compile Postgres without updating statistics..."
-cd ../build && make CFLAGS="-DMEASURE_TIME" -j32 && sudo make install && rm_pg_log && pg_start && cd ../measure
+cd ../build && make CFLAGS="-DMEASURE_TIME" -j32 && sudo make install && pg_start && cd ../measure
 
 echo "Official" 2>&1|tee -a compile.log
 for sql in "${Official_dir}"/*.sql; do
@@ -50,7 +49,7 @@ pg_stop
 
 # merge back to the whole plan
 echo "compile QuerySplit wo updating statistics and merge back sub-plans..."
-cd ../build && make CFLAGS="-MERGE_SUB_PLANS" -j32 && sudo make install && rm_pg_log && pg_start && cd ../measure
+cd ../build && make CFLAGS="-MERGE_SUB_PLANS" -j32 && sudo make install && pg_start && cd ../measure
 
 echo "QuerySplit wo updating statistics merge back sub-plans" 2>&1|tee -a compile.log
 for sql in "${QuerySplit_dir}"/*.sql; do
@@ -67,7 +66,7 @@ pg_stop
 
 # with updating statistics
 echo "compile QuerySplit with updating statistics..."
-cd ../build && make CFLAGS="-DMEASURE_TIME -DMANUAL_ANALYZE" -j32 && sudo make install && rm_pg_log && pg_start && cd ../measure
+cd ../build && make CFLAGS="-DMEASURE_TIME -DMANUAL_ANALYZE" -j32 && sudo make install && pg_start && cd ../measure
 
 echo "QuerySplit with updating statistics" 2>&1|tee -a compile.log
 for sql in "${QuerySplit_dir}"/*.sql; do
@@ -83,7 +82,7 @@ pg_stop
 
 # merge back to the whole plan
 echo "compile QuerySplit with updating statistics merge back sub-plans..."
-cd ../build && make CFLAGS="-MERGE_SUB_PLANS -DMANUAL_ANALYZE" -j32 && sudo make install && rm_pg_log && pg_start && cd ../measure
+cd ../build && make CFLAGS="-MERGE_SUB_PLANS -DMANUAL_ANALYZE" -j32 && sudo make install && pg_start && cd ../measure
 
 echo "QuerySplit with updating statistics merge back sub-plans" 2>&1|tee -a compile.log
 for sql in "${QuerySplit_dir}"/*.sql; do

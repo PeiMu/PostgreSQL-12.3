@@ -1,6 +1,5 @@
 #!/bin/bash
 
-rm -rf job_result/
 mkdir -p job_result/
 rm -rf compile.log
 
@@ -17,7 +16,7 @@ rm_pg_log() {
 
 # without updating statistics
 echo "compile Postgres without updating statistics..."
-cd ../build && make -j32 && sudo make install && rm_pg_log && pg_start && cd ../measure
+cd ../build && make -j32 && sudo make install && pg_start && cd ../measure
 
 echo "Official" 2>&1|tee -a compile.log
 bash ./hyperfine_in_mem_job.sh Official
@@ -29,7 +28,7 @@ pg_stop
 
 # with updating statistics
 echo "compile Postgres without updating statistics..."
-cd ../build && make CFLAGS="-DMANUAL_ANALYZE" -j32 && sudo make install && rm_pg_log && pg_start && cd ../measure
+cd ../build && make CFLAGS="-DMANUAL_ANALYZE" -j32 && sudo make install && pg_start && cd ../measure
 
 echo "QuerySplit" 2>&1|tee -a compile.log
 bash ./hyperfine_in_mem_job.sh QuerySplit
