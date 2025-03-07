@@ -1,4 +1,10 @@
-dir="/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset"
+#!/bin/bash
+
+if [ "$#" -ne 1  ]; then
+  echo "Please enter Official/QuerySPlit"
+fi
+
+dir="/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_$1_subset"
 iteration=1
 
 mkdir -p job_result/
