@@ -29,15 +29,15 @@ cd ../build && make clean && make -j32 && sudo make install && pg_start && cd ..
 # rest
 sed -i 's/#define MEASURE_TIME\s\+true/#define MEASURE_TIME false/' ../src/include/parser/query_split.h
 
-#echo "Official" 2>&1|tee -a compile.log
-#echo "Optimize, Execute"  >> ${LOG_NAME};
-#for sql in "${Official_dir}"/*.sql; do
-#  echo "execute ${sql}" >> $Project_path/data/${LOG_NAME};
-#  for i in $(eval echo {1.."${iteration}"}); do
-#    psql -U imdb -d imdb -f "${sql}";
-#  done
-#done
-#mv $Project_path/data/${LOG_NAME} pg_Official_breakdown_${LOG_NAME}
+echo "Official" 2>&1|tee -a compile.log
+echo "Optimize, Execute"  >> ${LOG_NAME};
+for sql in "${Official_dir}"/*.sql; do
+  echo "execute ${sql}" >> $Project_path/data/${LOG_NAME};
+  for i in $(eval echo {1.."${iteration}"}); do
+    psql -U imdb -d imdb -f "${sql}";
+  done
+done
+mv $Project_path/data/${LOG_NAME} pg_Official_breakdown_${LOG_NAME}
 
 ###### without updating statistics
 echo "QuerySplit wo updating statistics" 2>&1|tee -a compile.log
