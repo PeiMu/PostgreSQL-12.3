@@ -23,16 +23,21 @@ rm -rf $Project_path/data/*${LOG_NAME}
 
 # without updating statistics
 echo "compile Postgres without updating statistics..."
-cd ../build && make CFLAGS="-DMEASURE_TIME" -j32 && sudo make install && pg_start && cd ../measure
+# change `MEASURE_TIME` to true
+sed -i 's/#define MEASURE_TIME\s\+false/#define MEASURE_TIME true/' ../src/include/parser/query_split.h
+cd ../build && make clean && make -j32 && sudo make install && pg_start && cd ../measure
+# rest
+sed -i 's/#define MEASURE_TIME\s\+true/#define MEASURE_TIME false/' ../src/include/parser/query_split.h
 
-echo "Official" 2>&1|tee -a compile.log
-for sql in "${Official_dir}"/*.sql; do
-  echo "execute ${sql}" >> $Project_path/data/${LOG_NAME};
-  for i in $(eval echo {1.."${iteration}"}); do
-    psql -U imdb -d imdb -f "${sql}";
-  done
-done
-mv $Project_path/data/${LOG_NAME} Official_breakdown_${LOG_NAME}
+#echo "Official" 2>&1|tee -a compile.log
+#echo "Optimize, Execute"  >> ${LOG_NAME};
+#for sql in "${Official_dir}"/*.sql; do
+#  echo "execute ${sql}" >> $Project_path/data/${LOG_NAME};
+#  for i in $(eval echo {1.."${iteration}"}); do
+#    psql -U imdb -d imdb -f "${sql}";
+#  done
+#done
+#mv $Project_path/data/${LOG_NAME} pg_Official_breakdown_${LOG_NAME}
 
 ###### without updating statistics
 echo "QuerySplit wo updating statistics" 2>&1|tee -a compile.log
@@ -49,7 +54,11 @@ pg_stop
 
 # merge back to the whole plan
 echo "compile QuerySplit wo updating statistics and merge back sub-plans..."
-cd ../build && make CFLAGS="-MERGE_SUB_PLANS" -j32 && sudo make install && pg_start && cd ../measure
+# change `MERGE_SUB_PLANS` to true
+sed -i 's/#define MERGE_SUB_PLANS\s\+false/#define MERGE_SUB_PLANS true/' ../src/include/parser/query_split.h
+cd ../build && make clean && make -j32 && sudo make install && pg_start && cd ../measure
+# rest
+sed -i 's/#define MERGE_SUB_PLANS\s\+true/#define MERGE_SUB_PLANS false/' ../src/include/parser/query_split.h
 
 echo "QuerySplit wo updating statistics merge back sub-plans" 2>&1|tee -a compile.log
 for sql in "${QuerySplit_dir}"/*.sql; do
@@ -66,7 +75,14 @@ pg_stop
 
 # with updating statistics
 echo "compile QuerySplit with updating statistics..."
-cd ../build && make CFLAGS="-DMEASURE_TIME -DMANUAL_ANALYZE" -j32 && sudo make install && pg_start && cd ../measure
+# change `MEASURE_TIME` to true
+sed -i 's/#define MEASURE_TIME\s\+false/#define MEASURE_TIME true/' ../src/include/parser/query_split.h
+# change `MANUAL_ANALYZE` to true
+sed -i 's/#define MANUAL_ANALYZE\s\+false/#define MANUAL_ANALYZE true/' ../src/include/parser/query_split.h
+cd ../build && make clean && make -j32 && sudo make install && pg_start && cd ../measure
+# rest
+sed -i 's/#define MEASURE_TIME\s\+true/#define MEASURE_TIME false/' ../src/include/parser/query_split.h
+sed -i 's/#define MANUAL_ANALYZE\s\+true/#define MANUAL_ANALYZE false/' ../src/include/parser/query_split.h
 
 echo "QuerySplit with updating statistics" 2>&1|tee -a compile.log
 for sql in "${QuerySplit_dir}"/*.sql; do
@@ -82,7 +98,14 @@ pg_stop
 
 # merge back to the whole plan
 echo "compile QuerySplit with updating statistics merge back sub-plans..."
-cd ../build && make CFLAGS="-MERGE_SUB_PLANS -DMANUAL_ANALYZE" -j32 && sudo make install && pg_start && cd ../measure
+# change `MERGE_SUB_PLANS` to true
+sed -i 's/#define MERGE_SUB_PLANS\s\+false/#define MERGE_SUB_PLANS true/' ../src/include/parser/query_split.h
+# change `MANUAL_ANALYZE` to true
+sed -i 's/#define MANUAL_ANALYZE\s\+false/#define MANUAL_ANALYZE true/' ../src/include/parser/query_split.h
+cd ../build && make clean && make -j32 && sudo make install && pg_start && cd ../measure
+# rest
+sed -i 's/#define MERGE_SUB_PLANS\s\+true/#define MERGE_SUB_PLANS false/' ../src/include/parser/query_split.h
+sed -i 's/#define MANUAL_ANALYZE\s\+true/#define MANUAL_ANALYZE false/' ../src/include/parser/query_split.h
 
 echo "QuerySplit with updating statistics merge back sub-plans" 2>&1|tee -a compile.log
 for sql in "${QuerySplit_dir}"/*.sql; do

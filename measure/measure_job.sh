@@ -16,7 +16,7 @@ rm_pg_log() {
 
 # without updating statistics
 echo "compile Postgres without updating statistics..."
-cd ../build && make -j32 && sudo make install && pg_start && cd ../measure
+cd ../build && make clean && make -j32 && sudo make install && pg_start && cd ../measure
 
 echo "Official" 2>&1|tee -a compile.log
 bash ./hyperfine_in_mem_job.sh Official
@@ -28,7 +28,11 @@ pg_stop
 
 # with updating statistics
 echo "compile Postgres with updating statistics..."
-cd ../build && make CFLAGS="-DMANUAL_ANALYZE" -j32 && sudo make install && pg_start && cd ../measure
+# change `MANUAL_ANALYZE` to true
+sed -i 's/#define MANUAL_ANALYZE\s\+false/#define MANUAL_ANALYZE true/' ../src/include/parser/query_split.h
+cd ../build && make clean && make -j32 && sudo make install && pg_start && cd ../measure
+# rest
+sed -i 's/#define MANUAL_ANALYZE\s\+true/#define MANUAL_ANALYZE false/' ../src/include/parser/query_split.h
 
 echo "QuerySplit with updating statistics" 2>&1|tee -a compile.log
 bash ./hyperfine_in_mem_job.sh QuerySplit_with_stats

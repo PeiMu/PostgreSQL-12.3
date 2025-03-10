@@ -82,7 +82,11 @@
 #include "utils/timestamp.h"
 #include "mb/pg_wchar.h"
 
-//#define MEASURE_TIME false
+#include <stdbool.h>
+
+#define MEASURE_TIME false
+#define MERGE_SUB_PLANS false
+#define MANUAL_ANALYZE false
 
 void doQSparse(const char* query_string, const char* commandTag, Node* pstmt, Query* querytree, char* completionTag);
 
