@@ -24,6 +24,7 @@
 #define DumpSubQueryString  false
 #define DEBUG_TOTAL_SIZE    false
 #define DEBUG_MERGE_SUB_PLANS false
+#define DEBUG_QUERY_SPLIT   false
 
 #define SUBQUERIES_NUM      5
 
@@ -805,6 +806,15 @@ static void Recon(char* query_string, char* commandTag, Node* pstmt, Query* ori_
 	List* FKlist = grFK(global_query->rtable);
 	//transfer join list to join graph
 	bool* graph = List2Graph(is_relationship, Joinlist, FKlist, length);
+#if DEBUG_QUERY_SPLIT
+    printf("print join graph:\n");
+    for (int i = 0; i < length; i++) {
+        for (int j = 0; j < length; j++) {
+            printf("%d, ", graph[i*length+j]);
+        }
+        printf("\n");
+    }
+#endif
 	//value start from 1, index start from 0
 	transfer_array = (Index*)palloc(length * sizeof(Index));
 #if DumpSubQueryString
@@ -1207,7 +1217,8 @@ static List* QSExecutor(char* query_string, const char* commandTag, Node* pstmt,
 	portal = CreatePortal("", true, true);
 	portal->visible = false;
 	PortalDefineQuery(portal, NULL, query_string, commandTag, plantree_list, NULL);
-	PortalStart(portal, NULL, 0, SnapshotAny);
+//	PortalStart(portal, NULL, 0, SnapshotAny);
+    PortalStart(portal, NULL, 0, InvalidSnapshot);
 	format = 0;
 	PortalSetResultFormat(portal, 1, &format);
 	if (dest == DestRemote)
