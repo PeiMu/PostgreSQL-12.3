@@ -1,6 +1,6 @@
 #!/bin/bash
 
-mkdir -p job_result/
+mkdir -p dsb_result/
 rm -rf compile.log
 
 Project_path=/home/pei/Project/project_bins
@@ -19,13 +19,13 @@ echo "compile Postgres without updating statistics..."
 cd ../build && make clean && make -j32 && sudo make install && pg_start && cd ../measure
 
 # run ANALYZE
-psql -U imdb -d imdb -c "ANALYZE;"
+psql -U postgres -d dsb -c "ANALYZE;"
 
 echo "Official" 2>&1|tee -a compile.log
-bash ./hyperfine_in_mem_job.sh Official
+bash ./hyperfine_in_mem_dsb.sh Official
 
 echo "QuerySplit" 2>&1|tee -a compile.log
-bash ./hyperfine_in_mem_job.sh QuerySplit
+bash ./hyperfine_in_mem_dsb.sh QuerySplit
 
 pg_stop
 
@@ -38,8 +38,8 @@ cd ../build && make clean && make -j32 && sudo make install && pg_start && cd ..
 sed -i 's/#define MANUAL_ANALYZE\s\+true/#define MANUAL_ANALYZE false/' ../src/include/parser/query_split.h
 
 echo "QuerySplit with updating statistics" 2>&1|tee -a compile.log
-bash ./hyperfine_in_mem_job.sh QuerySplit_with_stats
+bash ./hyperfine_in_mem_dsb.sh QuerySplit_with_stats
 
-mv compile.log job_result/.
+mv compile.log dsb_result/.
 
 pg_stop
