@@ -1,0 +1,29 @@
+execute /home/pei/Project/benchmarks/dsb-postgres/code/tools/1_instance_out_qs_QuerySplit/1/query019_spj/query019_spj_0.sql
+0.004162750, 0.204842459, 0.000011467, 
+execute /home/pei/Project/benchmarks/dsb-postgres/code/tools/1_instance_out_qs_QuerySplit/1/query040_spj/query040_spj_0.sql
+0.000833504, execute /home/pei/Project/benchmarks/dsb-postgres/code/tools/1_instance_out_qs_QuerySplit/1/query099_spj/query099_spj_0.sql
+0.000950025, 0.077137785, 
+execute /home/pei/Project/benchmarks/dsb-postgres/code/tools/1_instance_out_qs_QuerySplit/1/query102_spj/query102_spj_0.sql
+0.001112198, 0.003305706, 0.495679585, 0.010092615, 0.011493157, 
+execute /home/pei/Project/benchmarks/dsb-postgres/code/tools/1_instance_out_qs_QuerySplit/1/query013_spj/query013_spj_0.sql
+0.001673505, 1.436301046, 
+execute /home/pei/Project/benchmarks/dsb-postgres/code/tools/1_instance_out_qs_QuerySplit/1/query018_spj/query018_spj_0.sql
+0.001026464, 0.655478405, 0.000008483, 
+execute /home/pei/Project/benchmarks/dsb-postgres/code/tools/1_instance_out_qs_QuerySplit/1/query027_spj/query027_spj_0.sql
+0.000679846, 1.242097847, 
+execute /home/pei/Project/benchmarks/dsb-postgres/code/tools/1_instance_out_qs_QuerySplit/1/query072_spj/query072_spj_0.sql
+0.001375454, execute /home/pei/Project/benchmarks/dsb-postgres/code/tools/1_instance_out_qs_QuerySplit/2/query019_spj/query019_spj_0.sql
+0.000996330, 0.170911192, 0.000010824, 
+execute /home/pei/Project/benchmarks/dsb-postgres/code/tools/1_instance_out_qs_QuerySplit/2/query040_spj/query040_spj_0.sql
+0.000889336, execute /home/pei/Project/benchmarks/dsb-postgres/code/tools/1_instance_out_qs_QuerySplit/2/query099_spj/query099_spj_0.sql
+0.000947290, 0.076973078, 
+execute /home/pei/Project/benchmarks/dsb-postgres/code/tools/1_instance_out_qs_QuerySplit/2/query102_spj/query102_spj_0.sql
+0.001196387, 0.003391911, 0.503621763, 0.003593567, 0.011510228, 
+execute /home/pei/Project/benchmarks/dsb-postgres/code/tools/1_instance_out_qs_QuerySplit/2/query013_spj/query013_spj_0.sql
+0.001095968, 1.441986874, 
+execute /home/pei/Project/benchmarks/dsb-postgres/code/tools/1_instance_out_qs_QuerySplit/2/query018_spj/query018_spj_0.sql
+0.001013294, 0.659729369, 0.000008586, 
+execute /home/pei/Project/benchmarks/dsb-postgres/code/tools/1_instance_out_qs_QuerySplit/2/query027_spj/query027_spj_0.sql
+0.000611001, 1.216493036, 
+execute /home/pei/Project/benchmarks/dsb-postgres/code/tools/1_instance_out_qs_QuerySplit/2/query072_spj/query072_spj_0.sql
+0.001387302, 

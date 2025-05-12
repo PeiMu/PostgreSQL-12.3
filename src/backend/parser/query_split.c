@@ -179,6 +179,15 @@ void doQSparse(const char* query_string, const char* commandTag, Node* pstmt, Qu
 			MemoryContext oldcontext = MemoryContextSwitchTo(MessageContext);
 			plannedstmt = planner(querytree, CURSOR_OPT_PARALLEL_OK, NULL);
 			QSExecutor(query_string, commandTag, pstmt, plannedstmt, DestRemote, NULL, completionTag, querytree, NULL, NIL, oldcontext);
+#if MEASURE_TIME || MERGE_SUB_PLANS
+            FILE *file = fopen("time_log.csv", "a");
+        if (NULL == file) {
+            printf("Error opening file\n");
+            exit(-1);
+        }
+        fprintf(file, "\n");
+        fclose(file);
+#endif
 			return;
 		}
 		length++;
@@ -188,6 +197,15 @@ void doQSparse(const char* query_string, const char* commandTag, Node* pstmt, Qu
 		MemoryContext oldcontext = MemoryContextSwitchTo(MessageContext);
 		plannedstmt = planner(querytree, CURSOR_OPT_PARALLEL_OK, NULL);
 		QSExecutor(query_string, commandTag, pstmt, plannedstmt, DestRemote, NULL, completionTag, querytree, NULL, NIL, oldcontext);
+#if MEASURE_TIME || MERGE_SUB_PLANS
+        FILE *file = fopen("time_log.csv", "a");
+        if (NULL == file) {
+            printf("Error opening file\n");
+            exit(-1);
+        }
+        fprintf(file, "\n");
+        fclose(file);
+#endif
 		return;
 	}
 	//split parent query by foreign key
@@ -771,6 +789,15 @@ static void Recon(char* query_string, char* commandTag, Node* pstmt, Query* ori_
 	{
 		plannedstmt = QSOptimizer(global_query, NULL, NULL, length);
 		QSExecutor(query_string, commandTag, pstmt, plannedstmt, DestRemote, NULL, completionTag, NULL, NULL, NIL, oldcontext);
+#if MEASURE_TIME || MERGE_SUB_PLANS
+        FILE *file = fopen("time_log.csv", "a");
+        if (NULL == file) {
+            printf("Error opening file\n");
+            exit(-1);
+        }
+        fprintf(file, "\n");
+        fclose(file);
+#endif
 		return;
 	}
 

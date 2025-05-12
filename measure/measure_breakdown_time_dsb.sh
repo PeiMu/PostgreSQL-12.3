@@ -1,6 +1,6 @@
 #!/bin/bash
 
-mkdir -p job_result/
+mkdir -p dsb_result/
 rm -rf compile.log
 
 Project_path=/home/pei/Project/project_bins
@@ -14,8 +14,10 @@ rm_pg_log() {
   rm $Project_path/logfile
 }
 
-Official_dir="/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset"
-QuerySplit_dir="/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset"
+Official_dir_1="/home/pei/Project/benchmarks/dsb-postgres/code/tools/1_instance_out_qs_Official/1/"
+Official_dir_2="/home/pei/Project/benchmarks/dsb-postgres/code/tools/1_instance_out_qs_Official/2/"
+QuerySplit_dir_1="/home/pei/Project/benchmarks/dsb-postgres/code/tools/1_instance_out_qs_QuerySplit/1/"
+QuerySplit_dir_2="/home/pei/Project/benchmarks/dsb-postgres/code/tools/1_instance_out_qs_QuerySplit/2/"
 iteration=15 # 5 warm up + 10 runs
 
 LOG_NAME=time_log.csv
@@ -31,20 +33,20 @@ sed -i 's/#define MEASURE_TIME\s\+true/#define MEASURE_TIME false/' ../src/inclu
 
 echo "Official" 2>&1|tee -a compile.log
 echo "Optimize, Execute"  >> $Project_path/data/${LOG_NAME};
-for sql in "${Official_dir}"/*.sql; do
+for sql in $(find "${Official_dir_1}" "${Official_dir_2}" -type f -name "*.sql"); do
   echo "execute ${sql}" >> $Project_path/data/${LOG_NAME};
   for i in $(eval echo {1.."${iteration}"}); do
-    psql -U imdb -d imdb -f "${sql}";
+    psql -U postgres -d dsb -P pager=off -f "${sql}";
   done
 done
 mv $Project_path/data/${LOG_NAME} pg_Official_breakdown_${LOG_NAME}
 
 ###### without updating statistics
 echo "QuerySplit wo updating statistics" 2>&1|tee -a compile.log
-for sql in "${QuerySplit_dir}"/*.sql; do
+for sql in $(find "${QuerySplit_dir_1}" "${QuerySplit_dir_2}" -type f -name "*.sql"); do
   echo "execute ${sql}" >> $Project_path/data/${LOG_NAME};
   for i in $(eval echo {1.."${iteration}"}); do
-    psql -U imdb -d imdb -f "${sql}";
+    psql -U postgres -d dsb -P pager=off -f "${sql}";
   done
 done
 mv $Project_path/data/${LOG_NAME} QuerySplit_wo_stats_breakdown_${LOG_NAME}
@@ -61,10 +63,10 @@ cd ../build && make clean && make -j32 && sudo make install && pg_start && cd ..
 sed -i 's/#define MERGE_SUB_PLANS\s\+true/#define MERGE_SUB_PLANS false/' ../src/include/parser/query_split.h
 
 echo "QuerySplit wo updating statistics merge back sub-plans" 2>&1|tee -a compile.log
-for sql in "${QuerySplit_dir}"/*.sql; do
+for sql in $(find "${QuerySplit_dir_1}" "${QuerySplit_dir_2}" -type f -name "*.sql"); do
   echo "execute ${sql}" >> $Project_path/data/${LOG_NAME};
   for i in $(eval echo {1.."${iteration}"}); do
-    psql -U imdb -d imdb -f "${sql}";
+    psql -U postgres -d dsb -P pager=off -f "${sql}";
   done
 done
 mv $Project_path/data/${LOG_NAME} QuerySplit_whole_plan_wo_stats_breakdown_${LOG_NAME}
@@ -85,10 +87,10 @@ sed -i 's/#define MEASURE_TIME\s\+true/#define MEASURE_TIME false/' ../src/inclu
 sed -i 's/#define MANUAL_ANALYZE\s\+true/#define MANUAL_ANALYZE false/' ../src/include/parser/query_split.h
 
 echo "QuerySplit with updating statistics" 2>&1|tee -a compile.log
-for sql in "${QuerySplit_dir}"/*.sql; do
+for sql in $(find "${QuerySplit_dir_1}" "${QuerySplit_dir_2}" -type f -name "*.sql"); do
   echo "execute ${sql}" >> $Project_path/data/${LOG_NAME};
   for i in $(eval echo {1.."${iteration}"}); do
-    psql -U imdb -d imdb -f "${sql}";
+    psql -U postgres -d dsb -P pager=off -f "${sql}";
   done
 done
 mv $Project_path/data/${LOG_NAME} QuerySplit_with_stats_breakdown_${LOG_NAME}
@@ -108,14 +110,14 @@ sed -i 's/#define MERGE_SUB_PLANS\s\+true/#define MERGE_SUB_PLANS false/' ../src
 sed -i 's/#define MANUAL_ANALYZE\s\+true/#define MANUAL_ANALYZE false/' ../src/include/parser/query_split.h
 
 echo "QuerySplit with updating statistics merge back sub-plans" 2>&1|tee -a compile.log
-for sql in "${QuerySplit_dir}"/*.sql; do
+for sql in $(find "${QuerySplit_dir_1}" "${QuerySplit_dir_2}" -type f -name "*.sql"); do
   echo "execute ${sql}" >> $Project_path/data/${LOG_NAME};
   for i in $(eval echo {1.."${iteration}"}); do
-    psql -U imdb -d imdb -f "${sql}";
+    psql -U postgres -d dsb -P pager=off -f "${sql}";
   done
 done
 mv $Project_path/data/${LOG_NAME} QuerySplit_whole_plan_breakdown_${LOG_NAME}
 
 pg_stop
 
-mv *${LOG_NAME} job_result/.
+mv *${LOG_NAME} dsb_result/.

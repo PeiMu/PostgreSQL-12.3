@@ -17,7 +17,7 @@ mkdir -p dsb_result/
 for i in $(eval echo {1.."${iteration}"}); do
   for sql in $(find "$dir_1" "$dir_2" -type f -name "*.sql"); do
     echo "execute ${sql}" 2>&1|tee -a ${log_name};
-    psql -U postgres -d dsb -f "${sql}" 2>&1|tee -a ${log_name};
+    psql -U postgres -d dsb -P pager=off -f "${sql}" 2>&1|tee -a ${log_name};
   done
 done
 
