@@ -106,6 +106,9 @@ static int queryId = 0;
 CommandDest mydest;
 Index* transfer_array = NULL;
 
+timespec aqp_timer;
+bool execute_plan_timer = false;
+
 timespec diff(timespec start, timespec end)
 {
     timespec temp;
@@ -140,7 +143,7 @@ timespec toc( timespec* start_time, const char* prefix, bool print )
         D_ASSERT(false);
     }
     timespec time_diff = diff( *start_time, current_time );
-    if (print)
+    if (true)
         printTimeSpec( time_diff, prefix );
     *start_time = current_time;
     return time_diff;
@@ -171,6 +174,10 @@ void doQSparse(const char* query_string, const char* commandTag, Node* pstmt, Qu
 	}
 	ListCell* lc;
 	int length = 0;
+#if MEASURE_TIME || MERGE_SUB_PLANS
+    execute_plan_timer = true;
+    aqp_timer = tic();
+#endif
 	foreach(lc, querytree->rtable)
 	{
 		RangeTblEntry* rte = (RangeTblEntry*)lfirst(lc);
@@ -178,6 +185,19 @@ void doQSparse(const char* query_string, const char* commandTag, Node* pstmt, Qu
 		{
 			MemoryContext oldcontext = MemoryContextSwitchTo(MessageContext);
 			plannedstmt = planner(querytree, CURSOR_OPT_PARALLEL_OK, NULL);
+#if MEASURE_TIME
+            if (execute_plan_timer) {
+                timespec opt_time = toc(&aqp_timer, "PG optimization time is", false);
+                // save time to a file
+                FILE *file = fopen("time_log.csv", "a");
+                if (NULL == file) {
+                    printf("Error opening file\n");
+                    exit(-1);
+                }
+                fprintf(file, "%d.%09d, ", (int)opt_time.tv_sec, (int)opt_time.tv_nsec);
+                fclose(file);
+            }
+#endif
 			QSExecutor(query_string, commandTag, pstmt, plannedstmt, DestRemote, NULL, completionTag, querytree, NULL, NIL, oldcontext);
 #if MEASURE_TIME || MERGE_SUB_PLANS
             FILE *file = fopen("time_log.csv", "a");
@@ -196,6 +216,19 @@ void doQSparse(const char* query_string, const char* commandTag, Node* pstmt, Qu
 	{
 		MemoryContext oldcontext = MemoryContextSwitchTo(MessageContext);
 		plannedstmt = planner(querytree, CURSOR_OPT_PARALLEL_OK, NULL);
+#if MEASURE_TIME
+        if (execute_plan_timer) {
+            timespec opt_time = toc(&aqp_timer, "PG optimization time is", false);
+            // save time to a file
+            FILE *file = fopen("time_log.csv", "a");
+            if (NULL == file) {
+                printf("Error opening file\n");
+                exit(-1);
+            }
+            fprintf(file, "%d.%09d, ", (int)opt_time.tv_sec, (int)opt_time.tv_nsec);
+            fclose(file);
+        }
+#endif
 		QSExecutor(query_string, commandTag, pstmt, plannedstmt, DestRemote, NULL, completionTag, querytree, NULL, NIL, oldcontext);
 #if MEASURE_TIME || MERGE_SUB_PLANS
         FILE *file = fopen("time_log.csv", "a");
@@ -770,9 +803,6 @@ void UpdatePrevTreeIndex(Plan **planTree, int current_rte_length, int current_pa
     }
 }
 
-timespec aqp_timer;
-bool execute_plan_timer = false;
-
 static void Recon(char* query_string, char* commandTag, Node* pstmt, Query* ori_query, char* completionTag)
 {
 	MemoryContext oldcontext = MemoryContextSwitchTo(MessageContext);
@@ -788,6 +818,19 @@ static void Recon(char* query_string, char* commandTag, Node* pstmt, Query* ori_
 	if (length == 1)
 	{
 		plannedstmt = QSOptimizer(global_query, NULL, NULL, length);
+#if MEASURE_TIME
+        if (execute_plan_timer) {
+            timespec opt_time = toc(&aqp_timer, "PG optimization time is", false);
+            // save time to a file
+            FILE *file = fopen("time_log.csv", "a");
+            if (NULL == file) {
+                printf("Error opening file\n");
+                exit(-1);
+            }
+            fprintf(file, "%d.%09d, ", (int)opt_time.tv_sec, (int)opt_time.tv_nsec);
+            fclose(file);
+        }
+#endif
 		QSExecutor(query_string, commandTag, pstmt, plannedstmt, DestRemote, NULL, completionTag, NULL, NULL, NIL, oldcontext);
 #if MEASURE_TIME || MERGE_SUB_PLANS
         FILE *file = fopen("time_log.csv", "a");
