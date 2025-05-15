@@ -143,7 +143,7 @@ timespec toc( timespec* start_time, const char* prefix, bool print )
         D_ASSERT(false);
     }
     timespec time_diff = diff( *start_time, current_time );
-    if (true)
+    if (print)
         printTimeSpec( time_diff, prefix );
     *start_time = current_time;
     return time_diff;
