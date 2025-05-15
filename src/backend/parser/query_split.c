@@ -1287,8 +1287,8 @@ static List* QSExecutor(char* query_string, const char* commandTag, Node* pstmt,
 	portal = CreatePortal("", true, true);
 	portal->visible = false;
 	PortalDefineQuery(portal, NULL, query_string, commandTag, plantree_list, NULL);
-//	PortalStart(portal, NULL, 0, SnapshotAny);
-    PortalStart(portal, NULL, 0, InvalidSnapshot);
+	PortalStart(portal, NULL, 0, SnapshotAny);
+//    PortalStart(portal, NULL, 0, InvalidSnapshot);
 	format = 0;
 	PortalSetResultFormat(portal, 1, &format);
 	if (dest == DestRemote)

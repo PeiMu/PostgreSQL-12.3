@@ -68,9 +68,7 @@ bash ./measure_dsb.sh && bash ./measure_breakdown_time_dsb.sh
 ```bash
 # check JOB
 bash ./check_result_job.sh
-diff job_result/pg_dsb_Official.txt job_result/pg_dsb_QuerySplit.txt
 
 # check DSB
 bash ./check_result_dsb.sh
-diff dsb_result/pg_dsb_Official.txt dsb_result/pg_dsb_QuerySplit.txt
 ```

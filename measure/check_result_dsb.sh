@@ -11,10 +11,31 @@ rm_pg_log() {
   rm $Project_path/logfile
 }
 
+sudo rm -rf dsb_result/pg_dsb_Official.txt
+sudo rm -rf dsb_result/pg_dsb_QuerySplit.txt
+
 # w/o updating statistics
 cd ../build && make clean && make -j32 && sudo make install && pg_start && cd ../measure
 
 bash ./execute_dsb_queries.sh Official
 bash ./execute_dsb_queries.sh QuerySplit
 
+echo "Comparing the results of the Official Postgres VS QuerySplit"
+diff dsb_result/pg_dsb_Official.txt dsb_result/pg_dsb_QuerySplit.txt 2>&1|tee dsb_diff_Official_QuerySplit.txt
+
+mv dsb_diff_Official_QuerySplit.txt dsb_result/.
+sudo rm -rf dsb_result/pg_dsb_QuerySplit.txt
+pg_stop
+
+sed -i 's/#define MERGE_SUB_PLANS\s\+false/#define MERGE_SUB_PLANS true/' ../src/include/parser/query_split.h
+cd ../build && make clean && make -j32 && sudo make install && pg_start && cd ../measure
+# rest
+sed -i 's/#define MERGE_SUB_PLANS\s\+true/#define MERGE_SUB_PLANS false/' ../src/include/parser/query_split.h
+
+bash ./execute_dsb_queries.sh QuerySplit
+
+echo "Comparing the results of the Official Postgres VS QuerySplit with merge_back"
+diff dsb_result/pg_dsb_Official.txt dsb_result/pg_dsb_QuerySplit.txt 2>&1|tee dsb_diff_Official_QuerySplit_merge.txt
+
+mv dsb_diff_Official_QuerySplit_merge.txt dsb_result/.
 pg_stop
