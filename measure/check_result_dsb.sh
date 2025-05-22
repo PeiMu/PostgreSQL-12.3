@@ -14,6 +14,9 @@ rm_pg_log() {
 sudo rm -rf dsb_result/pg_dsb_Official.txt
 sudo rm -rf dsb_result/pg_dsb_QuerySplit.txt
 
+# use `InvalidSnapshot` in DSB
+sed -i 's/PortalStart(portal, NULL, 0, SnapshotAny);/PortalStart(portal, NULL, 0, InvalidSnapshot);/' ../src/backend/parser/query_split.c
+
 # w/o updating statistics
 cd ../build && make clean && make -j32 && sudo make install && pg_start && cd ../measure
 
@@ -36,6 +39,9 @@ bash ./execute_dsb_queries.sh QuerySplit
 
 echo "Comparing the results of the Official Postgres VS QuerySplit with merge_back"
 diff dsb_result/pg_dsb_Official.txt dsb_result/pg_dsb_QuerySplit.txt 2>&1|tee dsb_diff_Official_QuerySplit_merge.txt
+
+# reset to `SnapshotAny`
+sed -i 's/PortalStart(portal, NULL, 0, InvalidSnapshot);/PortalStart(portal, NULL, 0, SnapshotAny);/' ../src/backend/parser/query_split.c
 
 mv dsb_diff_Official_QuerySplit_merge.txt dsb_result/.
 pg_stop

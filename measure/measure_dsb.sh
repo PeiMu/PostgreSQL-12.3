@@ -14,6 +14,9 @@ rm_pg_log() {
   rm $Project_path/logfile
 }
 
+# use `InvalidSnapshot` in DSB
+sed -i 's/PortalStart(portal, NULL, 0, SnapshotAny);/PortalStart(portal, NULL, 0, InvalidSnapshot);/' ../src/backend/parser/query_split.c
+
 # without updating statistics
 echo "compile Postgres without updating statistics..."
 cd ../build && make clean && make -j32 && sudo make install && pg_start && cd ../measure
@@ -41,5 +44,8 @@ echo "QuerySplit with updating statistics" 2>&1|tee -a compile.log
 bash ./hyperfine_in_mem_dsb.sh QuerySplit_with_stats
 
 mv compile.log dsb_result/.
+
+# reset to `SnapshotAny`
+sed -i 's/PortalStart(portal, NULL, 0, InvalidSnapshot);/PortalStart(portal, NULL, 0, SnapshotAny);/' ../src/backend/parser/query_split.c
 
 pg_stop

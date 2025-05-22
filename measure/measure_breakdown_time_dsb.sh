@@ -23,6 +23,9 @@ iteration=15 # 5 warm up + 10 runs
 LOG_NAME=time_log.csv
 rm -rf $Project_path/data/*${LOG_NAME}
 
+# use `InvalidSnapshot` in DSB
+sed -i 's/PortalStart(portal, NULL, 0, SnapshotAny);/PortalStart(portal, NULL, 0, InvalidSnapshot);/' ../src/backend/parser/query_split.c
+
 # without updating statistics
 echo "compile Postgres without updating statistics..."
 # change `MEASURE_TIME` to true
@@ -117,6 +120,9 @@ for sql in $(find "${QuerySplit_dir_1}" "${QuerySplit_dir_2}" -type f -name "*.s
   done
 done
 mv $Project_path/data/${LOG_NAME} QuerySplit_whole_plan_breakdown_${LOG_NAME}
+
+# reset to `SnapshotAny`
+sed -i 's/PortalStart(portal, NULL, 0, InvalidSnapshot);/PortalStart(portal, NULL, 0, SnapshotAny);/' ../src/backend/parser/query_split.c
 
 pg_stop
 
