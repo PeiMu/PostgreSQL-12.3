@@ -1,6 +1,11 @@
 #!/bin/bash
 
-mkdir -p dsb_result/
+if [ -z "$1" ]; then
+  echo "Please enter scale factor to choose the correct database!"
+  exit 1
+fi
+
+mkdir -p dsb_$1_result/
 rm -rf compile.log
 
 Project_path=/home/pei/Project/project_bins
@@ -22,13 +27,13 @@ echo "compile Postgres without updating statistics..."
 cd ../build && make clean && make -j32 && sudo make install && pg_start && cd ../measure
 
 # run ANALYZE
-psql -U postgres -d dsb -c "ANALYZE;"
+psql -U postgres -d dsb_$1 -c "ANALYZE;"
 
 echo "Official" 2>&1|tee -a compile.log
-bash ./hyperfine_in_mem_dsb.sh Official
+bash ./hyperfine_in_mem_dsb.sh Official $1
 
 echo "QuerySplit" 2>&1|tee -a compile.log
-bash ./hyperfine_in_mem_dsb.sh QuerySplit
+bash ./hyperfine_in_mem_dsb.sh QuerySplit $1
 
 pg_stop
 
@@ -41,9 +46,9 @@ cd ../build && make clean && make -j32 && sudo make install && pg_start && cd ..
 sed -i 's/#define MANUAL_ANALYZE\s\+true/#define MANUAL_ANALYZE false/' ../src/include/parser/query_split.h
 
 echo "QuerySplit with updating statistics" 2>&1|tee -a compile.log
-bash ./hyperfine_in_mem_dsb.sh QuerySplit_with_stats
+bash ./hyperfine_in_mem_dsb.sh QuerySplit_with_stats $1
 
-mv compile.log dsb_result/.
+mv compile.log dsb_$1_result/.
 
 # reset to `SnapshotAny`
 sed -i 's/PortalStart(portal, NULL, 0, InvalidSnapshot);/PortalStart(portal, NULL, 0, SnapshotAny);/' ../src/backend/parser/query_split.c

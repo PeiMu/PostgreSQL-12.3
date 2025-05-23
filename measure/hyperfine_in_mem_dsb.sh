@@ -1,8 +1,8 @@
 #!/bin/bash
 
-log_name=pg_$1.csv
+log_name=pg_$1_$2.csv
 
-rm -rf pg_$1.csv
+rm -rf ${log_name}
 
 dir_name=$1
 if [ ${dir_name} = "QuerySplit_with_stats" ]; then
@@ -14,9 +14,9 @@ iteration=10
 
 for sql in $(find "$dir_1" "$dir_2" -type f -name "*.sql"); do
   #echo "hyperfine run ${sql}" 2>&1|tee -a ${log_name}
-  hyperfine --warmup 5 --runs ${iteration} --export-csv temp.csv "psql -U postgres -d dsb -P pager=off -f ${sql}"
+  hyperfine --warmup 5 --runs ${iteration} --export-csv temp.csv "psql -U postgres -d dsb_$2 -P pager=off -f ${sql}"
   cat temp.csv >> ${log_name}
 done
 
-mv pg_$1.csv dsb_result/.
+mv ${log_name} dsb_$2_result/.
 rm temp.csv

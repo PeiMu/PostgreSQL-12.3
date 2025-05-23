@@ -11,8 +11,13 @@ rm_pg_log() {
   rm $Project_path/logfile
 }
 
-sudo rm -rf dsb_result/pg_dsb_Official.txt
-sudo rm -rf dsb_result/pg_dsb_QuerySplit.txt
+if [ -z "$1" ]; then
+  echo "Please enter scale factor to choose the correct database!"
+  exit 1
+fi
+
+sudo rm -rf dsb_$1_result/pg_dsb_$1_Official.txt
+sudo rm -rf dsb_$1_result/pg_dsb_$1_QuerySplit.txt
 
 # use `InvalidSnapshot` in DSB
 sed -i 's/PortalStart(portal, NULL, 0, SnapshotAny);/PortalStart(portal, NULL, 0, InvalidSnapshot);/' ../src/backend/parser/query_split.c
@@ -20,14 +25,14 @@ sed -i 's/PortalStart(portal, NULL, 0, SnapshotAny);/PortalStart(portal, NULL, 0
 # w/o updating statistics
 cd ../build && make clean && make -j32 && sudo make install && pg_start && cd ../measure
 
-bash ./execute_dsb_queries.sh Official
-bash ./execute_dsb_queries.sh QuerySplit
+bash ./execute_dsb_queries.sh Official $1
+bash ./execute_dsb_queries.sh QuerySplit $1
 
 echo "Comparing the results of the Official Postgres VS QuerySplit"
-diff dsb_result/pg_dsb_Official.txt dsb_result/pg_dsb_QuerySplit.txt 2>&1|tee dsb_diff_Official_QuerySplit.txt
+diff dsb_$1_result/pg_dsb_$1_Official.txt dsb_$1_result/pg_dsb_$1_QuerySplit.txt 2>&1|tee dsb_$1_diff_Official_QuerySplit.txt
 
-mv dsb_diff_Official_QuerySplit.txt dsb_result/.
-sudo rm -rf dsb_result/pg_dsb_QuerySplit.txt
+mv dsb_$1_diff_Official_QuerySplit.txt dsb_$1_result/.
+sudo rm -rf dsb_$1_result/pg_dsb_$1_QuerySplit.txt
 pg_stop
 
 sed -i 's/#define MERGE_SUB_PLANS\s\+false/#define MERGE_SUB_PLANS true/' ../src/include/parser/query_split.h
@@ -35,13 +40,13 @@ cd ../build && make clean && make -j32 && sudo make install && pg_start && cd ..
 # rest
 sed -i 's/#define MERGE_SUB_PLANS\s\+true/#define MERGE_SUB_PLANS false/' ../src/include/parser/query_split.h
 
-bash ./execute_dsb_queries.sh QuerySplit
+bash ./execute_dsb_queries.sh QuerySplit $1
 
 echo "Comparing the results of the Official Postgres VS QuerySplit with merge_back"
-diff dsb_result/pg_dsb_Official.txt dsb_result/pg_dsb_QuerySplit.txt 2>&1|tee dsb_diff_Official_QuerySplit_merge.txt
+diff dsb_$1_result/pg_dsb_$1_Official.txt dsb_$1_result/pg_dsb_$1_QuerySplit.txt 2>&1|tee dsb_$1_diff_Official_QuerySplit_merge.txt
 
 # reset to `SnapshotAny`
 sed -i 's/PortalStart(portal, NULL, 0, InvalidSnapshot);/PortalStart(portal, NULL, 0, SnapshotAny);/' ../src/backend/parser/query_split.c
 
-mv dsb_diff_Official_QuerySplit_merge.txt dsb_result/.
+mv dsb_$1_diff_Official_QuerySplit_merge.txt dsb_$1_result/.
 pg_stop

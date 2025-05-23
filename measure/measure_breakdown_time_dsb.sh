@@ -1,6 +1,11 @@
 #!/bin/bash
 
-mkdir -p dsb_result/
+if [ -z "$1" ]; then
+  echo "Please enter scale factor to choose the correct database!"
+  exit 1
+fi
+
+mkdir -p dsb_$1_result/
 rm -rf compile.log
 
 Project_path=/home/pei/Project/project_bins
@@ -39,7 +44,7 @@ echo "Optimize, Execute"  >> $Project_path/data/${LOG_NAME};
 for sql in $(find "${Official_dir_1}" "${Official_dir_2}" -type f -name "*.sql"); do
   echo "execute ${sql}" >> $Project_path/data/${LOG_NAME};
   for i in $(eval echo {1.."${iteration}"}); do
-    psql -U postgres -d dsb -P pager=off -f "${sql}";
+    psql -U postgres -d dsb_$1 -P pager=off -f "${sql}";
   done
 done
 mv $Project_path/data/${LOG_NAME} pg_Official_breakdown_${LOG_NAME}
@@ -49,7 +54,7 @@ echo "QuerySplit wo updating statistics" 2>&1|tee -a compile.log
 for sql in $(find "${QuerySplit_dir_1}" "${QuerySplit_dir_2}" -type f -name "*.sql"); do
   echo "execute ${sql}" >> $Project_path/data/${LOG_NAME};
   for i in $(eval echo {1.."${iteration}"}); do
-    psql -U postgres -d dsb -P pager=off -f "${sql}";
+    psql -U postgres -d dsb_$1 -P pager=off -f "${sql}";
   done
 done
 mv $Project_path/data/${LOG_NAME} QuerySplit_wo_stats_breakdown_${LOG_NAME}
@@ -69,7 +74,7 @@ echo "QuerySplit wo updating statistics merge back sub-plans" 2>&1|tee -a compil
 for sql in $(find "${QuerySplit_dir_1}" "${QuerySplit_dir_2}" -type f -name "*.sql"); do
   echo "execute ${sql}" >> $Project_path/data/${LOG_NAME};
   for i in $(eval echo {1.."${iteration}"}); do
-    psql -U postgres -d dsb -P pager=off -f "${sql}";
+    psql -U postgres -d dsb_$1 -P pager=off -f "${sql}";
   done
 done
 mv $Project_path/data/${LOG_NAME} QuerySplit_whole_plan_wo_stats_breakdown_${LOG_NAME}
@@ -93,7 +98,7 @@ echo "QuerySplit with updating statistics" 2>&1|tee -a compile.log
 for sql in $(find "${QuerySplit_dir_1}" "${QuerySplit_dir_2}" -type f -name "*.sql"); do
   echo "execute ${sql}" >> $Project_path/data/${LOG_NAME};
   for i in $(eval echo {1.."${iteration}"}); do
-    psql -U postgres -d dsb -P pager=off -f "${sql}";
+    psql -U postgres -d dsb_$1 -P pager=off -f "${sql}";
   done
 done
 mv $Project_path/data/${LOG_NAME} QuerySplit_with_stats_breakdown_${LOG_NAME}
@@ -116,7 +121,7 @@ echo "QuerySplit with updating statistics merge back sub-plans" 2>&1|tee -a comp
 for sql in $(find "${QuerySplit_dir_1}" "${QuerySplit_dir_2}" -type f -name "*.sql"); do
   echo "execute ${sql}" >> $Project_path/data/${LOG_NAME};
   for i in $(eval echo {1.."${iteration}"}); do
-    psql -U postgres -d dsb -P pager=off -f "${sql}";
+    psql -U postgres -d dsb_$1 -P pager=off -f "${sql}";
   done
 done
 mv $Project_path/data/${LOG_NAME} QuerySplit_whole_plan_breakdown_${LOG_NAME}
@@ -126,4 +131,4 @@ sed -i 's/PortalStart(portal, NULL, 0, InvalidSnapshot);/PortalStart(portal, NUL
 
 pg_stop
 
-mv *${LOG_NAME} dsb_result/.
+mv *${LOG_NAME} dsb_$1_result/.
