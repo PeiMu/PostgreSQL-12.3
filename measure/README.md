@@ -60,8 +60,11 @@ sudo rm -rf job_result/
 bash ./measure_job.sh && bash ./measure_breakdown_time_job.sh
 
 # measure DSB
-sudo rm -rf dsb_result/
-bash ./measure_dsb.sh && bash ./measure_breakdown_time_dsb.sh
+sudo rm -rf dsb_10_result/
+bash ./measure_dsb.sh 10 && bash ./measure_breakdown_time_dsb.sh 10
+
+sudo rm -rf dsb_100_result/
+bash ./measure_dsb.sh 100 && bash ./measure_breakdown_time_dsb.sh 100
 ```
 
 ## Test
@@ -70,5 +73,7 @@ bash ./measure_dsb.sh && bash ./measure_breakdown_time_dsb.sh
 bash ./check_result_job.sh
 
 # check DSB
-bash ./check_result_dsb.sh
+bash ./check_result_dsb.sh 10
+
+bash ./check_result_dsb.sh 100
 ```
