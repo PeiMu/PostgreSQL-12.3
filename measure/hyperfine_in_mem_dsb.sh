@@ -1,6 +1,6 @@
 #!/bin/bash
 
-log_name=pg_$1_$2.csv
+log_name=pg_$1.csv
 
 rm -rf ${log_name}
 
