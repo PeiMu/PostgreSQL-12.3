@@ -1,126 +1,126 @@
 command,mean,stddev,median,user,system,min,max
-psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/10c.sql,4.99444774302,0.018948872863526343,4.99459530812,0.0015999200000000001,0.000510232,4.97098790412,5.02940390112
+psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/10c.sql,11.23635264204,0.09258543860102071,11.198793749339998,0.00145,0.00253292,11.146785035839999,11.431538869839999
 command,mean,stddev,median,user,system,min,max
-psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/12a.sql,0.40115104112000005,0.001024159892995282,0.40138918572000004,0.00124296,0.0005174560000000001,0.39910710422,0.40230609522
+psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/12a.sql,0.8120395699799999,0.010714272539561623,0.8126602725800001,0.00260564,0.0017201779999999997,0.79936069708,0.82926075308
 command,mean,stddev,median,user,system,min,max
-psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/12b.sql,0.043404015500000004,0.0003181438847669753,0.0434969897,0.0014293,0.00026755599999999996,0.0426610247,0.0437264257
+psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/12b.sql,0.09787101476000001,0.00042124164013359797,0.09794437176000001,0.0019355619999999996,0.00235565,0.09697467276,0.09840882576
 command,mean,stddev,median,user,system,min,max
-psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/12c.sql,1.0634487092199998,0.0037297433651016067,1.06404868762,0.00139834,0.000338266,1.05547336512,1.0695463891199999
+psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/12c.sql,2.40094627652,0.00856740311755525,2.40322684942,0.0022176919999999994,0.002302832,2.38273783992,2.40993912892
 command,mean,stddev,median,user,system,min,max
-psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/13a.sql,2.56257602168,0.01619081570404944,2.56103733568,0.0014825199999999995,0.00021694000000000002,2.54618932118,2.5978826971799998
+psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/13a.sql,4.0333704322,0.011607020275256641,4.0303701134,0.0020312940000000003,0.0022452,4.0215080969,4.0581431709
 command,mean,stddev,median,user,system,min,max
-psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/13b.sql,0.6835994070200001,0.0024974239114363347,0.68447218732,0.00130412,0.000464086,0.67882300782,0.68634228882
+psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/13b.sql,1.6864111768,0.006446425832501897,1.6877836746,0.002662611999999999,0.00178511,1.6756336381,1.6945366441
 command,mean,stddev,median,user,system,min,max
-psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/13c.sql,0.66185721336,0.0034186245752633837,0.6617329728600001,0.0017502999999999998,0.0006230640000000001,0.6570829433600001,0.66849437936
+psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/13c.sql,1.6384669210799998,0.005836025145655537,1.63812680798,0.002301226,0.002053514,1.62608037098,1.64716498898
 command,mean,stddev,median,user,system,min,max
-psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/13d.sql,3.3252585350800006,0.013592997011170147,3.3248138125800004,0.0020552,0.000968192,3.30801822008,3.35061966108
+psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/13d.sql,4.63897495096,0.03548132817420841,4.626604350159999,0.0021295,0.00221306,4.596968643159999,4.69018635216
 command,mean,stddev,median,user,system,min,max
-psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/14a.sql,0.28247017812,0.0029681200442629335,0.28167217222,0.0016402800000000003,0.000500912,0.27887741922000003,0.28788975022
+psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/14a.sql,0.63386404508,0.007841378582360479,0.63108984818,0.0022434019999999994,0.0021866240000000003,0.62651700418,0.64847629818
 command,mean,stddev,median,user,system,min,max
-psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/14b.sql,0.13759487671999998,0.0015048535824180409,0.13765183402000003,0.0009754520000000002,0.00081155,0.13561216452000002,0.13918719952000003
+psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/14b.sql,0.31308428864,0.005656222553777642,0.31412673274,0.0010391959999999998,0.00344426,0.30501137824,0.32277463223999997
 command,mean,stddev,median,user,system,min,max
-psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/14c.sql,0.6812193000600001,0.006680680869740529,0.6814282700600001,0.00120454,0.00046185000000000003,0.6719987085600001,0.69447789656
+psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/14c.sql,1.51674978696,0.005045604581292956,1.51670051666,0.0016957799999999996,0.002671308,1.5102626001600001,1.52454646816
 command,mean,stddev,median,user,system,min,max
-psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/15a.sql,0.4644051162199999,0.006426570880884864,0.46227742382000003,0.0015600400000000002,0.000151704,0.46083042782000005,0.48216002782
+psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/15a.sql,0.99343439392,0.004840371744531682,0.99322135712,0.0020254179999999997,0.0024211539999999996,0.98714973912,0.9994086101199999
 command,mean,stddev,median,user,system,min,max
-psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/15b.sql,0.46854101232000006,0.00412782161223495,0.46796407642,0.0015821,0.001223352,0.46433588342,0.47569496942
+psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/15b.sql,1.00814572746,0.0052062035957890955,1.00834356776,0.0023182100000000002,0.002091212,0.99827899826,1.01707078726
 command,mean,stddev,median,user,system,min,max
-psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/15c.sql,0.46262224402,0.0035442514840931458,0.46180458062,0.0012529199999999998,0.00050986,0.46020388762000003,0.47230977862
+psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/15c.sql,1.0084806045399999,0.0028726344869547467,1.00862727514,0.0021819799999999996,0.0020634,1.00310984464,1.01366448664
 command,mean,stddev,median,user,system,min,max
-psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/15d.sql,0.51356402636,0.0059882114543384985,0.5122794283600001,0.0015914999999999998,0.000129832,0.5082726123600001,0.5289402953600001
+psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/15d.sql,1.10733257562,0.008006770469121599,1.10369664232,0.0033144,0.00110974,1.09783134582,1.11935362182
 command,mean,stddev,median,user,system,min,max
-psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/16b.sql,10.496974985800001,0.12102062969548245,10.468377421700001,0.0013540479999999996,0.00109876,10.4075976637,10.818616526700001
+psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/16b.sql,21.6418641158,0.029119071977946564,21.6395624851,0.002180292,0.0021453839999999997,21.6079657251,21.6800270131
 command,mean,stddev,median,user,system,min,max
-psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/16c.sql,2.27196622994,0.03345229488708279,2.26428598194,0.0015655799999999998,0.000169736,2.23960227494,2.35888898494
+psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/16c.sql,5.200488293900001,0.10739324222368972,5.153134505700001,0.002119936,0.0021752039999999996,5.134069585200001,5.4796279612
 command,mean,stddev,median,user,system,min,max
-psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/16d.sql,2.23097021102,0.07865135774817843,2.1836802142200002,0.00220248,0.0008381160000000001,2.16647583622,2.36758566522
+psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/16d.sql,4.74784064262,0.011338057950495802,4.74877725422,0.00154133,0.00289339,4.72859207822,4.76273272622
 command,mean,stddev,median,user,system,min,max
-psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/18a.sql,4.01287508222,0.02501556355350822,4.0027212505200005,0.0011554279999999998,0.00025768,3.99286055352,4.07405048452
+psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/18a.sql,1.59039643212,0.0067660287446331974,1.59022084682,0.0021318599999999997,0.00208808,1.58013537282,1.59909110782
 command,mean,stddev,median,user,system,min,max
-psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/18b.sql,0.39171949942000006,0.009172051075348065,0.38750070882000004,0.0016119399999999999,0.0004808399999999999,0.38265234082000005,0.40642210782000004
+psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/18b.sql,0.82220506814,0.00430377419911002,0.82234151874,0.0018182159999999999,0.00249414,0.81209680574,0.82928600774
 command,mean,stddev,median,user,system,min,max
-psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/18c.sql,4.16523334636,0.03438783105971789,4.14964126936,0.0020320599999999996,0.000629984,4.13448504436,4.22929315736
+psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/18c.sql,9.21850394882,0.019560937864500423,9.211339010019998,0.00254532,0.0018302279999999997,9.19988457052,9.26416520252
 command,mean,stddev,median,user,system,min,max
-psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/1a.sql,0.49491013418000007,0.056450464808127244,0.47654085358,0.0014771399999999998,0.0008836919999999999,0.47494190108,0.65540904708
+psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/1a.sql,0.042214734680000005,0.0002483093648876114,0.04215961468,0.00270902,0.0015676280000000002,0.041881023680000004,0.04273858768
 command,mean,stddev,median,user,system,min,max
-psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/1b.sql,0.01068565334,0.0004015917353765722,0.01067277844,0.0011822,0.00048523999999999996,0.01010991444,0.01143547344
+psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/1b.sql,0.029196131800000004,0.00033501921304521205,0.029224515700000002,0.0025935600000000004,0.0016798,0.028710649700000004,0.029716690700000003
 command,mean,stddev,median,user,system,min,max
-psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/1c.sql,0.36937109598000006,0.005474910046670155,0.36781730178000005,0.00125748,0.0008684119999999998,0.36546069078000004,0.38454210078000006
+psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/1c.sql,0.5517925107,0.0025307319921501733,0.5514482876,0.002384336,0.0019694839999999996,0.5482714906,0.5557602886
 command,mean,stddev,median,user,system,min,max
-psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/1d.sql,0.01057235232,0.00019380683094268001,0.010569780720000001,0.0012019999999999997,0.0004895,0.010260965720000001,0.010956157720000002
+psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/1d.sql,0.029443607020000005,0.0002850592550927105,0.02945383872,0.00248944,0.0016598619999999998,0.029083256720000002,0.02989538572
 command,mean,stddev,median,user,system,min,max
-psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/20b.sql,1.3401570537,0.013030903354138782,1.3413152200000003,0.0011501599999999995,0.00035015,1.321698014,1.361249038
+psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/20b.sql,1.2256080790000001,0.006712712224638292,1.2242657029,0.0018051060000000001,0.00264989,1.2139964803999999,1.2364953834
 command,mean,stddev,median,user,system,min,max
-psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/20c.sql,0.8621932355800002,0.045958908768106176,0.8480124827800002,0.0012622799999999997,0.0004965,0.83723974178,0.9907284797800001
+psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/20c.sql,1.9779984716799999,0.025388525304183614,1.97024503508,0.00171648,0.0025428819999999993,1.95789273108,2.04775354108
 command,mean,stddev,median,user,system,min,max
-psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/22d.sql,0.7939168482800001,0.008503890649840478,0.7911886113800001,0.00159026,0.00035637199999999993,0.7868621898800001,0.81645407688
+psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/22d.sql,1.7806042082800002,0.008090222532402963,1.78325392368,0.00247592,0.001976592,1.76627918368,1.7893512466800001
 command,mean,stddev,median,user,system,min,max
-psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/23a.sql,0.4209116118,0.0030179233108284993,0.42027243430000005,0.00142698,0.000648888,0.41752395330000003,0.42819184530000004
+psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/23a.sql,0.9082256227400001,0.006025698272977908,0.90748149144,0.0020407719999999997,0.002520438,0.9001456994400001,0.9161199284400001
 command,mean,stddev,median,user,system,min,max
-psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/23b.sql,0.41638057114000004,0.00620265241859269,0.41440544144,0.0014393399999999997,0.000361132,0.41283694094,0.43368101494
+psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/23b.sql,0.8681564945600002,0.005721760543737928,0.8670178998600001,0.0014452640000000001,0.0029140400000000006,0.8609406073600001,0.8776600913600001
 command,mean,stddev,median,user,system,min,max
-psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/23c.sql,0.42106990595999993,0.0017941585480167974,0.42116979476,0.0010365799999999998,0.0005723880000000001,0.41873628476,0.42410559676000004
+psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/23c.sql,0.9067161130200001,0.0046136647181895096,0.90640353102,0.002427776,0.002128258,0.90043035352,0.91513793452
 command,mean,stddev,median,user,system,min,max
-psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/25a.sql,1.2219931128600001,0.01138435952165467,1.21745674536,0.0017767599999999998,0.000651288,1.20869073836,1.23972865536
+psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/25a.sql,2.75267103486,0.03829986346248612,2.74135745156,0.0017862739999999998,0.0027708919999999996,2.72911095506,2.85926884806
 command,mean,stddev,median,user,system,min,max
-psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/25b.sql,0.48774551468,0.002370708135306372,0.48818186308,0.0013622000000000003,0.00038511599999999996,0.48245534308000004,0.49028724108000005
+psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/25b.sql,1.0587003183600001,0.007992494885131606,1.05756800826,0.00213404,0.0023779639999999998,1.04574372676,1.07068151176
 command,mean,stddev,median,user,system,min,max
-psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/25c.sql,4.22042111088,0.013613450391577518,4.22763702538,0.0012354199999999999,0.00126184,4.19752843238,4.23317122038
+psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/25c.sql,9.256136360940001,0.009727067546976553,9.260107763339999,0.00233224,0.0017553399999999998,9.24161554984,9.266590624840001
 command,mean,stddev,median,user,system,min,max
-psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/26a.sql,0.4937163804200001,0.004842264358322696,0.4933367295200001,0.00140164,0.000676256,0.48721533902,0.50076670702
+psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/26a.sql,1.11373044144,0.011703333338117697,1.11264337684,0.0017251740000000001,0.00267062,1.0997029333400001,1.13637585734
 command,mean,stddev,median,user,system,min,max
-psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/2a.sql,0.4493870793600001,0.020768653904662544,0.44341116556000004,0.0015027600000000001,0.0008468200000000001,0.43781252106,0.5074287630600001
+psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/2a.sql,1.006236065,0.003958596650401962,1.0069757882,0.002058636,0.002376202,0.9976603192000001,1.0117218512
 command,mean,stddev,median,user,system,min,max
-psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/2b.sql,0.42442048736000004,0.007645059798062413,0.42257924816000003,0.00148858,0.000298552,0.41885502066,0.44576437966000004
+psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/2b.sql,0.96205291046,0.007096502332178536,0.9618550389600001,0.001838312,0.0026199479999999995,0.9508463489600001,0.97189165196
 command,mean,stddev,median,user,system,min,max
-psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/2d.sql,0.66985696334,0.08318490921509665,0.6428105612400001,0.00143798,0.0015890679999999997,0.6391264512400001,0.9062435282400001
+psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/2d.sql,1.50533445528,0.015351368929270493,1.5022849314800002,0.0021852900000000003,0.0022917460000000003,1.4794622529800001,1.52664944398
 command,mean,stddev,median,user,system,min,max
-psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/30a.sql,0.55113224054,0.004333571301661963,0.55201447254,0.00172864,0,0.54514071204,0.55851762604
+psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/30a.sql,1.84139325706,0.0056503715414917294,1.84187197416,0.0017084679999999999,0.00276498,1.83271685516,1.8536190421599998
 command,mean,stddev,median,user,system,min,max
-psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/30b.sql,0.245399353,0.002095870873661194,0.245964038,0.00152814,0.00020221199999999995,0.24146694100000002,0.247736426
+psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/30b.sql,0.92071822664,0.008680642240214755,0.91697659824,0.00231696,0.00205793,0.9095689327400001,0.93536889974
 command,mean,stddev,median,user,system,min,max
-psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/30c.sql,1.4928836055,0.12735316034827096,1.4497414969000002,0.0013861820000000001,0.000391264,1.4358467449,1.8527721739000003
+psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/30c.sql,3.62055791422,0.029238386099408122,3.61317583782,0.0016571399999999997,0.0025322400000000003,3.6009238363200002,3.7013095013200004
 command,mean,stddev,median,user,system,min,max
-psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/31a.sql,0.60076871392,0.004392049727877766,0.60000466252,0.00143056,0.00028926799999999997,0.59546056352,0.60982427852
+psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/31a.sql,1.3507894605000001,0.006639859695097197,1.3537243736,0.002528588,0.001992246,1.3341246041,1.3574330901
 command,mean,stddev,median,user,system,min,max
-psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/31b.sql,0.43069363699999996,0.007927345409968626,0.42974197999999997,0.00143666,0.001063048,0.421648787,0.444868155
+psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/31b.sql,0.9537630151200001,0.008223157856044506,0.9537998192200001,0.002557888,0.0018692679999999997,0.9399108407200001,0.96560485872
 command,mean,stddev,median,user,system,min,max
-psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/31c.sql,0.7351220949000001,0.16254738647953276,0.6830683311,0.0010796959999999998,0.0010913799999999999,0.6720493851,1.1965215121000001
+psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/31c.sql,1.5115757352799999,0.005793003734642037,1.51262578118,0.0027546000000000003,0.001744064,1.5031142226799998,1.51885079568
 command,mean,stddev,median,user,system,min,max
-psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/3a.sql,0.15209067506,0.005658309240197919,0.14974785946000002,0.0014948200000000002,0.0006047759999999999,0.14847394696000002,0.16651044996
+psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/3a.sql,0.9689338347200002,0.0028627952135200957,0.9687601844200001,0.0009108319999999997,0.0034443400000000006,0.96356237192,0.9725243149200001
 command,mean,stddev,median,user,system,min,max
-psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/3b.sql,0.09955908570000002,0.0012867567097162625,0.0999356606,0.0013404799999999998,0.00037935799999999994,0.0973490241,0.1011613331
+psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/3b.sql,2.4636275405,0.0057751886363751085,2.4641100716,0.0016902199999999997,0.0025618219999999996,2.4565410296,2.4750147336
 command,mean,stddev,median,user,system,min,max
-psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/3c.sql,2.80959782252,0.160708990163279,2.76456839212,0.0013107,0.00021786799999999997,2.74209857212,3.26620808112
+psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/3c.sql,6.62476181698,0.021006988667403362,6.62114847238,0.00177984,0.0024163399999999995,6.58544876838,6.65891019238
 command,mean,stddev,median,user,system,min,max
-psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/4a.sql,0.09278744382000001,0.0020784973571749844,0.09339916482,0.00121536,0.0004935079999999999,0.08914250932000001,0.09515332832000001
+psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/4a.sql,2.1859592912200005,0.004566473475781143,2.18721177412,0.0021648600000000002,0.0021549479999999994,2.17980695462,2.19334752062
 command,mean,stddev,median,user,system,min,max
-psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/4b.sql,0.09410141968,0.0012763075159983497,0.09432203328000001,0.0013368,0.000350676,0.09202843678000001,0.09576617778000002
+psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/4b.sql,0.1902929452,0.004322704450038173,0.1875627193,0.0022484319999999994,0.002197976,0.18636768480000002,0.19558569580000001
 command,mean,stddev,median,user,system,min,max
-psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/4c.sql,0.22330363026000005,0.003424151662728474,0.22308861556,0.0017400799999999998,0.00033574799999999997,0.21828584006,0.23076983206
+psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/4c.sql,2.59107936844,0.023523137868087234,2.5830638555400003,0.002223724,0.0021989099999999997,2.5747380685400003,2.6537038985400003
 command,mean,stddev,median,user,system,min,max
-psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/6a.sql,0.02360237332,0.00038134195619306786,0.023503101720000003,0.0009816999999999998,0.00063774,0.023150844720000004,0.024287073720000003
+psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/6a.sql,0.06264107583999999,0.00041831031884089083,0.06265533194,0.0022428400000000003,0.002192255999999999,0.06209816994,0.06329917494000001
 command,mean,stddev,median,user,system,min,max
-psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/6b.sql,0.20177645100000005,0.000900189722691643,0.20186066260000002,0.0015765799999999997,0.000219164,0.1995793241,0.2029462511
+psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/6b.sql,0.4605152357600001,0.007193267678729667,0.45855685546,0.00231822,0.001961236,0.44715857596,0.47036711696000005
 command,mean,stddev,median,user,system,min,max
-psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/6c.sql,0.02220242522,0.00752433832180273,0.019683108220000002,0.0014012939999999998,0.000796,0.01903558722,0.04354044722
+psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/6c.sql,0.0476303239,0.000304413243257984,0.0477297996,0.0016537980000000002,0.002638114,0.047202984100000005,0.047974117100000005
 command,mean,stddev,median,user,system,min,max
-psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/6d.sql,0.6142249465,0.0059783271893110645,0.6135433851000001,0.0013497,0.000324876,0.6074553501000001,0.6299708391000001
+psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/6d.sql,1.4386216405199999,0.005165481655858217,1.43990648692,0.00302718,0.0012198919999999998,1.42654053642,1.44477940142
 command,mean,stddev,median,user,system,min,max
-psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/6e.sql,0.032027730840000004,0.013844569743239055,0.026142033340000002,0.0013301200000000002,0.0005914119999999999,0.024752131340000004,0.06865212134000001
+psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/6e.sql,0.05998137711999999,0.000391435179531483,0.060048655920000006,0.0021324319999999996,0.0021930799999999996,0.059435629920000004,0.060653736920000006
 command,mean,stddev,median,user,system,min,max
-psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/6f.sql,4.71070156096,0.03041972521716933,4.711049728160001,0.001277404,0.0008712599999999999,4.67680134266,4.7614551586600005
+psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/6f.sql,6.57633170692,0.09160723096928677,6.5360076759200005,0.001381214,0.00282462,6.52219481892,6.77770783192
 command,mean,stddev,median,user,system,min,max
-psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/8a.sql,0.9963382239000002,0.006598321243740916,0.9964235086000002,0.0012927999999999998,0.000774408,0.9861408716000001,1.0089721026
+psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/8a.sql,2.06907228546,0.005470191378300218,2.0689001130599998,0.0025776199999999997,0.001769536,2.05940456606,2.07676588006
 command,mean,stddev,median,user,system,min,max
-psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/8b.sql,0.2866140708,0.0005593305671332439,0.28671557820000004,0.0014047999999999999,0.00036264399999999997,0.28588538020000004,0.2873331652
+psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/8b.sql,2.61775686544,0.00918252413341473,2.61944317374,0.00271776,0.0016899179999999999,2.60309086774,2.63402758274
 command,mean,stddev,median,user,system,min,max
-psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/8c.sql,6.756034594899999,0.03191373116883428,6.753109513,0.0014819399999999997,0.00026856000000000004,6.708000591,6.820101901
+psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/8c.sql,9.537529635139999,0.04070067208694243,9.52571746474,0.0022071879999999997,0.0023616559999999993,9.51362141124,9.64973110524
 command,mean,stddev,median,user,system,min,max
-psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/8d.sql,5.728482562239999,0.03542763851860055,5.71523121374,0.0013290439999999997,0.0015480799999999999,5.69496774174,5.81594403774
+psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/8d.sql,6.620369928880001,0.015358732419655994,6.61505613798,0.0024161199999999995,0.0018333800000000001,6.603270639480001,6.655176244480001
 command,mean,stddev,median,user,system,min,max
-psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/9a.sql,0.48654825840000004,0.0030304841963493256,0.48571413310000006,0.0017199000000000003,0.00040675999999999993,0.48456753460000007,0.49475825160000003
+psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/9a.sql,2.8834441007200002,0.010575089897608267,2.87935063142,0.0021081199999999994,0.002203344,2.87254405392,2.90243436292
 command,mean,stddev,median,user,system,min,max
-psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/9b.sql,0.48012955178000005,0.0027515132484975395,0.47967223518,0.00174104,0.00036787399999999997,0.47773513568000003,0.48713906668000007
+psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/9b.sql,2.61603346322,0.007425626605209918,2.6178822462199998,0.00287216,0.00145837,2.6023301712199998,2.62372556122
 command,mean,stddev,median,user,system,min,max
-psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/9c.sql,1.9909236393200005,0.008634698772733852,1.98843592402,0.0012718,0.00043288000000000007,1.97945074252,2.00440288852
+psql -U imdb -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/9c.sql,4.335107220740001,0.04151968503602235,4.317345839040001,0.0017383280000000001,0.0025445399999999996,4.30283547404,4.42163874904
