@@ -26,7 +26,7 @@
 #define DEBUG_MERGE_SUB_PLANS false
 #define DEBUG_QUERY_SPLIT   false
 
-#define SUBQUERIES_NUM      5
+#define SUBQUERIES_NUM      10
 
 double total_size = 0.0;
 //long long optimize_time = 0;
@@ -844,7 +844,7 @@ static void Recon(char* query_string, char* commandTag, Node* pstmt, Query* ori_
 		return;
 	}
 
-#if MEASURE_TIME || MERGE_SUB_PLANS
+#if MEASURE_TIME
     execute_plan_timer = true;
     aqp_timer = tic();
 #endif
