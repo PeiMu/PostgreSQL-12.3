@@ -4,7 +4,7 @@ log_name=pg_$1_$2.csv
 
 rm -rf ${log_name}
 
-dir="/home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/$1/$2"
+dir="/home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/$1/$1"
 iteration=10
 
 for sql in "${dir}"/*.sql; do
