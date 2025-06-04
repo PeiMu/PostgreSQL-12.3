@@ -1,0 +1,38 @@
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/LIP_AJA/job_rand/10a.sql,0.6591926178799999,0.003495752076939437,0.6609813636799999,0.0021014699999999994,0.0026702379999999997,0.65370432718,0.66200982218
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/LIP_AJA/job_rand/10b.sql,0.44586060902,0.0043148545557630535,0.44683428662,0.0022711359999999996,0.0024739519999999997,0.43778658962,0.45085401062
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/LIP_AJA/job_rand/12b.sql,0.0773621241,0.002061467213614138,0.07807107220000001,0.0019518,0.0025925019999999996,0.0733915197,0.0793404467
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/LIP_AJA/job_rand/15a.sql,8.714012720980001,0.05107065471159992,8.70806836458,0.001621968,0.0037101599999999997,8.661233387580001,8.80488229458
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/LIP_AJA/job_rand/15b.sql,4.131486367460001,0.01823241205298128,4.13595782126,0.001105864,0.004320559999999999,4.10199616826,4.1652538872600005
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/LIP_AJA/job_rand/15d.sql,604.22317418596,1.3219674419916119,604.52745997596,0.003045136,0.002302536,601.71590173996,605.46298932096
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/LIP_AJA/job_rand/16a.sql,0.38226947828000013,0.0038332771105231652,0.38358790108000007,0.0015300479999999998,0.0033946799999999997,0.37407939008,0.38586980508
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/LIP_AJA/job_rand/17c.sql,2.38171092038,0.06355219733115021,2.3403726643800002,0.0022193239999999995,0.0034380140000000005,2.3267906853800002,2.4625166323800003
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/LIP_AJA/job_rand/17e.sql,6.936672659040001,0.010266028601415726,6.93583161894,0.00269272,0.002232772,6.92250963544,6.95866911044
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/LIP_AJA/job_rand/20a.sql,1.99675611848,0.03076704131754308,2.00998879418,0.002611196,0.0030908079999999996,1.93588716068,2.0186620556799997
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/LIP_AJA/job_rand/22b.sql,0.5823938171,0.0019528994589091174,0.5816866164000001,0.001992384,0.003029926,0.5802477604,0.5858734024
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/LIP_AJA/job_rand/22c.sql,3.02366562508,0.007083499219230874,3.02518090728,0.0030898999999999996,0.0018168879999999998,3.00598103428,3.0307164502800004
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/LIP_AJA/job_rand/24b.sql,0.78937909582,0.00464415933760941,0.78783447042,0.0028302600000000002,0.002170316,0.78402691942,0.7978156604200001
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/LIP_AJA/job_rand/26b.sql,0.751503073,0.007244875159865006,0.7548676242000001,0.00221704,0.00268282,0.7380201922,0.7577065042000001
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/LIP_AJA/job_rand/2a.sql,0.49748048684000007,0.003196982086036615,0.49871322244000005,0.001633528,0.0031716500000000003,0.49041970844,0.50074121544
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/LIP_AJA/job_rand/30c.sql,3.6566420176400007,0.0033624237174167265,3.65630327614,0.00301695,0.002064128,3.6519112261399997,3.66234692414
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/LIP_AJA/job_rand/4b.sql,0.34913203598000003,0.0038032369642190416,0.34986891398000003,0.0017178159999999998,0.003005982,0.34349517248,0.35403172148
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/LIP_AJA/job_rand/4c.sql,0.27612365002,0.0040599597234184884,0.27611662092,0.001763168,0.0027717519999999997,0.26817703542,0.28455866542
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/LIP_AJA/job_rand/8a.sql,2.19762556418,0.022378512631027404,2.18693295108,0.003098024,0.0024738679999999997,2.17658125358,2.23786745558
