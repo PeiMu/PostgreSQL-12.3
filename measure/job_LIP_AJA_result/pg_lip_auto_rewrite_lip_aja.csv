@@ -1,0 +1,196 @@
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/10a.sql,1.8777693604399999,0.021658867725217225,1.8673923118400002,0.0027444160000000004,0.003228614,1.8501929108400001,1.9154242728400002
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/10b.sql,2.1082487311600002,0.035995925858635223,2.1127254237599997,0.0020656079999999996,0.0035647439999999995,2.03727419726,2.16210013626
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/10c.sql,4.30518611768,0.04564707138959346,4.29433517628,0.002243782,0.0034204440000000003,4.24826675828,4.399037627279999
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/11a.sql,0.93705593772,0.009735374275333114,0.93550039462,0.00260596,0.0023409859999999998,0.92424468012,0.95835988112
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/11b.sql,0.78941515904,0.004443032466275424,0.79012534274,0.0028615839999999995,0.0024512999999999996,0.78128996624,0.79529021324
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/11c.sql,1.1889049452,0.010297592792921032,1.1908311648,0.00234094,0.0026700120000000003,1.1608243403,1.1958699193
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/11d.sql,1.25683692398,0.007598202472107609,1.2581665334799998,0.00343524,0.0016420299999999998,1.23716280348,1.2645639444799999
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/12a.sql,1.4987924844799998,0.004610686884152116,1.49793331728,0.0026490879999999995,0.0027936840000000003,1.49298708578,1.50647394178
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/12b.sql,0.4984809815599999,0.006728382927127735,0.50034146026,0.0014326879999999997,0.003746232,0.48005115826000005,0.50271319626
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/12c.sql,1.9073699132800002,0.012333087805719551,1.90579171078,0.004039672,0.001919564,1.89579375628,1.9401093952800001
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/13a.sql,1.5908269485800004,0.008103305085021559,1.5883769841800002,0.0026723679999999996,0.002352252,1.58223243118,1.6047897741800001
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/13b.sql,0.62865307206,0.0037277864349942974,0.62963020286,0.0015059559999999997,0.00363992,0.61904333986,0.6329022628600001
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/13c.sql,0.5777560100799999,0.0035133896932392295,0.5783667261800001,0.0026635799999999996,0.002290888,0.56840824018,0.58102924718
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/13d.sql,2.53162801782,0.0220454205631385,2.53007841272,0.00241974,0.0032190499999999998,2.5024026262200003,2.5753359132200004
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/14a.sql,2.1125137941600003,0.01816443391095887,2.1081132393599997,0.002871672,0.0031286599999999997,2.09996214786,2.16171754786
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/14b.sql,1.90045198896,0.02084929445522783,1.8910078270600001,0.0019019699999999998,0.004279911999999999,1.87718184606,1.9336290280600001
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/14c.sql,2.51013176652,0.0136109833009675,2.5069576933200004,0.00262902,0.003341636,2.49944148482,2.54592045082
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/15a.sql,1.6086699850000001,0.00558280965551949,1.6095562497,0.00291444,0.0029749,1.5989121012,1.6167136272
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/15b.sql,1.32134107316,0.009348401449824417,1.32285281916,0.0022585919999999994,0.002726112,1.2976099991599999,1.3338195071599999
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/15c.sql,2.1764238390600004,0.019370818619245205,2.1793328569600003,0.002660276,0.0033835819999999996,2.14592199846,2.20506591446
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/15d.sql,2.27676227082,0.00743538685696329,2.27824446312,0.002724712,0.003048632,2.26133866212,2.2876136281200004
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/16a.sql,0.43249138258000003,0.003930801456485988,0.43350735878,0.0020270780000000003,0.002842478,0.42225638878000005,0.43596657378000003
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/16b.sql,21.613808544780003,0.06515116717766686,21.589475042580002,0.0017994799999999996,0.003273059999999999,21.517728924580002,21.70300003458
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/16c.sql,2.6201201833599996,0.010049785145828617,2.62014869456,0.003065276,0.0025947279999999993,2.60711961956,2.64325630156
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/16d.sql,2.1882646549,0.01447709483462621,2.1863300932,0.0032996199999999996,0.002396932,2.1671014522000003,2.2081348922
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/17a.sql,4.45757416336,0.021432728629647124,4.45629725816,0.002604036,0.003040238,4.4304805941600005,4.48552068416
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/17b.sql,2.51391666012,0.012912907748203075,2.51594968012,0.0015422699999999999,0.004184858,2.49179287212,2.53309302012
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/17c.sql,2.2164947539799993,0.009739927060923751,2.2200458101800002,0.001558736,0.003946580000000001,2.20020835518,2.2284254631800002
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/17d.sql,2.3404136503999995,0.011964211280530485,2.3422079666,0.0031465919999999993,0.0023695059999999995,2.3115298106,2.3558870976
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/17e.sql,11.833570496499998,0.02524431094452519,11.828175856800001,0.00293524,0.002352532,11.8023589383,11.8865062203
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/17f.sql,6.540417146040001,0.10319876974024769,6.498739583140001,0.002714652,0.002558614,6.41703965214,6.69218599814
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/18a.sql,2.18195744066,0.02956987531819025,2.1645794174599997,0.00231634,0.003153519999999999,2.15247261196,2.22701827596
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/18b.sql,3.2309388692,0.0658090831015324,3.2076706687,0.00239145,0.00333436,3.2005291302,3.4157265652
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/18c.sql,5.456886141060001,0.08304115903580528,5.4495036608600005,0.0021529279999999997,0.003614982,5.358052591360001,5.56862672836
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/19a.sql,3.5643272152199996,0.010969933672117434,3.56205552692,0.0029391600000000006,0.002987456,3.55537296842,3.59456819042
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/19b.sql,3.0006725634199998,0.0033079756033204434,3.00190617272,0.002402592,0.0036944199999999995,2.99454924772,3.0044706747200003
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/19c.sql,5.11999192916,0.03472882429200774,5.10874853236,0.0015977419999999999,0.004585279999999999,5.087974449860001,5.19789960886
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/19d.sql,11.376546420260002,0.5488160588789677,11.09011431136,0.0029813719999999995,0.0028730179999999993,11.007900751360001,12.597074515360001
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/1a.sql,0.4555445506800001,0.003380238726797048,0.45636900388,0.002040036,0.002884954,0.44803881238,0.46026723538000003
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/1b.sql,0.79413879906,0.009803086589031378,0.7953069448600001,0.002404554,0.0026232399999999998,0.76869017636,0.80545502136
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/1c.sql,0.63129041976,0.005015677717743263,0.63314677586,0.00305034,0.001858008,0.62062133286,0.63580899086
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/1d.sql,0.8758446685399999,0.015225896434999536,0.8841568212400001,0.0014452680000000002,0.0039242619999999995,0.8488105422400001,0.8889634272400001
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/20a.sql,2.41097352646,0.013196575216825003,2.41172016016,0.0023450659999999994,0.0035533580000000004,2.39244083916,2.44168914516
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/20b.sql,2.04953706686,0.01377897965642481,2.04802214256,0.0018936019999999999,0.004159563999999999,2.03692654856,2.08547864156
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/20c.sql,1.8031973219000001,0.022395075391665447,1.7955459158,0.0016881819999999999,0.00404122,1.7931139113,1.8665467933000002
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/21a.sql,2.0231907495400003,0.012523335223042572,2.0213366074400003,0.003964519999999999,0.00189298,2.0028046989400003,2.05202728794
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/21b.sql,1.7021383789599998,0.008745166164094754,1.70160854916,0.002774902,0.0032497900000000002,1.68968924466,1.72002147866
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/21c.sql,2.3455972459399996,0.013619460628864563,2.34628908144,0.0036686820000000004,0.00238672,2.32673678444,2.3617502354399997
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/22a.sql,2.3283568068399996,0.02186651525424901,2.32455705114,0.0028796099999999995,0.003523964,2.3008255271399998,2.38147450614
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/22b.sql,2.0860786491,0.008542582302805262,2.0877497443,0.00213214,0.003919334,2.0734843813,2.0989960593
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/22c.sql,4.73402655512,0.020077719343037412,4.73105684162,0.0034310080000000006,0.002664216,4.70298874662,4.76311842562
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/22d.sql,2.9881271310399997,0.009105299788712511,2.9884730093400003,0.0037254799999999998,0.002252218,2.9715928818400004,3.00095634484
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/23a.sql,1.4218661262599999,0.002998644650596814,1.42152090166,0.0021655280000000003,0.003210204,1.41747327566,1.42801810866
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/23b.sql,1.29279165434,0.005164350887621412,1.2918581176400001,0.002742924,0.0024566019999999996,1.28276151764,1.3015378376400002
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/23c.sql,1.4770134297400002,0.005440870198258491,1.47679716494,0.0015437919999999998,0.004167832,1.46789730644,1.48927968244
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/24a.sql,3.1654253062800004,0.016407684382434586,3.16029842068,0.002502338,0.00365784,3.15766961318,3.21184335218
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/24b.sql,2.99839833604,0.012458586462326799,2.99624247764,0.0018157200000000003,0.004253964,2.98722756564,3.03086058864
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/25a.sql,3.4666911785000005,0.005393811121111746,3.4665027798,0.002582194,0.003200951999999999,3.4584845873,3.4752253493
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/25b.sql,3.0205934743000005,0.010475866669517022,3.0169356308,0.002650564,0.0033418280000000002,3.0128355113,3.0486745363
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/25c.sql,7.753355910180001,0.01813656415652392,7.75363966118,0.002934804,0.0030448399999999996,7.72219993518,7.77605948618
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/26a.sql,1.7139301295800002,0.005447084926859313,1.7136247345800002,0.001425052,0.004660038,1.70736233008,1.72317697108
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/26b.sql,1.1004239707599999,0.008607967781639945,1.10034363726,0.002433732,0.0029353920000000006,1.08726203926,1.11380579726
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/26c.sql,2.4448404399,0.004252064477462599,2.4457135645,0.002552132,0.0033907799999999995,2.435274132,2.451315847
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/27a.sql,1.87860733202,0.00510050170023323,1.87995728822,0.002918512,0.003250028,1.86795084572,1.8846130007200002
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/27b.sql,1.7386294681800003,0.005247556943711393,1.7375926618800002,0.0016373799999999997,0.00443204,1.7329430003800002,1.74878214538
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/27c.sql,2.39340892806,0.007726816977804144,2.39569517856,0.0025471399999999994,0.00348788,2.38106322956,2.40252406156
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/31c.sql,3.3092408789400003,0.02456456010123314,3.3109272452400003,0.0028316159999999995,0.0032042599999999996,3.27321643524,3.34495052824
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/32a.sql,0.07846401234,0.00045176542823595177,0.07853305444,0.002108892,0.0023037739999999993,0.07761425144,0.07907690744000001
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/32b.sql,0.24652922895999999,0.0013309963228669312,0.24610570266,0.0024952999999999998,0.0019849719999999998,0.24517851816,0.24893341216
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/33a.sql,1.04699480326,0.00337130560155941,1.04723402376,0.0020087399999999997,0.003319286,1.03874671426,1.05153587526
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/33b.sql,0.97042638564,0.021275286029577192,0.97318657514,0.0028841,0.0022634919999999998,0.91370883514,0.98884070614
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/33c.sql,1.0724936272799996,0.017855147417144238,1.07898113198,0.00246918,0.0026623799999999998,1.02546372598,1.0850071989799999
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/3a.sql,1.6115035069,0.014552581803131997,1.6068247834,0.0025182459999999996,0.002954084,1.6032968194000001,1.6522095674000001
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/3b.sql,1.02638993084,0.006058909401662638,1.02746567794,0.002891468,0.0020040659999999997,1.0185510844399999,1.0353094994399998
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/3c.sql,2.0740084965600003,0.017509995391785577,2.0711374524600004,0.0025377059999999994,0.0030829939999999995,2.03847316096,2.10682611996
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/4a.sql,0.7551893029200001,0.005451041945253409,0.75746323682,0.0013326080000000003,0.0037673800000000007,0.74453823732,0.7612587603200001
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/4b.sql,0.6076562565200001,0.003809544814387425,0.60859243662,0.0026352599999999995,0.0022099439999999997,0.59776348162,0.61095263062
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/4c.sql,0.9335498357600001,0.0046705898183296,0.9347514223600001,0.00221753,0.002653264,0.9210718813600001,0.9377091583600001
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/5a.sql,1.88601535114,0.013345126886027393,1.88494373304,0.002706082,0.002927436,1.87113745504,1.91172156504
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/5b.sql,1.4791966991,0.006928894396729087,1.4803918907,0.001343644,0.004373719999999999,1.4630100787000002,1.4899649667000001
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/5c.sql,2.2519794170200003,0.005703365097898877,2.2511973744200002,0.0015127159999999999,0.0041668,2.24522933842,2.26608896342
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/6a.sql,0.6171518040200001,0.0015125432183272418,0.61670354632,0.001458904,0.003424092,0.61541881832,0.62011127532
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/6b.sql,0.6779257889999999,0.0020932876913103905,0.6775371506,0.0016707319999999999,0.003193,0.6738166371000001,0.6811260991
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/6c.sql,0.5406904035,0.0014499250604785774,0.5407288154,0.0027131039999999996,0.0023112280000000002,0.5377716739,0.5429080119
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/6d.sql,2.3087558087,0.004642656097838522,2.3091100365,0.000989356,0.004769459999999999,2.2981143545,2.3144730425
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/6e.sql,0.7582203054800001,0.004116525481150547,0.7592510891800001,0.0022996179999999994,0.0025032399999999995,0.7508806226800001,0.7640921636800001
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/6f.sql,5.8409350167200005,0.02363430078768843,5.85271666412,0.0023162579999999994,0.003162454,5.806592450619999,5.8640035056199995
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/7a.sql,1.7940252959000003,0.01705645817561601,1.7901763275000002,0.0023936,0.0031886879999999994,1.7807945855000002,1.8405015135
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/7b.sql,1.1425248205999998,0.004323772543565445,1.1431680063999998,0.0027191940000000003,0.0024415319999999997,1.1352651894,1.1497390433999999
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/7c.sql,2.86839406296,0.036973937203959854,2.86721472936,0.0037164500000000005,0.002386112,2.80418724936,2.91716960636
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/8a.sql,1.9436755438600002,0.0052158648558728055,1.94358070906,0.003614564,0.002351252,1.93258087506,1.95018253806
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/8b.sql,2.01773391416,0.004996932790720967,2.01835744026,0.0011634199999999999,0.00490646,2.00795691176,2.02441690876
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/8c.sql,9.237454681859997,0.04447135379427781,9.237325869660001,0.0023546979999999997,0.003222278,9.18832146516,9.29685422916
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/8d.sql,8.352935566220001,0.055034465593332194,8.33565017992,0.002835502,0.0026621039999999998,8.27926332192,8.470092175920001
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/9a.sql,2.7339869297000003,0.011228915619116455,2.7310335033,0.003208064,0.002801886,2.7230427083000004,2.7623372063000002
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/9b.sql,2.33426540208,0.0032951450052336965,2.33460927288,0.001469916,0.00436728,2.32972057438,2.34033251438
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/9c.sql,2.2148852231200005,0.005242172015625061,2.21468106732,0.0028513779999999995,0.0029404239999999996,2.2039602458200003,2.22106862382
+command,mean,stddev,median,user,system,min,max
+psql -U pei -d imdb -f /home/pei/Project/benchmarks/imdb_job-postgres/LIP_AJA/lip_auto_rewrite/lip_auto_rewrite/9d.sql,4.81047641016,0.10924254205792713,4.77119164136,0.0018365439999999996,0.0039638600000000005,4.70966040486,5.05577124586
