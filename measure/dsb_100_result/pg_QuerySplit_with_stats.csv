@@ -1,28 +1,28 @@
 command,mean,stddev,median,user,system,min,max
-psql -U postgres -d dsb -P pager=off -f /home/pei/Project/benchmarks/dsb-postgres/code/tools/1_instance_out_qs_QuerySplit/1/query072_spj/query072_spj_0.sql,11.68125111798,0.02309078210642589,11.68316103728,0.002050176,0.0024164959999999997,11.64530675828,11.72478252328
+psql -U postgres -d dsb_100 -P pager=off -f /home/pei/Project/benchmarks/dsb-postgres/code/tools/1_instance_out_qs_QuerySplit/1/query019_spj/query019_spj_0.sql,0.28810314185999997,0.0039119567446092825,0.28706429615999995,0.00085094,0.000038663999999999954,0.28510043116,0.29828809016
 command,mean,stddev,median,user,system,min,max
-psql -U postgres -d dsb -P pager=off -f /home/pei/Project/benchmarks/dsb-postgres/code/tools/1_instance_out_qs_QuerySplit/1/query102_spj/query102_spj_0.sql,2.2514204722800004,0.07652885298536262,2.2277484221800004,0.00258778,0.0019432279999999995,2.2143864891800003,2.46765201818
+psql -U postgres -d dsb_100 -P pager=off -f /home/pei/Project/benchmarks/dsb-postgres/code/tools/1_instance_out_qs_QuerySplit/1/query040_spj/query040_spj_0.sql,1.1216156650999998,0.0059791948999162675,1.1199109877,0.00150482,0.00023096599999999998,1.1154973862000002,1.1354086902
 command,mean,stddev,median,user,system,min,max
-psql -U postgres -d dsb -P pager=off -f /home/pei/Project/benchmarks/dsb-postgres/code/tools/1_instance_out_qs_QuerySplit/1/query040_spj/query040_spj_0.sql,2.2621034243600002,0.016606270266200953,2.2546940509600004,0.0014706239999999994,0.002858504,2.24878783846,2.2974403104600003
+psql -U postgres -d dsb_100 -P pager=off -f /home/pei/Project/benchmarks/dsb-postgres/code/tools/1_instance_out_qs_QuerySplit/1/query099_spj/query099_spj_0.sql,0.38100364974,0.005812163741729217,0.37870044754000004,0.0013365199999999997,0.00041816400000000006,0.37577867954000005,0.39154960054000004
 command,mean,stddev,median,user,system,min,max
-psql -U postgres -d dsb -P pager=off -f /home/pei/Project/benchmarks/dsb-postgres/code/tools/1_instance_out_qs_QuerySplit/1/query013_spj/query013_spj_0.sql,167.7707966339,0.5261243236928462,167.87161313399997,0.00236608,0.0023752479999999995,166.85497855949998,168.4429174745
+psql -U postgres -d dsb_100 -P pager=off -f /home/pei/Project/benchmarks/dsb-postgres/code/tools/1_instance_out_qs_QuerySplit/1/query013_spj/query013_spj_0.sql,83.2657205621,0.27256156773932233,83.21946618999999,0.0017190399999999998,0.000030532,82.966905517,83.916033361
 command,mean,stddev,median,user,system,min,max
-psql -U postgres -d dsb -P pager=off -f /home/pei/Project/benchmarks/dsb-postgres/code/tools/1_instance_out_qs_QuerySplit/1/query018_spj/query018_spj_0.sql,12.58169851752,0.03972374430121582,12.57202807072,0.0028106419999999995,0.002002576,12.53726911722,12.68065150522
+psql -U postgres -d dsb_100 -P pager=off -f /home/pei/Project/benchmarks/dsb-postgres/code/tools/1_instance_out_qs_QuerySplit/1/query018_spj/query018_spj_0.sql,6.11530612034,0.021717102125665164,6.10990367014,0.0014677400000000001,0.00069032,6.0892133056399995,6.15590482164
 command,mean,stddev,median,user,system,min,max
-psql -U postgres -d dsb -P pager=off -f /home/pei/Project/benchmarks/dsb-postgres/code/tools/1_instance_out_qs_QuerySplit/1/query019_spj/query019_spj_0.sql,0.58228145082,0.006835573467757226,0.5830703044200001,0.001979174,0.0025607720000000002,0.5680677174200001,0.5930221734200001
+psql -U postgres -d dsb_100 -P pager=off -f /home/pei/Project/benchmarks/dsb-postgres/code/tools/1_instance_out_qs_QuerySplit/1/query072_spj/query072_spj_0.sql,5.7016718196200005,0.05408205039122331,5.68171345122,0.0010713399999999998,0.00047323999999999993,5.66638199572,5.84745638172
 command,mean,stddev,median,user,system,min,max
-psql -U postgres -d dsb -P pager=off -f /home/pei/Project/benchmarks/dsb-postgres/code/tools/1_instance_out_qs_QuerySplit/1/query099_spj/query099_spj_0.sql,0.8611479653,0.003057629384795081,0.8601557366,0.0016019119999999998,0.00250876,0.8574404081,0.8690961581
+psql -U postgres -d dsb_100 -P pager=off -f /home/pei/Project/benchmarks/dsb-postgres/code/tools/1_instance_out_qs_QuerySplit/1/query102_spj/query102_spj_0.sql,0.9896981413600002,0.007051827602129153,0.9898749437600001,0.00135572,0.000495916,0.9783909457600001,0.99997035576
 command,mean,stddev,median,user,system,min,max
-psql -U postgres -d dsb -P pager=off -f /home/pei/Project/benchmarks/dsb-postgres/code/tools/1_instance_out_qs_QuerySplit/2/query072_spj/query072_spj_0.sql,11.674798175779998,0.037351064008002206,11.66830046618,0.0025840399999999997,0.0016875079999999997,11.63739100168,11.76754662068
+psql -U postgres -d dsb_100 -P pager=off -f /home/pei/Project/benchmarks/dsb-postgres/code/tools/1_instance_out_qs_QuerySplit/2/query019_spj/query019_spj_0.sql,0.29142042938,0.006872958622034467,0.28967453498,0.0014911,0.0010328099999999999,0.28553668498,0.30935535798
 command,mean,stddev,median,user,system,min,max
-psql -U postgres -d dsb -P pager=off -f /home/pei/Project/benchmarks/dsb-postgres/code/tools/1_instance_out_qs_QuerySplit/2/query102_spj/query102_spj_0.sql,2.26999529196,0.09391594170119807,2.23097666546,0.0018218279999999997,0.0026411740000000005,2.2083267494600003,2.4711255484600003
+psql -U postgres -d dsb_100 -P pager=off -f /home/pei/Project/benchmarks/dsb-postgres/code/tools/1_instance_out_qs_QuerySplit/2/query040_spj/query040_spj_0.sql,1.1195769308399999,0.005606676369247797,1.11951305824,0.00112522,0.0006215,1.1131618777399999,1.13250371674
 command,mean,stddev,median,user,system,min,max
-psql -U postgres -d dsb -P pager=off -f /home/pei/Project/benchmarks/dsb-postgres/code/tools/1_instance_out_qs_QuerySplit/2/query040_spj/query040_spj_0.sql,2.2680670981200004,0.020671352571854287,2.2632074434200002,0.0022303799999999997,0.0019355960000000001,2.24532951842,2.3053314094200004
+psql -U postgres -d dsb_100 -P pager=off -f /home/pei/Project/benchmarks/dsb-postgres/code/tools/1_instance_out_qs_QuerySplit/2/query099_spj/query099_spj_0.sql,0.377327468,0.0015929749240739732,0.3774913161000001,0.0015356000000000002,0.000228594,0.37519065860000006,0.3795948786
 command,mean,stddev,median,user,system,min,max
-psql -U postgres -d dsb -P pager=off -f /home/pei/Project/benchmarks/dsb-postgres/code/tools/1_instance_out_qs_QuerySplit/2/query013_spj/query013_spj_0.sql,167.99517744987998,0.2584796255127666,168.03371618687999,0.001789742,0.0030549520000000005,167.35576898238,168.25560444938
+psql -U postgres -d dsb_100 -P pager=off -f /home/pei/Project/benchmarks/dsb-postgres/code/tools/1_instance_out_qs_QuerySplit/2/query013_spj/query013_spj_0.sql,83.83367555886001,2.098682366013971,83.15050154086,0.0010030879999999999,0.0007427439999999998,82.99846841586,89.78085556686001
 command,mean,stddev,median,user,system,min,max
-psql -U postgres -d dsb -P pager=off -f /home/pei/Project/benchmarks/dsb-postgres/code/tools/1_instance_out_qs_QuerySplit/2/query018_spj/query018_spj_0.sql,12.584863666459999,0.10324535556396258,12.54082770416,0.0024928319999999995,0.001865508,12.48877136466,12.771493419659999
+psql -U postgres -d dsb_100 -P pager=off -f /home/pei/Project/benchmarks/dsb-postgres/code/tools/1_instance_out_qs_QuerySplit/2/query018_spj/query018_spj_0.sql,6.126557879679999,0.018458281886703523,6.121829313179999,0.001240102,0.0009721199999999999,6.10823988818,6.17178524518
 command,mean,stddev,median,user,system,min,max
-psql -U postgres -d dsb -P pager=off -f /home/pei/Project/benchmarks/dsb-postgres/code/tools/1_instance_out_qs_QuerySplit/2/query019_spj/query019_spj_0.sql,0.58099097868,0.006942000032585918,0.57823287768,0.0032977220000000003,0.0011521699999999999,0.57430773568,0.59482398068
+psql -U postgres -d dsb_100 -P pager=off -f /home/pei/Project/benchmarks/dsb-postgres/code/tools/1_instance_out_qs_QuerySplit/2/query072_spj/query072_spj_0.sql,5.67805929174,0.025689722251770596,5.67981556024,0.00152936,0.000210076,5.63189672474,5.73093665574
 command,mean,stddev,median,user,system,min,max
-psql -U postgres -d dsb -P pager=off -f /home/pei/Project/benchmarks/dsb-postgres/code/tools/1_instance_out_qs_QuerySplit/2/query099_spj/query099_spj_0.sql,0.8598183158000001,0.0016447530107984282,0.8597761572,0.0029599200000000004,0.001083088,0.8572761152,0.8627676772
+psql -U postgres -d dsb_100 -P pager=off -f /home/pei/Project/benchmarks/dsb-postgres/code/tools/1_instance_out_qs_QuerySplit/2/query102_spj/query102_spj_0.sql,0.99614018692,0.0046981822562823725,0.9947875297200001,0.00141513,0.00075881,0.99047326422,1.0039534162200001
