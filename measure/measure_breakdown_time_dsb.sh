@@ -35,7 +35,7 @@ sed -i 's/PortalStart(portal, NULL, 0, SnapshotAny);/PortalStart(portal, NULL, 0
 echo "compile Postgres without updating statistics..."
 # change `MEASURE_TIME` to true
 sed -i 's/#define MEASURE_TIME\s\+false/#define MEASURE_TIME true/' ../src/include/parser/query_split.h
-cd ../build && make clean && make -j32 && sudo make install && pg_start && cd ../measure
+cd ../build && make clean >> compile.log 2>&1 && make -j32 >> compile.log 2>&1 && sudo make install >> compile.log 2>&1 && pg_start && cd ../measure
 # rest
 sed -i 's/#define MEASURE_TIME\s\+true/#define MEASURE_TIME false/' ../src/include/parser/query_split.h
 
@@ -66,7 +66,7 @@ pg_stop
 echo "compile QuerySplit wo updating statistics and merge back sub-plans..."
 # change `MERGE_SUB_PLANS` to true
 sed -i 's/#define MERGE_SUB_PLANS\s\+false/#define MERGE_SUB_PLANS true/' ../src/include/parser/query_split.h
-cd ../build && make clean && make -j32 && sudo make install && pg_start && cd ../measure
+cd ../build && make clean >> compile.log 2>&1 && make -j32 >> compile.log 2>&1 && sudo make install >> compile.log 2>&1 && pg_start && cd ../measure
 # rest
 sed -i 's/#define MERGE_SUB_PLANS\s\+true/#define MERGE_SUB_PLANS false/' ../src/include/parser/query_split.h
 
@@ -89,7 +89,7 @@ echo "compile QuerySplit with updating statistics..."
 sed -i 's/#define MEASURE_TIME\s\+false/#define MEASURE_TIME true/' ../src/include/parser/query_split.h
 # change `MANUAL_ANALYZE` to true
 sed -i 's/#define MANUAL_ANALYZE\s\+false/#define MANUAL_ANALYZE true/' ../src/include/parser/query_split.h
-cd ../build && make clean && make -j32 && sudo make install && pg_start && cd ../measure
+cd ../build && make clean >> compile.log 2>&1 && make -j32 >> compile.log 2>&1 && sudo make install >> compile.log 2>&1 && pg_start && cd ../measure
 # rest
 sed -i 's/#define MEASURE_TIME\s\+true/#define MEASURE_TIME false/' ../src/include/parser/query_split.h
 sed -i 's/#define MANUAL_ANALYZE\s\+true/#define MANUAL_ANALYZE false/' ../src/include/parser/query_split.h
@@ -112,7 +112,7 @@ echo "compile QuerySplit with updating statistics merge back sub-plans..."
 sed -i 's/#define MERGE_SUB_PLANS\s\+false/#define MERGE_SUB_PLANS true/' ../src/include/parser/query_split.h
 # change `MANUAL_ANALYZE` to true
 sed -i 's/#define MANUAL_ANALYZE\s\+false/#define MANUAL_ANALYZE true/' ../src/include/parser/query_split.h
-cd ../build && make clean && make -j32 && sudo make install && pg_start && cd ../measure
+cd ../build && make clean >> compile.log 2>&1 && make -j32 >> compile.log 2>&1 && sudo make install >> compile.log 2>&1 && pg_start && cd ../measure
 # rest
 sed -i 's/#define MERGE_SUB_PLANS\s\+true/#define MERGE_SUB_PLANS false/' ../src/include/parser/query_split.h
 sed -i 's/#define MANUAL_ANALYZE\s\+true/#define MANUAL_ANALYZE false/' ../src/include/parser/query_split.h

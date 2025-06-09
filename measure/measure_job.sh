@@ -16,7 +16,7 @@ rm_pg_log() {
 
 # without updating statistics
 echo "compile Postgres without updating statistics..."
-cd ../build && make clean && make -j32 && sudo make install && pg_start && cd ../measure
+cd ../build && make clean >> compile.log 2>&1 && make -j32 >> compile.log 2>&1 && sudo make install  >> compile.log 2>&1 && pg_start && cd ../measure
 
 # run ANALYZE
 psql -U imdb -d imdb -c "ANALYZE;"
@@ -33,7 +33,7 @@ pg_stop
 echo "compile Postgres with updating statistics..."
 # change `MANUAL_ANALYZE` to true
 sed -i 's/#define MANUAL_ANALYZE\s\+false/#define MANUAL_ANALYZE true/' ../src/include/parser/query_split.h
-cd ../build && make clean && make -j32 && sudo make install && pg_start && cd ../measure
+cd ../build && make clean >> compile.log 2>&1 && make -j32 >> compile.log 2>&1 && sudo make install >> compile.log 2>&1 && pg_start && cd ../measure
 # rest
 sed -i 's/#define MANUAL_ANALYZE\s\+true/#define MANUAL_ANALYZE false/' ../src/include/parser/query_split.h
 
