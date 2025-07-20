@@ -7,12 +7,25 @@ sudo apt install libreadline-dev zlib1g-dev make bison flex gawk
 
 ../configure --prefix=$PREFIX
 make -j32 && make check
-make install
+sudo make install
 ```
 
 Reference: https://www.postgresql.org/docs/16/install-make.html#CONFIGURE-OPTIONS
 
 ----------------------------------------------------
+
+## Setup
+
+```bash
+# create database
+pg_ctl -D $PREFIX/data initdb # initdb -D $PREFIX/data
+
+# start server
+pg_ctl start -l $PREFIX/logfile -D $PREFIX/data
+
+# stop server
+pg_ctl stop -D $PREFIX/data -m smart -s
+```
 
 
 PostgreSQL Database Management System
