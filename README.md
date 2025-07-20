@@ -1,5 +1,6 @@
 ## How to Compile
 
+```bash
 source ./conf.sh
 mkdir build && cd build
 
