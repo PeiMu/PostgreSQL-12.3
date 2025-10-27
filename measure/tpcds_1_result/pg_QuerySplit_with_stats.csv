@@ -1,0 +1,172 @@
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/1/query2/query2_0.sql,0.99015524276,0.00472503171855362,0.9901555361600001,0.00443556,0.0007997720000000001,0.9811232916600001,0.99885866766
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/1/query5/query5_0.sql,0.6932131052600001,0.005322605998636325,0.69131089656,0.00152098,0.000575152,0.68864539706,0.7060495410600001
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/1/query8/query8_0.sql,0.31531764384000005,0.0022100512564393305,0.31502706354000004,0.0011405999999999999,0.0006619099999999999,0.31277489704000005,0.32028898404000006
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/1/query9/query9_0.sql,2.83539878948,0.009832445934298408,2.83373533328,0.00126752,0.00047443599999999995,2.8182391282799997,2.84809623028
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/1/query14/query14_0.sql,40.84631216408,0.18731807688079855,40.78355108618,0.0018816799999999997,0.00049416,40.68714486468,41.31321994568
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/1/query21/query21_0.sql,1.0635477978999999,0.00309631729047524,1.0627027065,0.0013457999999999999,0.0005336,1.0585608610000001,1.069175785
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/1/query23/query23_0.sql,6.8687535447400005,0.02692240563262355,6.86265651084,0.0014777399999999995,0.00037221799999999995,6.83783688234,6.92392349834
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/1/query24/query24_0.sql,0.04649044166,0.0002467467643435492,0.046443926860000005,0.0011355399999999996,0.0005661099999999999,0.046146495360000005,0.04699844236
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/1/query28/query28_0.sql,2.2974149512400004,0.010602003460844518,2.29275174754,0.0013128999999999999,0.0004066139999999999,2.28774896654,2.31968111754
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/1/query33/query33_0.sql,0.37626958156,0.013627579788877693,0.36929833306000004,0.0006359600000000001,0.0011246860000000002,0.36688964256,0.40581210456000005
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/1/query38/query38_0.sql,2.5600062411,0.010620165736450811,2.5618833139,0.0016066799999999997,0.00013967599999999998,2.5422245864,2.5752936614
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/1/query39/query39_0.sql,63.62105985136001,0.24708439590536008,63.51808126276,27.290812500000005,2.01692088,63.40962679576,64.08011117976001
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/1/query40/query40_0.sql,0.0463284254,0.0005292593172215186,0.0461025687,0.0010740799999999998,0.0006629699999999999,0.0456918547,0.0475427637
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/1/query41/query41_0.sql,0.43318463566,0.0032123870792663003,0.43192853346000004,0.00139118,0.00030479999999999993,0.43071005346,0.44060773146000004
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/1/query44/query44_0.sql,1.41420936336,0.0056632563287969916,1.41384499106,0.0013306379999999999,0.0007587999999999999,1.40287367256,1.4217757045600001
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/1/query47/query47_0.sql,2.6432857146,0.010887125497415131,2.6406129026,0.00191684,0.00042630799999999997,2.6299255241000004,2.6597714351
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/1/query49/query49_0.sql,0.08989795002,0.0012524625371710316,0.08929178422,0.0015432999999999998,0.000305456,0.08842252672,0.09251518672
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/1/query51/query51_0.sql,1.14133169066,0.003022491229626184,1.1413772513600002,0.0013919800000000001,0.0005674839999999999,1.1362018253600001,1.14735909636
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/1/query53/query53_0.sql,0.32104744086000003,0.002269629023020683,0.32017612296000003,0.00167438,0.000224392,0.31886396146000007,0.32502239746000006
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/1/query54/query54_0.sql,0.02276826028,0.0010185672693895744,0.02252529308,0.00112016,0.00047025599999999995,0.02215126508,0.02561722508
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/1/query56/query56_0.sql,0.6325540288600002,0.007427953574118698,0.6307638577600001,0.0016328400000000004,0.00023774399999999997,0.6243043762600001,0.6513129902600001
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/1/query57/query57_0.sql,1.15951709948,0.016592886628857315,1.1541527548800001,0.00139936,0.0007065,1.1485369303800002,1.2045233153800001
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/1/query59/query59_0.sql,1.3563156640999998,0.007411408319895768,1.3548349129,0.0017940200000000003,0.0006126840000000001,1.3438276254000001,1.3696201134000001
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/1/query60/query60_0.sql,1.2931278555999999,0.0074546617220873305,1.2901297835999999,0.00137594,0.000514948,1.2858567631,1.3068922460999999
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/1/query61/query61_0.sql,0.0101258647,0.0007982050228351179,0.0099441711,0.0015335600000000002,0.00014166599999999998,0.009216554600000001,0.0115382056
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/1/query63/query63_0.sql,0.31810310222000004,0.0009250969008615911,0.3179132359200001,0.00135348,0.000048382,0.31704398342000006,0.31968205242000003
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/1/query66/query66_0.sql,0.25477116412,0.0025481880274360663,0.25381610962,0.001805,0.00016719600000000002,0.25283649462,0.26105044962
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/1/query67/query67_0.sql,4.647182272900001,0.007675017974111789,4.6455923119,0.0022195,0.00014212,4.6380828889000005,4.659652487900001
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/1/query72/query72_0.sql,0.6615203551000001,0.05248864724874675,0.6449349614,0.0014322000000000002,0.0006702699999999999,0.6403193219,0.8105872499
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/1/query73/query73_0.sql,24.366545466159998,0.07522212099499713,24.34505818636,16.2086066,1.15469432,24.29399509136,24.54664897536
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/1/query75/query75_0.sql,1.6877958718200001,0.009887925864390357,1.68734462892,0.0015609800000000004,0.0004310179999999999,1.6760951704200002,1.70182445642
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/1/query76/query76_0.sql,0.3918060448000001,0.0030236010148935416,0.39150995120000004,0.000952758,0.0011990999999999998,0.3884433487,0.39683703770000006
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/1/query77/query77_0.sql,0.43651699282,0.006259792347324382,0.43416508742000004,0.0012750399999999999,0.0005370159999999999,0.43205188742,0.45142519242
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/1/query78/query78_0.sql,2.26452490152,0.008364115460456597,2.2629078739199997,0.00141556,0.00054769,2.25631222642,2.2855756124199997
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/1/query79/query79_0.sql,0.35964827762,0.0014082186879270135,0.35910772242000005,0.00164868,0.000400256,0.35815679592000005,0.36271600392000003
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/1/query80/query80_0.sql,0.45018707544000003,0.009348013331068446,0.44696987344000005,0.0008539839999999998,0.001247164,0.44396347194,0.47538957394000003
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/1/query83/query83_0.sql,0.3367147121,0.0026674225889912894,0.33631461949999997,0.0016501540000000002,0.000510734,0.332672251,0.341327387
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/1/query87/query87_0.sql,2.5758216419799997,0.005989410778339909,2.57712966338,0.0013877799999999997,0.000285516,2.56518563988,2.58544385488
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/1/query88/query88_0.sql,1.96099963254,0.0059169430136243656,1.9591651101399998,0.0012728400000000001,0.0004936439999999999,1.9541368291399999,1.97285327114
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/1/query89/query89_0.sql,0.40325941607999993,0.0017879161766287221,0.40330260728,0.0021243599999999996,0.00027717999999999997,0.40037885678,0.40622364278
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/1/query90/query90_0.sql,0.17883571026,0.0046062793123467505,0.17693251136000002,0.0011486900000000002,0.000562776,0.17608608236,0.19111336236
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/1/query93/query93_0.sql,0.05723352604,0.0004561999549130962,0.05709577014,0.001241,0.000427926,0.05675538464,0.05793529664
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/1/query97/query97_0.sql,0.6812210789800002,0.0031677558814789866,0.68069380018,0.00137266,0.00032935399999999996,0.6757432951800001,0.6864941391800001
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/2/query2/query2_0.sql,0.9923684180000001,0.002785497501825791,0.9922490166,0.00553988,0.0010009799999999998,0.9868846041,0.9969901121000001
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/2/query5/query5_0.sql,0.6915509413400001,0.002245898579015736,0.6909706747400001,0.00150666,0.0005888639999999999,0.68866083424,0.69680217524
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/2/query8/query8_0.sql,0.31707946504,0.006965284611089938,0.31527381164,0.001325616,0.00048408399999999997,0.31333101814000003,0.33659426914
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/2/query9/query9_0.sql,2.8328846707000004,0.010861530461380685,2.8318071628,0.0013443740000000002,0.00039820000000000003,2.8156751448,2.8499564398
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/2/query14/query14_0.sql,40.81892668561999,0.3141009298308187,40.71145091331999,0.0020848599999999996,0.00024498999999999994,40.58510278932,41.68524583832
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/2/query21/query21_0.sql,1.08089572268,0.051137339492262124,1.06476909498,0.00133802,0.0005328100000000001,1.06233430448,1.22636841848
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/2/query23/query23_0.sql,6.851096715200001,0.016534076930421304,6.847797899300001,0.0016788399999999996,0.000139088,6.8227924883,6.8748776973000005
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/2/query24/query24_0.sql,0.047082053540000016,0.0013746780044294822,0.04659350554000001,0.0013238200000000003,0.00034025999999999994,0.045817357540000006,0.05039064654000001
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/2/query28/query28_0.sql,2.29100467656,0.007245283895137959,2.29192911786,0.0014393399999999997,0.00030693,2.2763337898600002,2.30121945986
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/2/query33/query33_0.sql,0.36769883490000005,0.0014928424140625675,0.3676794056,0.0014027199999999999,0.000380084,0.3659814411,0.3707894771
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/2/query38/query38_0.sql,2.5669433857599997,0.025352643397997553,2.56012894916,0.00134666,0.00036455200000000003,2.54021213066,2.62123341566
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/2/query39/query39_0.sql,63.696020578180004,0.3296197041118794,63.588747326379995,27.333885600000002,1.9913377999999995,63.31017011788,64.27190470388
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/2/query40/query40_0.sql,0.04665333806000001,0.0005156463982062924,0.04665480126,0.00118118,0.00056805,0.04563820676,0.04760310176
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/2/query41/query41_0.sql,0.43572969318000004,0.006587939688430563,0.43373858438,0.0013593599999999998,0.000264838,0.43013832438,0.45171575838
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/2/query44/query44_0.sql,1.4124311553200004,0.012135139800469902,1.4080865529200002,0.0015641599999999998,0.0004718,1.40065508692,1.4393225499200002
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/2/query47/query47_0.sql,2.6364488897400005,0.006366447032831379,2.6354941700400003,0.0018951060000000001,0.00043650599999999997,2.62731332654,2.6468312915400003
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/2/query49/query49_0.sql,0.08992346806000001,0.0007742780948997645,0.08987924956000001,0.0015686799999999998,0.000299896,0.08868849156000001,0.09160548156000001
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/2/query51/query51_0.sql,1.1501104850600001,0.022876321903824774,1.14190047636,0.0014675799999999996,0.00039994200000000003,1.1372869838600002,1.21184626186
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/2/query53/query53_0.sql,0.32053293496,0.0022847746580313332,0.32007946696000006,0.0013093599999999996,0.000532956,0.31850922396000003,0.32610496096
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/2/query54/query54_0.sql,0.022522350899999998,0.00016720009192850352,0.0225672291,0.0014119400000000002,0.000199468,0.0222790156,0.0227206406
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/2/query56/query56_0.sql,0.6321034853,0.003269517573240985,0.6309663407000001,0.00132942,0.000511608,0.6291712602,0.6388460282
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/2/query57/query57_0.sql,1.1566273917199998,0.003885043153637591,1.1562289954199998,0.00145182,0.0007057559999999999,1.15094381542,1.1628841884199999
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/2/query59/query59_0.sql,1.3546215296,0.004006729867513925,1.3546439968000001,0.0024062,0,1.3486620623,1.3619286233
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/2/query60/query60_0.sql,1.2879947341400002,0.004174101693784765,1.2886156307399999,0.0012080999999999997,0.0005889999999999999,1.28322555924,1.2950930692399998
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/2/query61/query61_0.sql,0.01164850966,0.0021111792407454925,0.01069383756,0.00112282,0.0007942400000000001,0.00952624506,0.014512163060000001
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/2/query63/query63_0.sql,0.31866451668000007,0.0012478932333295173,0.31891982068,0.00127206,0.00036239399999999993,0.31624104518000007,0.32026790518000003
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/2/query66/query66_0.sql,0.25429762405999995,0.0021120850864812784,0.25390773426,0.0019146600000000003,0.00015564,0.25239689526,0.25972961126
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/2/query67/query67_0.sql,4.68008866118,0.08719080508493242,4.65127570758,0.00177906,0.00061298,4.62540259058,4.915118881580001
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/2/query72/query72_0.sql,0.64570964294,0.011039681092210795,0.64283647874,0.0016045799999999995,0.000425568,0.6362991022400001,0.67590461524
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/2/query73/query73_0.sql,24.47129708664,0.14601595391703096,24.47012513074,16.32028032,1.15018204,24.24662149424,24.73257615424
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/2/query75/query75_0.sql,1.6953170539000002,0.03030030857580497,1.6828684271999999,0.0019349600000000001,0.000079232,1.6720651002,1.7683963862
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/2/query76/query76_0.sql,0.39135566512000003,0.004404174341529319,0.39042682502000003,0.00201196,0.000249912,0.38812262102,0.40326447702
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/2/query77/query77_0.sql,0.43295064148000006,0.001892936888267547,0.43274541388000004,0.00177822,0.000071422,0.43047564388000004,0.43673989688000003
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/2/query78/query78_0.sql,2.33029022676,0.13700964001246063,2.27606294076,0.0012808599999999998,0.0006772879999999998,2.2697051357599998,2.71105500676
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/2/query79/query79_0.sql,0.35966148254,0.0025496893543332194,0.35871830534000004,0.00134208,0.0006593599999999999,0.35757364434000005,0.36585680534000004
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/2/query80/query80_0.sql,0.45076370460000004,0.007352094197226586,0.4479815896,0.0014806399999999996,0.00060926,0.4448706781,0.46444521910000003
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/2/query83/query83_0.sql,0.33548870118000007,0.0010552686951341703,0.33548659088000005,0.0014156999999999998,0.0007260299999999999,0.33371734638000006,0.33684193238000004
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/2/query87/query87_0.sql,2.58796183928,0.048429209966839304,2.57327912668,0.000817536,0.000992096,2.5653775701800003,2.72490283718
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/2/query88/query88_0.sql,1.9798480223200001,0.03688433743711931,1.96757066792,0.00140676,0.000442514,1.94595056192,2.07017592492
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/2/query89/query89_0.sql,0.4027824909600001,0.0018432841889880341,0.40265839766,0.0015859000000000001,0.0007539099999999999,0.40085464416000005,0.40757658216000003
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/2/query90/query90_0.sql,0.17738918546000002,0.0009065352897016741,0.17706827846,0.00146348,0.00020948399999999996,0.17634700796000002,0.17923708396000002
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/2/query93/query93_0.sql,0.05729019394000001,0.00033481107500227367,0.05733741924000001,0.0015041800000000004,0.000139716,0.05682364374,0.05775096674
+command,mean,stddev,median,user,system,min,max
+psql -U postgres -d tpcds_1 -P pager=off -f /home/pei/Project/benchmarks/tpcds-kit/tools/1_instance_out_qs_QuerySplit/2/query97/query97_0.sql,0.6838267982,0.01000259783713715,0.6809365870999999,0.0013569,0.00035776799999999995,0.6727557286,0.7038487676
