@@ -13,7 +13,7 @@ include $(top_builddir)/src/Makefile.global
 override CPPFLAGS := -I. -I$(srcdir) $(CPPFLAGS)
 
 # for the middleware
-CPPFLAGS += -I/home/pei/Project/IR_SQL_Converter/inc
+override CPPFLAGS += -I/home/pei/Project/IR_SQL_Converter/inc
 
 OBJS= analyze.o gram.o scan.o parser.o \
       parse_agg.o parse_clause.o parse_coerce.o parse_collate.o parse_cte.o \
