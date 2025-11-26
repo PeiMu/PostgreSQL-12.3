@@ -8,6 +8,7 @@
  *
  *-------------------------------------------------------------------------
  */
+#include <assert.h>
 #include "postgres.h"
 #include "parser/query_split.h"
 #include "fe_utils/simple_list.h"
@@ -18,6 +19,12 @@
 #include "utils/rel.h"
 #include "storage/buf_internals.h"
 
+#include "c_interface.h"
+#include "parser/analyze.h"
+#include "parser/parser.h"
+#include "optimizer/optimizer.h"
+#include "tcop/tcopprot.h"
+
 #define NEWBETTER 1
 #define OLDBETTER 2
 
@@ -25,6 +32,8 @@
 #define DEBUG_TOTAL_SIZE    false
 #define DEBUG_MERGE_SUB_PLANS false
 #define DEBUG_QUERY_SPLIT   false
+#define ENABLE_MIDDLEWARE   true
+#define DumpMiddlewareSubQueryString  true
 
 #define SUBQUERIES_NUM      10
 
@@ -140,7 +149,7 @@ timespec toc( timespec* start_time, const char* prefix, bool print )
     timespec current_time;
     if (-1 == clock_gettime(CLOCK_REALTIME, &current_time)) {
         elog(ERROR, "Could not get clock time!");
-        D_ASSERT(false);
+        assert(false);
     }
     timespec time_diff = diff( *start_time, current_time );
     if (print)
@@ -803,6 +812,27 @@ void UpdatePrevTreeIndex(Plan **planTree, int current_rte_length, int current_pa
     }
 }
 
+void MiddlewareCleanUp(char *nodestr, IRConverterStmt ir_stmt, char *generated_sql) {
+	if (generated_sql)
+	{
+		FreeSQLString(generated_sql);
+		generated_sql = NULL;
+	}
+
+	if (ir_stmt)
+	{
+		FreeStmt(ir_stmt);
+		ir_stmt = NULL;
+	}
+
+	if (nodestr)
+	{
+		pfree(nodestr);
+		nodestr = NULL;
+	}
+
+}
+
 static void Recon(char* query_string, char* commandTag, Node* pstmt, Query* ori_query, char* completionTag)
 {
 	MemoryContext oldcontext = MemoryContextSwitchTo(MessageContext);
@@ -924,7 +954,64 @@ static void Recon(char* query_string, char* commandTag, Node* pstmt, Query* ori_
         fclose(file);
 //        printf("subquery optimized plan: %s\n", nodeToString(plannedstmt));
 #endif
-        queryId++;
+		queryId++;
+
+#if ENABLE_MIDDLEWARE
+				char *nodestr = nodeToString(plannedstmt);
+				IRConverterStmt ir_stmt = NULL;
+				char *generated_sql = NULL;
+
+				if (!nodestr) {
+					elog(WARNING, "Failed to convert plannedstmt to nodestring for query %d", queryId);
+					MiddlewareCleanUp(nodestr, ir_stmt, generated_sql);
+				}
+
+				ir_stmt = ConvertNodeStrToIR_C(nodestr, queryId);
+				if (!ir_stmt) {
+					elog(WARNING, "Failed to convert nodestring to IR for query %d", queryId);
+					MiddlewareCleanUp(nodestr, ir_stmt, generated_sql);
+				}
+
+				IRConverterStmt raw_stmt = GetRawStmt(ir_stmt);
+				if (!raw_stmt) {
+					elog(WARNING, "Failed to get raw statement for query %d", queryId);
+					MiddlewareCleanUp(nodestr, ir_stmt, generated_sql);
+				}
+
+#if DumpMiddlewareSubQueryString
+				generated_sql = ConvertIRToSQL_C(raw_stmt, queryId, 1, "/home/pei/Project/PostgreSQL-12.3/measure");
+#else
+				generated_sql = ConvertIRToSQL_C(raw_stmt, queryId, 0, "");
+#endif
+
+				if (!generated_sql) {
+					elog(WARNING, "Failed to convert IR to SQL for query %d", queryId);
+					MiddlewareCleanUp(nodestr, ir_stmt, generated_sql);
+				}
+
+				// parse the generated SQL
+				List *generated_parsetree_list = pg_parse_query(generated_sql);
+				if (1 != list_length(generated_parsetree_list)) {
+					elog(WARNING, "Generated SQL produced %d statements, expected 1", list_length(generated_parsetree_list));
+				}
+
+				RawStmt *generated_parsetree = (RawStmt *) linitial(generated_parsetree_list);
+				const char *generated_commandTag = CreateCommandTag(generated_parsetree->stmt);
+				List *generated_querytree_list = pg_analyze_and_rewrite(generated_parsetree, generated_sql, NULL, 0, NULL);
+				if (1 != list_length(generated_querytree_list)) {
+					elog(WARNING, "Analysis produced %d query trees, expected 1", list_length(generated_querytree_list));
+				}
+
+				Query *generated_querytree = (Query *) linitial(generated_querytree_list);
+				PlannedStmt *generated_plannedstmt = pg_plan_query(generated_querytree, CURSOR_OPT_PARALLEL_OK, NULL);
+
+				plannedstmt = generated_plannedstmt;
+				query_string = generated_sql;
+				commandTag = generated_commandTag;
+				pstmt = (Node *)generated_parsetree;
+
+				MiddlewareCleanUp(nodestr, ir_stmt, generated_sql);
+#endif
 #if MERGE_SUB_PLANS
 
 #if DEBUG_MERGE_SUB_PLANS

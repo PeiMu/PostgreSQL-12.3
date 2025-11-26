@@ -51,6 +51,9 @@ ifeq ($(with_systemd),yes)
 LIBS += -lsystemd
 endif
 
+# for the middleware
+LIBS += -L/home/pei/Project/IR_SQL_Converter/lib -lIR_SQL_Converter_C
+
 ##########################################################################
 
 all: submake-libpgport submake-catalog-headers submake-utils-headers postgres $(POSTGRES_IMP)
