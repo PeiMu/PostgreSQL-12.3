@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ "$#" -ne 1  ]; then
-  echo "Please enter Official or QuerySPlit!"
+  echo "Please enter Official or QuerySplit!"
 fi
 
 dir="/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_$1_subset"

@@ -32,7 +32,7 @@
 #define DEBUG_TOTAL_SIZE    false
 #define DEBUG_MERGE_SUB_PLANS false
 #define DEBUG_QUERY_SPLIT   false
-#define ENABLE_MIDDLEWARE   true
+#define ENABLE_MIDDLEWARE   false
 #define DumpMiddlewareSubQueryString  true
 
 #define SUBQUERIES_NUM      10
@@ -1650,6 +1650,7 @@ static List* Prepare4Next(Query* generated_querytree, Index* transfer_array, DR_
 		if (transfer_array[vtar->varnoold - 1] != 0)
 		{
 			tar->resorigtbl = relid;
+#if ENABLE_MIDDLEWARE
             // Get the original table and attribute name
             RangeTblEntry* orig_rte = (RangeTblEntry*)list_nth(original_rtable, vtar->varnoold - 1);
             char* orig_colname = strVal(list_nth(orig_rte->eref->colnames, vtar->varoattno - 1));
@@ -1667,6 +1668,21 @@ static List* Prepare4Next(Query* generated_querytree, Index* transfer_array, DR_
                     found = true;
 					break;
 				}
+			}
+#else
+            for (int i = 0; i < relation->rd_att->natts; i++)
+            {
+                if (strcmp(tar->resname, relation->rd_att->attrs[i].attname.data) == 0)
+                {
+                    tar->resorigcol = i + 1;
+                    vtar->varattno = i + 1;
+                    vtar->varno = X + 1;
+                    vtar->varoattno = vtar->varattno;
+                    vtar->varnoold = vtar->varno;
+
+                    break;
+                }
+#endif
 			}
 		}
 		else
