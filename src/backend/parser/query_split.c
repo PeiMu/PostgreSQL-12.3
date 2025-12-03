@@ -84,7 +84,7 @@ static bool* List2Graph(bool* is_relationship, List* joinlist, List* FKlist, int
 //Make a aggregation function as result
 static List* removeAggref(List* targetList);
 //give the new value to some var, prepare for the next subquery
-static List* Prepare4Next(Query* global_query, Index* transfer_array, DR_intorel* receiver, PlannedStmt* plannedstmt,char* relname, List* FKlist);
+static List* Prepare4Next(Query* generated_querytree, Index* transfer_array, DR_intorel* receiver, PlannedStmt* plannedstmt,char* relname, List* FKlist);
 static void Recon(char* query_string, char* commandTag, Node* pstmt, Query* ori_query, char* completionTag);
 //remove redundant join
 static void rRj(Query* querytree);
@@ -104,7 +104,7 @@ static int tarfunc(Index* rels, PlannedStmt* new, PlannedStmt* old);
 //Execute the local query
 static List* QSExecutor(char* query_string, const char* commandTag, Node* pstmt, PlannedStmt* plannedstmt, CommandDest dest, char* relname, char* completionTag, Query* querytree, Index* transfer_array, List* FKlist, MemoryContext oldcontext);
 //find the subquery with lowest cost to be executed
-static PlannedStmt* QSOptimizer(Query* global_query, bool* graph, Index* transfer_array, int length);
+static PlannedStmt* QSOptimizer(Query* generated_querytree, bool* graph, Index* transfer_array, int length);
 static Plan* find_node_with_nleaf_recursive(Plan* plan, int nleaf, int* leaf_has, int* depth);
 static void walk_plantree(Plan* plan, Index* rel);
 
@@ -936,7 +936,9 @@ static void Recon(char* query_string, char* commandTag, Node* pstmt, Query* ori_
     PlannedStmt *temp_stmts[SUBQUERIES_NUM] = {NULL};
     // an array to store the index of unmerged subqueries
     Oid temp_table_id[SUBQUERIES_NUM] = {0};
-	while (plannedstmt = QSOptimizer(global_query, graph, transfer_array, length))
+    Query *query_for_next_iteration = global_query;
+
+	while (plannedstmt = QSOptimizer(query_for_next_iteration, graph, transfer_array, length))
 	{
 #if DumpSubQueryString
         FILE *file = fopen(file_name, "a");
@@ -979,7 +981,7 @@ static void Recon(char* query_string, char* commandTag, Node* pstmt, Query* ori_
 				}
 
 #if DumpMiddlewareSubQueryString
-				generated_sql = ConvertIRToSQL_C(raw_stmt, queryId, 1, "/home/pei/Project/PostgreSQL-12.3/measure");
+				generated_sql = ConvertIRToSQL_C(raw_stmt, queryId, 1, "/home/pei/Project/PostgreSQL-12.3/measure/temp_");
 #else
 				generated_sql = ConvertIRToSQL_C(raw_stmt, queryId, 0, "");
 #endif
@@ -1003,14 +1005,20 @@ static void Recon(char* query_string, char* commandTag, Node* pstmt, Query* ori_
 				}
 
 				Query *generated_querytree = (Query *) linitial(generated_querytree_list);
+
+                // Temporarily disable query splitting for middleware-generated plans
+                int saved_algorithm = query_splitting_algorithm;
+                query_splitting_algorithm = None;
+
 				PlannedStmt *generated_plannedstmt = pg_plan_query(generated_querytree, CURSOR_OPT_PARALLEL_OK, NULL);
+
+                // Restore the algorithm
+                query_splitting_algorithm = saved_algorithm;
 
 				plannedstmt = generated_plannedstmt;
 				query_string = generated_sql;
 				commandTag = generated_commandTag;
 				pstmt = (Node *)generated_parsetree;
-
-				MiddlewareCleanUp(nodestr, ir_stmt, generated_sql);
 #endif
 #if MERGE_SUB_PLANS
 
@@ -1103,7 +1111,10 @@ static void Recon(char* query_string, char* commandTag, Node* pstmt, Query* ori_
 		}
 
 		//Execute the subquery and do some change for next subquery creation
-		FKlist = QSExecutor(query_string, commandTag, pstmt, plannedstmt, mydest, relname, completionTag, global_query, transfer_array, FKlist, oldcontext);
+		FKlist = QSExecutor(query_string, commandTag, pstmt, plannedstmt, mydest, relname, completionTag, query_for_next_iteration, transfer_array, FKlist, oldcontext);
+#if ENABLE_MIDDLEWARE
+        MiddlewareCleanUp(nodestr, ir_stmt, generated_sql);
+#endif
 		//finish_xact_command();
 		if (mydest == DestRemote)
 		{
@@ -1112,17 +1123,23 @@ static void Recon(char* query_string, char* commandTag, Node* pstmt, Query* ori_
 #endif
 			break;
 		}
-		switch (global_query->jointree->quals->type)
+		switch (query_for_next_iteration->jointree->quals->type)
 		{
-			case T_BoolExpr:
+            case T_List:
+            {
+                elog(INFO, "It is a T_List!");
+                WhereClause = (List*)query_for_next_iteration->jointree->quals;
+                break;
+            }
+            case T_BoolExpr:
 			{
-				BoolExpr* expr = (BoolExpr*)global_query->jointree->quals;
+				BoolExpr* expr = (BoolExpr*)query_for_next_iteration->jointree->quals;
 				WhereClause = expr->args;
 				break;
 			}
 			case T_OpExpr:
 			{
-				WhereClause = lappend(WhereClause, global_query->jointree->quals);
+				WhereClause = lappend(WhereClause, query_for_next_iteration->jointree->quals);
 				break;
 			}
 		}
@@ -1133,7 +1150,8 @@ static void Recon(char* query_string, char* commandTag, Node* pstmt, Query* ori_
 			if (!is_RC(lc->data.ptr_value))
 				Joinlist = lappend(Joinlist, lc->data.ptr_value);
 		}
-		length = global_query->rtable->length;
+		length = query_for_next_iteration->rtable->length;
+
 		graph = List2Graph(is_relationship, Joinlist, FKlist, length);
 #if MEASURE_TIME
         if (execute_plan_timer) {
@@ -1166,7 +1184,7 @@ static void Recon(char* query_string, char* commandTag, Node* pstmt, Query* ori_
 }
 
 //Planner
-static PlannedStmt* QSOptimizer(Query* global_query, bool* graph, Index* transfer_array, int length)
+static PlannedStmt* QSOptimizer(Query* generated_querytree, bool* graph, Index* transfer_array, int length)
 {
 	PlannedStmt* result = NULL;
 	//start_xact_command();
@@ -1177,12 +1195,12 @@ static PlannedStmt* QSOptimizer(Query* global_query, bool* graph, Index* transfe
 	{
 		if (order_decision == global_view)
 		{
-			PlannedStmt* temp = planner(copyObjectImpl(global_query), CURSOR_OPT_PARALLEL_OK, NULL);
+			PlannedStmt* temp = planner(copyObjectImpl(generated_querytree), CURSOR_OPT_PARALLEL_OK, NULL);
 			int leaf_has = 0, depth = 0;
 			Plan* temp_plan = find_node_with_nleaf_recursive(temp->planTree, 2, &leaf_has, &depth);
 			walk_plantree(temp_plan, rels);
-			rels[0] = ((RangeTblEntry*)list_nth(global_query->rtable, rels[0] - 1))->relid;
-			rels[1] = ((RangeTblEntry*)list_nth(global_query->rtable, rels[1] - 1))->relid;
+			rels[0] = ((RangeTblEntry*)list_nth(generated_querytree->rtable, rels[0] - 1))->relid;
+			rels[1] = ((RangeTblEntry*)list_nth(generated_querytree->rtable, rels[1] - 1))->relid;
 		}
 		for (int i = 0; i < length; i++)
 		{
@@ -1195,7 +1213,7 @@ static PlannedStmt* QSOptimizer(Query* global_query, bool* graph, Index* transfe
 			for (int j = 0; j < length; j++)
 				transfer_array[j] = 0;
 			//Get the rang table list for this subgraph
-			List* rtable = getRT_2(global_query->rtable, graph, length, i, transfer_array);
+			List* rtable = getRT_2(generated_querytree->rtable, graph, length, i, transfer_array);
 			//Can this subgraph make a join ?
 			if (rtable->length < 2)
 			{
@@ -1203,7 +1221,7 @@ static PlannedStmt* QSOptimizer(Query* global_query, bool* graph, Index* transfe
 			}
 			char* relname = NULL;
 			//If so, create a subquery
-			Query* local_query = createQuery(global_query, mydest, rtable, transfer_array, length);
+			Query* local_query = createQuery(generated_querytree, mydest, rtable, transfer_array, length);
 			PlannedStmt* candidate_result = planner(local_query, CURSOR_OPT_PARALLEL_OK, NULL);
 			if (tarfunc(rels, candidate_result, result) == NEWBETTER)
 			{
@@ -1223,12 +1241,12 @@ static PlannedStmt* QSOptimizer(Query* global_query, bool* graph, Index* transfe
 	{
 		if (order_decision == global_view)
 		{
-			PlannedStmt* temp = planner(copyObjectImpl(global_query), CURSOR_OPT_PARALLEL_OK, NULL);
+			PlannedStmt* temp = planner(copyObjectImpl(generated_querytree), CURSOR_OPT_PARALLEL_OK, NULL);
 			int leaf_has = 0, depth = 0;
 			Plan* temp_plan = find_node_with_nleaf_recursive(temp->planTree, 2, &leaf_has, &depth);
 			walk_plantree(temp_plan, rels);
-			rels[0] = ((RangeTblEntry*)list_nth(global_query->rtable, rels[0] - 1))->relid;
-			rels[1] = ((RangeTblEntry*)list_nth(global_query->rtable, rels[1] - 1))->relid;
+			rels[0] = ((RangeTblEntry*)list_nth(generated_querytree->rtable, rels[0] - 1))->relid;
+			rels[1] = ((RangeTblEntry*)list_nth(generated_querytree->rtable, rels[1] - 1))->relid;
 		}
 		for (int i = 0; i < length; i++)
 		{
@@ -1243,7 +1261,7 @@ static PlannedStmt* QSOptimizer(Query* global_query, bool* graph, Index* transfe
 				for (int j = 0; j < length; j++)
 					transfer_array[j] = 0;
 				//Get the rang table list for this subgraph
-				List* rtable = getRT_1(global_query->rtable, graph, length, i, j, transfer_array);
+				List* rtable = getRT_1(generated_querytree->rtable, graph, length, i, j, transfer_array);
 				//Can this subgraph make a join ?
 				if (rtable == NIL)
 				{
@@ -1251,7 +1269,7 @@ static PlannedStmt* QSOptimizer(Query* global_query, bool* graph, Index* transfe
 				}
 				char* relname = NULL;
 				//If so, create a subquery
-				Query* local_query = createQuery(global_query, mydest, rtable, transfer_array, length);
+				Query* local_query = createQuery(generated_querytree, mydest, rtable, transfer_array, length);
 				PlannedStmt* candidate_result = planner(local_query, CURSOR_OPT_PARALLEL_OK, NULL);
 				if (tarfunc(rels, candidate_result, result) == NEWBETTER)
 				{
@@ -1269,6 +1287,10 @@ static PlannedStmt* QSOptimizer(Query* global_query, bool* graph, Index* transfe
 			}
 		}
 	}
+    if (NULL == result) {
+        result = planner(generated_querytree, CURSOR_OPT_PARALLEL_OK, NULL);
+        return result;
+    }
 	for (int j = 0; j < length; j++)
 		transfer_array[j] = 0;
 	if (query_splitting_algorithm == RelationshipCenter || query_splitting_algorithm == EntityCenter)
@@ -1330,16 +1352,16 @@ static PlannedStmt* QSOptimizer(Query* global_query, bool* graph, Index* transfe
 			}
 		}
 	}
-	switch (global_query->jointree->quals->type)
+	switch (generated_querytree->jointree->quals->type)
 	{
 		case T_BoolExpr:
 		{
-			((BoolExpr*)global_query->jointree->quals)->args = simplifyjoinlist(((BoolExpr*)global_query->jointree->quals)->args, mydest, transfer_array, graph, length);
+			((BoolExpr*)generated_querytree->jointree->quals)->args = simplifyjoinlist(((BoolExpr*)generated_querytree->jointree->quals)->args, mydest, transfer_array, graph, length);
 			break;
 		}
 		case T_OpExpr:
 		{
-			global_query->jointree->quals = NULL;
+			generated_querytree->jointree->quals = NULL;
 			break;
 		}
 	}
@@ -1463,11 +1485,13 @@ static List* QSExecutor(char* query_string, const char* commandTag, Node* pstmt,
 	return FKlist;
 }
 
-static List* Prepare4Next(Query* global_query, Index* transfer_array, DR_intorel* receiver, PlannedStmt* plannedstmt, char* relname, List* FKlist)
+static List* Prepare4Next(Query* generated_querytree, Index* transfer_array, DR_intorel* receiver, PlannedStmt* plannedstmt, char* relname, List* FKlist)
 {
-	int length = global_query->rtable->length;
+	int length = generated_querytree->rtable->length;
 	int X = -1;
 	int before = 0;
+    List* original_rtable = copyObject(generated_querytree->rtable);
+
 	for (int i = 0; i < length; i++)
 	{
 		if (X == -1 && transfer_array[i] == 0)
@@ -1520,19 +1544,19 @@ static List* Prepare4Next(Query* global_query, Index* transfer_array, DR_intorel
 			prev = lc;
 		}
 	}
-	
+
 	Oid relid = RangeVarGetRelid(receiver->into->rel, NoLock, true);
 	Relation relation = table_open(relid, NoLock);
-	List* varlist = pull_var_clause((Node*)global_query->jointree, 0);
+	List* varlist = pull_var_clause((Node*)generated_querytree->jointree, 0);
 	foreach(lc, varlist)
 	{
 		Var* var = (Var*)lfirst(lc);
 		if (transfer_array[var->varnoold - 1] != 0)
 		{
-			RangeTblEntry* rte = (RangeTblEntry*)list_nth(global_query->rtable, var->varnoold - 1);
+			RangeTblEntry* rte = (RangeTblEntry*)list_nth(original_rtable, var->varnoold - 1);
 			int len = strlen(rte->eref->aliasname) + strlen(strVal(list_nth(rte->eref->colnames, var->varoattno - 1))) + 2;
 			char* attrname = (char*)palloc(len * sizeof(char));
-			sprintf(attrname, "%s_%s", rte->eref->aliasname, strVal(list_nth(rte->eref->colnames, var->varoattno - 1)));
+			sprintf(attrname, "%s", strVal(list_nth(rte->eref->colnames, var->varoattno - 1)));
 			var->varno = X + 1;
 			var->varnoold = var->varno;
 			for (int i = 0; i < relation->rd_att->natts; i++)
@@ -1588,20 +1612,20 @@ static List* Prepare4Next(Query* global_query, Index* transfer_array, DR_intorel
 	{
 		if (transfer_array[i] != 0)
 		{
-			RangeTblEntry* rte = list_nth(global_query->rtable, i);
-			global_query->rtable = list_delete(global_query->rtable, list_nth(global_query->rtable, i));
-			global_query->jointree->fromlist = list_delete(global_query->jointree->fromlist, list_nth(global_query->jointree->fromlist, i));
+			RangeTblEntry* rte = list_nth(generated_querytree->rtable, i);
+			generated_querytree->rtable = list_delete(generated_querytree->rtable, list_nth(generated_querytree->rtable, i));
+			generated_querytree->jointree->fromlist = list_delete(generated_querytree->jointree->fromlist, list_nth(generated_querytree->jointree->fromlist, i));
 		}
 	}
-	RangeTblEntry* rte = (RangeTblEntry*)list_nth(global_query->rtable, X);
+	RangeTblEntry* rte = (RangeTblEntry*)list_nth(generated_querytree->rtable, X);
 	dochange(rte, relname, relation, relid);
 	Index index = 1;
-	foreach(lc, global_query->jointree->fromlist)
+	foreach(lc, generated_querytree->jointree->fromlist)
 	{
 		RangeTblRef* rtr = (RangeTblRef*)lfirst(lc);
 		rtr->rtindex = index++;
 	}
-	foreach(lc, global_query->targetList)
+	foreach(lc, generated_querytree->targetList)
 	{
 		TargetEntry* tar = (TargetEntry*)lfirst(lc);
 		Var* vtar = NULL;
@@ -1626,15 +1650,21 @@ static List* Prepare4Next(Query* global_query, Index* transfer_array, DR_intorel
 		if (transfer_array[vtar->varnoold - 1] != 0)
 		{
 			tar->resorigtbl = relid;
+            // Get the original table and attribute name
+            RangeTblEntry* orig_rte = (RangeTblEntry*)list_nth(original_rtable, vtar->varnoold - 1);
+            char* orig_colname = strVal(list_nth(orig_rte->eref->colnames, vtar->varoattno - 1));
+
+            bool found = false;
 			for (int i = 0; i < relation->rd_att->natts; i++)
 			{
-				if (strcmp(tar->resname, relation->rd_att->attrs[i].attname.data) == 0)
+				if (strcmp(orig_colname, relation->rd_att->attrs[i].attname.data) == 0)
 				{
 					tar->resorigcol = i + 1;
 					vtar->varattno = i + 1;
 					vtar->varno = X + 1;
 					vtar->varoattno = vtar->varattno;
 					vtar->varnoold = vtar->varno;
+                    found = true;
 					break;
 				}
 			}
@@ -1904,11 +1934,11 @@ static List* findvarlist(List* joinlist, Index* transfer_array, int length)
 	return reslist;
 }
 
-static Query* createQuery(const Query* global_query, CommandDest dest, List* rtable, Index* transfer_array, int length)
+static Query* createQuery(const Query* generated_querytree, CommandDest dest, List* rtable, Index* transfer_array, int length)
 {
 	Query* query;
 	query = makeNode(Query);
-	query = copyObjectImpl(global_query);
+	query = copyObjectImpl(generated_querytree);
 	query->rtable = copyObjectImpl(rtable);
 	query->jointree->fromlist = setfromlist(query->jointree->fromlist, transfer_array, length);
 	List* varlist = NIL;
@@ -1926,7 +1956,7 @@ static Query* createQuery(const Query* global_query, CommandDest dest, List* rta
 			break;
 		}
 	}
-	query->targetList = settargetlist(global_query->rtable, rtable, dest, varlist, query->targetList, transfer_array, length);
+	query->targetList = settargetlist(generated_querytree->rtable, rtable, dest, varlist, query->targetList, transfer_array, length);
 	switch (query->jointree->quals->type)
 	{
 		case T_BoolExpr:
@@ -1939,7 +1969,7 @@ static Query* createQuery(const Query* global_query, CommandDest dest, List* rta
 	}
 	if (dest == DestRemote)
 	{
-		query->hasAggs = global_query->hasAggs;
+		query->hasAggs = generated_querytree->hasAggs;
 	}
 	else
 	{
@@ -2164,7 +2194,7 @@ static List* settargetlist(const List* global_rtable, List* local_rtable, Comman
 			tar->resorigtbl = rte->relid;
 			int len = strlen(rte->eref->aliasname) + strlen(strVal(list_nth(rte->eref->colnames, var->varattno - 1))) + 2;
 			tar->resname = (char*)palloc(len * sizeof(char));
-			sprintf(tar->resname, "%s_%s", rte->eref->aliasname, strVal(list_nth(rte->eref->colnames, var->varattno - 1)));
+			sprintf(tar->resname, "%s", strVal(list_nth(rte->eref->colnames, var->varattno - 1)));
 			tar->resorigcol = var->varattno;
 			if(targetlist)
 				tar->resno = targetlist->length + 1;
