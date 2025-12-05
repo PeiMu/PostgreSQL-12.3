@@ -959,6 +959,24 @@ static void Recon(char* query_string, char* commandTag, Node* pstmt, Query* ori_
 		queryId++;
 
 #if ENABLE_MIDDLEWARE
+                ListCell *rtable_lc;
+                foreach(rtable_lc, plannedstmt->rtable)
+                {
+                  RangeTblEntry *rte = (RangeTblEntry *)lfirst(rtable_lc);
+                  if (rte->rtekind == RTE_RELATION && rte->relid != InvalidOid)
+                  {
+                      // Get the real table name from the relid
+                      char *real_tablename = get_rel_name(rte->relid);
+                      if (real_tablename) {
+                          char *real_tablename_copy = pstrdup(real_tablename);
+                          rte->eref->aliasname = real_tablename_copy;
+                          if (rte->alias) {
+                              rte->alias->aliasname = real_tablename_copy;
+                          }
+                      }
+                  }
+                }
+
 				char *nodestr = nodeToString(plannedstmt);
 				IRConverterStmt ir_stmt = NULL;
 				char *generated_sql = NULL;
@@ -967,7 +985,7 @@ static void Recon(char* query_string, char* commandTag, Node* pstmt, Query* ori_
 					elog(WARNING, "Failed to convert plannedstmt to nodestring for query %d", queryId);
 					MiddlewareCleanUp(nodestr, ir_stmt, generated_sql);
 				}
-
+//                elog(INFO, "%d nodestr: %s", queryId, nodestr);
 				ir_stmt = ConvertNodeStrToIR_C(nodestr, queryId);
 				if (!ir_stmt) {
 					elog(WARNING, "Failed to convert nodestring to IR for query %d", queryId);
@@ -1548,28 +1566,56 @@ static List* Prepare4Next(Query* generated_querytree, Index* transfer_array, DR_
 	Oid relid = RangeVarGetRelid(receiver->into->rel, NoLock, true);
 	Relation relation = table_open(relid, NoLock);
 	List* varlist = pull_var_clause((Node*)generated_querytree->jointree, 0);
+#if ENABLE_MIDDLEWARE
 	foreach(lc, varlist)
 	{
 		Var* var = (Var*)lfirst(lc);
 		if (transfer_array[var->varnoold - 1] != 0)
 		{
-			RangeTblEntry* rte = (RangeTblEntry*)list_nth(original_rtable, var->varnoold - 1);
-			int len = strlen(rte->eref->aliasname) + strlen(strVal(list_nth(rte->eref->colnames, var->varoattno - 1))) + 2;
-			char* attrname = (char*)palloc(len * sizeof(char));
-			sprintf(attrname, "%s", strVal(list_nth(rte->eref->colnames, var->varoattno - 1)));
+            // Get the original table's column name
+            RangeTblEntry* orig_rte = (RangeTblEntry*)list_nth(original_rtable, var->varnoold - 1);
+            // Get REAL table name from relid (works for both real tables and temp tables)
+            char* real_tablename = NULL;
+            if (orig_rte->rtekind == RTE_RELATION && orig_rte->relid != InvalidOid)
+            {
+                real_tablename = get_rel_name(orig_rte->relid);
+            }
+
+            // Fallback to eref aliasname if get_rel_name fails
+            if (!real_tablename)
+            {
+                real_tablename = orig_rte->eref->aliasname;
+            }
+
+            char* orig_colname = pstrdup(strVal(list_nth(orig_rte->eref->colnames, var->varoattno - 1)));
+
+            // Construct the expected temp table column name: tablename_columnname
+            char expected_colname[256];
+            snprintf(expected_colname, sizeof(expected_colname), "%s_%s", real_tablename, orig_colname);
+
 			var->varno = X + 1;
 			var->varnoold = var->varno;
+            // debug
+            bool found = false;
 			for (int i = 0; i < relation->rd_att->natts; i++)
 			{
-				if (strcmp(attrname, relation->rd_att->attrs[i].attname.data) == 0)
+				if (strcmp(expected_colname, relation->rd_att->attrs[i].attname.data) == 0)
 				{
 					var->varattno = i + 1;
 					var->varoattno = var->varattno;
+                    found = true;
 					break;
 				}
 			}
-			pfree(attrname);
-			attrname = NULL;
+            if (!found)
+            {
+                elog(WARNING, "    -> NOT FOUND! This is the bug! Column '%s' doesn't exist in temp table.", expected_colname);
+                elog(WARNING, "    -> Available columns in temp table:");
+                for (int i = 0; i < relation->rd_att->natts; i++)
+                {
+                    elog(WARNING, "         [%d]: '%s'", i+1, relation->rd_att->attrs[i].attname.data);
+                }
+            }
 		}
 		else
 		{
@@ -1585,6 +1631,45 @@ static List* Prepare4Next(Query* generated_querytree, Index* transfer_array, DR_
 			var->varnoold = var->varno;
 		}
 	}
+#else
+    foreach(lc, varlist)
+    {
+        Var* var = (Var*)lfirst(lc);
+        if (transfer_array[var->varnoold - 1] != 0)
+        {
+            RangeTblEntry* rte = (RangeTblEntry*)list_nth(original_rtable, var->varnoold - 1);
+            int len = strlen(rte->eref->aliasname) + strlen(strVal(list_nth(rte->eref->colnames, var->varoattno - 1))) + 2;
+            char* attrname = (char*)palloc(len * sizeof(char));
+            sprintf(attrname, "%s", strVal(list_nth(rte->eref->colnames, var->varoattno - 1)));
+            var->varno = X + 1;
+            var->varnoold = var->varno;
+            for (int i = 0; i < relation->rd_att->natts; i++)
+            {
+                if (strcmp(attrname, relation->rd_att->attrs[i].attname.data) == 0)
+                {
+                    var->varattno = i + 1;
+                    var->varoattno = var->varattno;
+                    break;
+                }
+            }
+            pfree(attrname);
+            attrname = NULL;
+        }
+        else
+        {
+            int before = 0;
+            for (int i = X + 1; i < var->varno - 1; i++)
+            {
+                if (transfer_array[i] != 0)
+                {
+                    before++;
+                }
+            }
+            var->varno -= before;
+            var->varnoold = var->varno;
+        }
+    }
+#endif
 	foreach(lc, FKlist)
 	{
 		ForeignKeyOptInfo* fkOptInfo = (ForeignKeyOptInfo*)lfirst(lc);
@@ -1653,12 +1738,29 @@ static List* Prepare4Next(Query* generated_querytree, Index* transfer_array, DR_
 #if ENABLE_MIDDLEWARE
             // Get the original table and attribute name
             RangeTblEntry* orig_rte = (RangeTblEntry*)list_nth(original_rtable, vtar->varnoold - 1);
-            char* orig_colname = strVal(list_nth(orig_rte->eref->colnames, vtar->varoattno - 1));
+            // Get REAL table name from relid (works for both real tables and temp tables)
+            char* real_tablename = NULL;
+            if (orig_rte->rtekind == RTE_RELATION && orig_rte->relid != InvalidOid)
+            {
+              real_tablename = get_rel_name(orig_rte->relid);
+            }
+
+            // Fallback to eref aliasname if get_rel_name fails
+            if (!real_tablename)
+            {
+              real_tablename = orig_rte->eref->aliasname;
+            }
+
+            char* orig_colname = pstrdup(strVal(list_nth(orig_rte->eref->colnames, vtar->varoattno - 1)));
+
+            // Construct expected temp table column name
+            char expected_colname[256];
+            snprintf(expected_colname, sizeof(expected_colname), "%s_%s", real_tablename, orig_colname);
 
             bool found = false;
 			for (int i = 0; i < relation->rd_att->natts; i++)
 			{
-				if (strcmp(orig_colname, relation->rd_att->attrs[i].attname.data) == 0)
+				if (strcmp(expected_colname, relation->rd_att->attrs[i].attname.data) == 0)
 				{
 					tar->resorigcol = i + 1;
 					vtar->varattno = i + 1;
@@ -1669,6 +1771,10 @@ static List* Prepare4Next(Query* generated_querytree, Index* transfer_array, DR_
 					break;
 				}
 			}
+            if (!found)
+            {
+              elog(WARNING, "    -> NOT FOUND! This is the bug! Column '%s' doesn't exist in temp table.", expected_colname);
+            }
 #else
             for (int i = 0; i < relation->rd_att->natts; i++)
             {
