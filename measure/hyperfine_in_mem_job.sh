@@ -5,8 +5,10 @@ log_name=pg_$1.csv
 rm -rf pg_$1.csv
 
 dir_name=$1
-if [ ${dir_name} = "QuerySplit_with_stats" ]; then
-  dir_name="QuerySplit"
+if [ "$dir_name" = "QuerySplit_with_stats" ] || \
+   [ "$dir_name" = "QuerySplit_with_middleware" ] || \
+   [ "$dir_name" = "QuerySplit_with_stats_and_middleware" ]; then
+    dir_name="QuerySplit"
 fi
 dir="/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_${dir_name}_subset"
 iteration=10
