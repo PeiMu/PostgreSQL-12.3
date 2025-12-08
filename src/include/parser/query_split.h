@@ -87,6 +87,8 @@
 #define MEASURE_TIME false
 #define MERGE_SUB_PLANS false
 #define MANUAL_ANALYZE false
+#define ENABLE_MIDDLEWARE false
+#define DumpMiddlewareSubQueryString false
 
 void doQSparse(const char* query_string, const char* commandTag, Node* pstmt, Query* querytree, char* completionTag);
 

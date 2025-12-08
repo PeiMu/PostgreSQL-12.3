@@ -32,8 +32,6 @@
 #define DEBUG_TOTAL_SIZE    false
 #define DEBUG_MERGE_SUB_PLANS false
 #define DEBUG_QUERY_SPLIT   false
-#define ENABLE_MIDDLEWARE   true
-#define DumpMiddlewareSubQueryString  true
 
 #define SUBQUERIES_NUM      10
 
