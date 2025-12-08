@@ -1638,7 +1638,7 @@ static List* Prepare4Next(Query* generated_querytree, Index* transfer_array, DR_
             RangeTblEntry* rte = (RangeTblEntry*)list_nth(original_rtable, var->varnoold - 1);
             int len = strlen(rte->eref->aliasname) + strlen(strVal(list_nth(rte->eref->colnames, var->varoattno - 1))) + 2;
             char* attrname = (char*)palloc(len * sizeof(char));
-            sprintf(attrname, "%s", strVal(list_nth(rte->eref->colnames, var->varoattno - 1)));
+            sprintf(attrname, "%s_%s", rte->eref->aliasname, strVal(list_nth(rte->eref->colnames, var->varoattno - 1)));
             var->varno = X + 1;
             var->varnoold = var->varno;
             for (int i = 0; i < relation->rd_att->natts; i++)
@@ -2314,7 +2314,7 @@ static List* settargetlist(const List* global_rtable, List* local_rtable, Comman
 			tar->resorigtbl = rte->relid;
 			int len = strlen(rte->eref->aliasname) + strlen(strVal(list_nth(rte->eref->colnames, var->varattno - 1))) + 2;
 			tar->resname = (char*)palloc(len * sizeof(char));
-			sprintf(tar->resname, "%s", strVal(list_nth(rte->eref->colnames, var->varattno - 1)));
+            sprintf(tar->resname, "%s_%s", rte->eref->aliasname, strVal(list_nth(rte->eref->colnames, var->varattno - 1)));
 			tar->resorigcol = var->varattno;
 			if(targetlist)
 				tar->resno = targetlist->length + 1;
