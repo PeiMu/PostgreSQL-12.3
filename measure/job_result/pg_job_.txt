@@ -1,0 +1,1244 @@
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset//10c.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/10c.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/10c.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/10c.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+ character | movie_with_american_producer 
+-----------+------------------------------
+ Himself   | Evil Eyes: Behind the Scenes
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset//12a.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/12a.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/12a.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/12a.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+      movie_company       | rating | drama_horror_movie 
+--------------------------+--------+--------------------
+ 10th Grade Reunion Films | 8.1    | 3:20
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset//12b.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/12b.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/12b.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/12b.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+ budget  |    unsuccsessful_movie     
+---------+----------------------------
+ $10,000 | Birdemic: Shock and Terror
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset//12c.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/12c.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/12c.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/12c.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+      movie_company       | rating | mainstream_movie 
+--------------------------+--------+------------------
+ 101st Street Productions | 7.1    | $1.11
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset//13a.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/13a.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/13a.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/13a.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+       release_date       | rating | german_movie 
+--------------------------+--------+--------------
+ Afghanistan:24 June 2012 | 1.0    | 00
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset//13b.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/13b.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/13b.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/13b.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+ producing_company | rating | movie_about_winning 
+-------------------+--------+---------------------
+ 501audio          | 1.8    | 5 Time Champion
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset//13c.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/13c.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/13c.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/13c.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+ producing_company | rating | movie_about_winning 
+-------------------+--------+---------------------
+ DL Sites          | 1.8    | Champion
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset//13d.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/13d.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/13d.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/13d.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+ producing_company | rating | movie 
+-------------------+--------+-------
+ 01 Entertainment  | 1.0    | ****
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset//14a.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/14a.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/14a.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/14a.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+ rating | northern_dark_movie 
+--------+---------------------
+ 1.0    | $lowdown
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset//14b.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/14b.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/14b.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/14b.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+ rating | western_dark_production 
+--------+-------------------------
+ 6.4    | Of Dolls and Murder
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset//14c.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/14c.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/14c.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/14c.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+ rating | north_european_dark_production 
+--------+--------------------------------
+ 1.0    | $lowdown
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset//15a.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/15a.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/15a.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/15a.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+   release_date   |            internet_movie            
+------------------+--------------------------------------
+ USA:12 June 2006 | Battlestar Galactica: The Resistance
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset//15b.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/15b.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/15b.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/15b.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+   release_date    |     youtube_movie     
+-------------------+-----------------------
+ USA:27 April 2007 | RoboCop vs Terminator
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset//15c.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/15c.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/15c.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/15c.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+   release_date    | modern_american_internet_movie 
+-------------------+--------------------------------
+ USA:10 April 2001 | 24: Day Six - Debrief
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset//15d.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/15d.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/15d.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/15d.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+        aka_title        | internet_movie_title 
+-------------------------+----------------------
+ 06/05: The Sixth of May | 06/05
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset//16b.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/16b.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/16b.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/16b.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+ cool_actor_pseudonym | series_named_after_char 
+----------------------+-------------------------
+ ...                  | 002 agenti segretissimi
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset//16c.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/16c.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/16c.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/16c.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+ cool_actor_pseudonym | series_named_after_char 
+----------------------+-------------------------
+ ?                    | 003
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset//16d.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/16d.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/16d.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/16d.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+ cool_actor_pseudonym | series_named_after_char 
+----------------------+-------------------------
+ ?                    | 003
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset//18a.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/18a.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/18a.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/18a.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+ movie_budget | movie_votes |      movie_title      
+--------------+-------------+-----------------------
+ $1,000       | 10          | 40 Days and 40 Nights
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset//18b.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/18b.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/18b.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/18b.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+ movie_budget | movie_votes | movie_title 
+--------------+-------------+-------------
+ Horror       | 8.1         | Agorable
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset//18c.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/18c.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/18c.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/18c.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+ movie_budget | movie_votes | movie_title 
+--------------+-------------+-------------
+ Action       | 10          | ?
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset//1a.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/1a.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/1a.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/1a.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+             production_note             |    movie_title     | movie_year 
+-----------------------------------------+--------------------+------------
+ (as Indo-British Films Ltd.) (presents) | A Clockwork Orange |       1934
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset//1b.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/1b.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/1b.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/1b.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+        production_note         |  movie_title   | movie_year 
+--------------------------------+----------------+------------
+ (as Grosvenor Park) (presents) | Disaster Movie |       2008
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset//1c.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/1c.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/1c.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/1c.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+ production_note | movie_title  | movie_year 
+-----------------+--------------+------------
+ (co-production) | Intouchables |       2011
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset//1d.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/1d.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/1d.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/1d.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+ production_note  |  movie_title   | movie_year 
+------------------+----------------+------------
+ (as ApolloMedia) | Disaster Movie |       2004
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset//20b.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/20b.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/20b.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/20b.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+ complete_downey_ironman_movie 
+-------------------------------
+ Iron Man
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset//20c.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/20c.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/20c.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/20c.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+   cast_member   | complete_dynamic_hero_movie 
+-----------------+-----------------------------
+ Abell, Alistair | 12 Rounds
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset//22d.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/22d.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/22d.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/22d.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+  movie_company  | rating | western_violent_movie 
+-----------------+--------+-----------------------
+ 01 Distribution | 1.6    | 10,000 BC
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset//23a.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/23a.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/23a.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/23a.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+ movie_kind | complete_us_internet_movie 
+------------+----------------------------
+ movie      | The Analysts
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset//23b.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/23b.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/23b.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/23b.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+ movie_kind | complete_nerdy_internet_movie 
+------------+-------------------------------
+ movie      | The Big Mope
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset//23c.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/23c.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/23c.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/23c.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+ movie_kind | complete_us_internet_movie 
+------------+----------------------------
+ movie      | Dirt Merchant
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset//25a.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/25a.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/25a.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/25a.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+ movie_budget | movie_votes |   male_writer   | violent_movie_title 
+--------------+-------------+-----------------+---------------------
+ Horror       | 10          | Abdallah, Damon | 1000 Year Sleep
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset//25b.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/25b.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/25b.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/25b.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+ movie_budget | movie_votes |    male_writer     | violent_movie_title 
+--------------+-------------+--------------------+---------------------
+ Horror       | 138         | Campbell, Jeremiah | Vampire Boys
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset//25c.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/25c.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/25c.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/25c.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+ movie_budget | movie_votes |    male_writer    | violent_movie_title 
+--------------+-------------+-------------------+---------------------
+ Action       | 10          | Aakeson, Kim Fupz | $
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset//26a.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/26a.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/26a.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/26a.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+  character_name  | rating |  playing_actor  | complete_hero_movie 
+------------------+--------+-----------------+---------------------
+ Aaron Fleischman | 7.1    | Acereda, Hermie | 3:10 to Yuma
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset//2a.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/2a.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/2a.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/2a.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+       movie_title        
+--------------------------
+ 008 - Agent wider Willen
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset//2b.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/2b.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/2b.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/2b.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+ movie_title 
+-------------
+ 007 in Rio
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset//2d.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/2d.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/2d.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/2d.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+       movie_title       
+-------------------------
+ 002 agenti segretissimi
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset//30a.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/30a.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/30a.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/30a.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+ movie_budget | movie_votes |    writer    | complete_violent_movie 
+--------------+-------------+--------------+------------------------
+ Horror       | 100356      | Abrams, J.J. | 16 Blocks
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset//30b.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/30b.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/30b.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/30b.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+ movie_budget | movie_votes |     writer      | complete_gore_movie 
+--------------+-------------+-----------------+---------------------
+ Horror       | 194782      | Shannon, Damian | Freddy vs. Jason
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset//30c.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/30c.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/30c.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/30c.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+ movie_budget | movie_votes |      writer      | complete_violent_movie 
+--------------+-------------+------------------+------------------------
+ Action       | 100356      | Abernathy, Lewis | $
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset//31a.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/31a.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/31a.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/31a.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+ movie_budget | movie_votes |   writer   | violent_liongate_movie 
+--------------+-------------+------------+------------------------
+ Horror       | 1040        | Agnew, Jim | 2001 Maniacs
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset//31b.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/31b.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/31b.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/31b.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+ movie_budget | movie_votes |        writer        | violent_liongate_movie 
+--------------+-------------+----------------------+------------------------
+ Horror       | 129755      | Bousman, Darren Lynn | Saw
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset//31c.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/31c.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/31c.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/31c.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+ movie_budget | movie_votes |    writer     | violent_liongate_movie 
+--------------+-------------+---------------+------------------------
+ Action       | 1008        | Abraham, Brad | 11:14
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset//3a.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/3a.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/3a.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/3a.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+    movie_title     
+--------------------
+ 2 Days in New York
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset//3b.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/3b.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/3b.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/3b.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+      movie_title       
+------------------------
+ 300: Rise of an Empire
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset//3c.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/3c.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/3c.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/3c.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+             movie_title              
+--------------------------------------
+ 00 Schneider - Jagd auf Nihil Baxter
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset//4a.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/4a.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/4a.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/4a.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+ rating |                movie_title                 
+--------+--------------------------------------------
+ 5.1    | 20-seiki shônen: Dai 2 shô - Saigo no kibô
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset//4b.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/4b.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/4b.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/4b.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+ rating |     movie_title     
+--------+---------------------
+ 9.1    | Batman: Arkham City
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset//4c.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/4c.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/4c.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/4c.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+ rating |             movie_title              
+--------+--------------------------------------
+ 2.1    | 00 Schneider - Jagd auf Nihil Baxter
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset//6a.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/6a.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/6a.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/6a.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+       movie_keyword       |     actor_name     | marvel_movie 
+---------------------------+--------------------+--------------
+ marvel-cinematic-universe | Downey Jr., Robert | Iron Man 3
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset//6b.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/6b.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/6b.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/6b.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+ movie_keyword  |     actor_name     |   hero_movie   
+----------------+--------------------+----------------
+ based-on-comic | Downey Jr., Robert | The Avengers 2
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset//6c.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/6c.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/6c.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/6c.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+       movie_keyword       |     actor_name     |  marvel_movie  
+---------------------------+--------------------+----------------
+ marvel-cinematic-universe | Downey Jr., Robert | The Avengers 2
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset//6d.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/6d.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/6d.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/6d.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+ movie_keyword  |     actor_name     |      hero_movie       
+----------------+--------------------+-----------------------
+ based-on-comic | Downey Jr., Robert | 2008 MTV Movie Awards
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset//6e.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/6e.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/6e.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/6e.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+       movie_keyword       |     actor_name     | marvel_movie 
+---------------------------+--------------------+--------------
+ marvel-cinematic-universe | Downey Jr., Robert | Iron Man 3
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset//6f.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/6f.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/6f.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/6f.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+ movie_keyword  | actor_name |      hero_movie       
+----------------+------------+-----------------------
+ based-on-comic | $hort, Too | 007: Agent Under Fire
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset//8a.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/8a.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/8a.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/8a.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/8a.sql:38: ERROR:  column "id" specified more than once
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset//8b.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/8b.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/8b.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/8b.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+ acress_pseudonym |    japanese_anime_movie     
+------------------+-----------------------------
+ Chambers, Linda  | Dragon Ball Z: Shin Budokai
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset//8c.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/8c.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/8c.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/8c.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+ writer_pseudo_name | movie_title 
+--------------------+-------------
+ ?                  | ****
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset//8d.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/8d.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/8d.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/8d.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+ costume_designer_pseudo | movie_with_costumes 
+-------------------------+---------------------
+ 100% Birgitta           | ?
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset//9a.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/9a.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/9a.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/9a.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/9a.sql:46: ERROR:  column "id" specified more than once
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset//9b.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/9b.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/9b.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/9b.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/9b.sql:44: ERROR:  column "id" specified more than once
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset//9c.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/9c.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/9c.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/9c.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/9c.sql:43: ERROR:  column "id" specified more than once
