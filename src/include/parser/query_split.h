@@ -81,14 +81,72 @@
 #include "utils/timeout.h"
 #include "utils/timestamp.h"
 #include "mb/pg_wchar.h"
+#include "postgres.h"
+#include "fmgr.h"
+#include "storage/lmgr.h"  /* For LockRelationOid */
 
 #include <stdbool.h>
 
 #define MEASURE_TIME false
 #define MERGE_SUB_PLANS false
 #define MANUAL_ANALYZE false
+#define SERIALIZE_WITH_OID true
 
 void doQSparse(const char* query_string, const char* commandTag, Node* pstmt, Query* querytree, char* completionTag);
+
+// SERIALIZE_WITH_OID
+#include "utils/lsyscache.h"
+#include "catalog/namespace.h"
+/*-------------------------------------------------------------------------
+ * OID Translation Support
+ *
+ * These structures and functions support serializing plans from one database
+ * (with FK constraints) and executing them in another database (columnar).
+ *-------------------------------------------------------------------------
+ */
+
+/* Maximum number of relations in a single plan */
+#define MAX_PLAN_RELATIONS 64
+
+/* OID mapping entry: maps old OID to schema.table name */
+typedef struct OidMapEntry
+{
+  Oid         old_oid;
+  char        schema_name[NAMEDATALEN];
+  char        table_name[NAMEDATALEN];
+} OidMapEntry;
+
+/* OID mapping for a plan */
+typedef struct OidMap
+{
+  int         num_entries;
+  OidMapEntry entries[MAX_PLAN_RELATIONS];
+} OidMap;
+
+/* Function declarations for OID translation */
+static void BuildOidMap(PlannedStmt *plan, OidMap *map);
+static void WriteOidMapToFile(FILE *file, OidMap *map);
+static bool ReadOidMapFromFile(FILE *file, OidMap *map);
+static Oid LookupNewOid(OidMap *map, Oid old_oid);
+static void TranslateOidsInPlan(PlannedStmt *plan, OidMap *map);
+static void TranslateOidsInPlanTree(Plan *plan, OidMap *map);
+
+/*
+ * OID Translation Functions for Cross-Database Plan Execution
+ *
+ * Use these to serialize plans from a database with FK constraints
+ * and execute them in a database with columnar storage.
+ */
+
+/* Serialize a plan with OID-to-name mapping (call in source DB with FKs) */
+void SerializePlanWithOidMap(PlannedStmt *plan, const char *filepath);
+
+/* Execute serialized plans with OID translation (call in target columnar DB) */
+void ExecuteSerializedPlans(const char *filepath,
+                            const char *query_string,
+                            const char *commandTag,
+                            char *completionTag);
+// SERIALIZE_WITH_OID end
 
 typedef struct timespec timespec;
 timespec diff(timespec start, timespec end);

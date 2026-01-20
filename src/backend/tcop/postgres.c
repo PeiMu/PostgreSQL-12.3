@@ -1163,6 +1163,51 @@ exec_simple_query(const char *query_string)
 	 */
 	oldcontext = MemoryContextSwitchTo(MessageContext);
 
+        /*
+	 * EXECUTION MODE: If query starts with "EXECUTE_PLANS:", execute serialized plans
+	 * Usage: EXECUTE_PLANS:/path/to/postgres_plan
+	 * This allows running pre-planned queries on columnar database
+         */
+        elog(INFO, "1");
+        if (strncmp(query_string, "EXECUTE_PLANS:", 14) == 0)
+        {
+          elog(INFO, "2");
+          const char *filepath = query_string + 14;
+          /* Trim leading whitespace */
+          while (*filepath == ' ' || *filepath == '\t')
+            filepath++;
+          /* Remove trailing semicolon/whitespace */
+          char *path_copy = pstrdup(filepath);
+          int len = strlen(path_copy);
+          while (len > 0 && (path_copy[len-1] == ';' || path_copy[len-1] == ' ' ||
+                             path_copy[len-1] == '\n' || path_copy[len-1] == '\r'))
+            path_copy[--len] = '\0';
+
+          elog(INFO, "Executing serialized plans from: %s", path_copy);
+          elog(INFO, "Before PushActiveSnapshot: ActiveSnapshotSet() = %d",
+               ActiveSnapshotSet());
+          PushActiveSnapshot(GetTransactionSnapshot());
+          elog(INFO, "After PushActiveSnapshot: ActiveSnapshotSet() = %d",
+               ActiveSnapshotSet());
+          Snapshot snap = GetActiveSnapshot();
+          elog(INFO, "Snapshot xmin=%u, xmax=%u, IsMVCCSnapshot=%d",
+               snap->xmin, snap->xmax, IsMVCCSnapshot(snap));
+
+          char completionTag[COMPLETION_TAG_BUFSIZE];
+          completionTag[0] = '\0';
+
+          ExecuteSerializedPlans(path_copy, query_string, "SELECT", completionTag);
+          PopActiveSnapshot();
+          elog(INFO, "After PopActiveSnapshot: ActiveSnapshotSet() = %d",
+               ActiveSnapshotSet());
+
+          pfree(path_copy);
+
+          /* Finish transaction before returning */
+//          finish_xact_command();
+          return;
+        }
+
 	if (strcmp(query_string, "switch to Postgres;") == 0)
 		query_splitting_algorithm = None;
 	else if (strcmp(query_string, "switch to minsubquery;") == 0)

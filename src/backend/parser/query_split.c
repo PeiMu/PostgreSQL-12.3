@@ -8,7 +8,6 @@
  *
  *-------------------------------------------------------------------------
  */
-#include "postgres.h"
 #include "parser/query_split.h"
 #include "fe_utils/simple_list.h"
 #include "commands/event_trigger.h"
@@ -21,7 +20,7 @@
 #define NEWBETTER 1
 #define OLDBETTER 2
 
-#define DumpSubQueryString  false
+#define DUMP_SUBQUERY_STRING  false
 #define DEBUG_TOTAL_SIZE    false
 #define DEBUG_MERGE_SUB_PLANS false
 #define DEBUG_QUERY_SPLIT   false
@@ -93,7 +92,10 @@ static List* spq(char* query_string, char* commandTag, Node* pstmt, Query* query
 extern void start_xact_command();
 static int tarfunc(Index* rels, PlannedStmt* new, PlannedStmt* old);
 //Execute the local query
-static List* QSExecutor(char* query_string, const char* commandTag, Node* pstmt, PlannedStmt* plannedstmt, CommandDest dest, char* relname, char* completionTag, Query* querytree, Index* transfer_array, List* FKlist, MemoryContext oldcontext);
+static List* QSExecutor(char* query_string, const char* commandTag, Node* pstmt,
+                        PlannedStmt* plannedstmt, CommandDest dest, char* relname,
+                        char* completionTag, Query* querytree, Index* transfer_array,
+                        List* FKlist, MemoryContext oldcontext, bool serialize_node_str);
 //find the subquery with lowest cost to be executed
 static PlannedStmt* QSOptimizer(Query* global_query, bool* graph, Index* transfer_array, int length);
 static Plan* find_node_with_nleaf_recursive(Plan* plan, int nleaf, int* leaf_has, int* depth);
@@ -169,7 +171,9 @@ void doQSparse(const char* query_string, const char* commandTag, Node* pstmt, Qu
 		plannedstmt->utilityStmt = querytree->utilityStmt;
 		plannedstmt->stmt_location = querytree->stmt_location;
 		plannedstmt->stmt_len = querytree->stmt_len;
-		QSExecutor(query_string, commandTag, pstmt, plannedstmt, DestRemote, NULL, completionTag, querytree, NULL, NIL, oldcontext);
+		QSExecutor(query_string, commandTag, pstmt, plannedstmt,
+                           DestRemote, NULL, completionTag, querytree, NULL,
+                           NIL, oldcontext, false);
 		return;
 	}
 	ListCell* lc;
@@ -198,7 +202,9 @@ void doQSparse(const char* query_string, const char* commandTag, Node* pstmt, Qu
                 fclose(file);
             }
 #endif
-			QSExecutor(query_string, commandTag, pstmt, plannedstmt, DestRemote, NULL, completionTag, querytree, NULL, NIL, oldcontext);
+			QSExecutor(query_string, commandTag, pstmt, plannedstmt,
+                       DestRemote, NULL, completionTag, querytree, NULL, NIL,
+                       oldcontext, false);
 #if MEASURE_TIME || MERGE_SUB_PLANS
             FILE *file = fopen("time_log.csv", "a");
         if (NULL == file) {
@@ -229,7 +235,9 @@ void doQSparse(const char* query_string, const char* commandTag, Node* pstmt, Qu
             fclose(file);
         }
 #endif
-		QSExecutor(query_string, commandTag, pstmt, plannedstmt, DestRemote, NULL, completionTag, querytree, NULL, NIL, oldcontext);
+		QSExecutor(query_string, commandTag, pstmt, plannedstmt,
+                   DestRemote, NULL, completionTag, querytree, NULL, NIL,
+                   oldcontext, false);
 #if MEASURE_TIME || MERGE_SUB_PLANS
         FILE *file = fopen("time_log.csv", "a");
         if (NULL == file) {
@@ -269,7 +277,7 @@ static void rRj(Query* querytree)
 	switch (querytree->jointree->quals->type)
 	{
 		case T_BoolExpr:
-		{	
+		{
 			BoolExpr* expr = (BoolExpr*)querytree->jointree->quals;
 			if (expr == NULL)
 				return;
@@ -811,7 +819,9 @@ static void Recon(char* query_string, char* commandTag, Node* pstmt, Query* ori_
 	if (global_query->commandType == CMD_UTILITY)
 	{
 		plannedstmt = QSOptimizer(global_query, NULL, NULL, 0);
-		QSExecutor(query_string, commandTag, pstmt, plannedstmt, DestRemote, NULL, completionTag, NULL, NULL, NIL, oldcontext);
+		QSExecutor(query_string, commandTag, pstmt, plannedstmt,
+                           DestRemote, NULL, completionTag, NULL, NULL, NIL,
+                           oldcontext, false);
 		return;
 	}
 	int length = global_query->rtable->length;
@@ -831,7 +841,8 @@ static void Recon(char* query_string, char* commandTag, Node* pstmt, Query* ori_
             fclose(file);
         }
 #endif
-		QSExecutor(query_string, commandTag, pstmt, plannedstmt, DestRemote, NULL, completionTag, NULL, NULL, NIL, oldcontext);
+		QSExecutor(query_string, commandTag, pstmt, plannedstmt, DestRemote,
+                   NULL, completionTag, NULL, NULL, NIL, oldcontext, false);
 #if MEASURE_TIME || MERGE_SUB_PLANS
         FILE *file = fopen("time_log.csv", "a");
         if (NULL == file) {
@@ -887,12 +898,18 @@ static void Recon(char* query_string, char* commandTag, Node* pstmt, Query* ori_
 #endif
 	//value start from 1, index start from 0
 	transfer_array = (Index*)palloc(length * sizeof(Index));
-#if DumpSubQueryString
-    const char *dir_path = "/home/pei/Project/duckdb/measure/postgres_plan";
+#if DUMP_SUBQUERY_STRING || SERIALIZE_WITH_OID
+    char dir_path[100];
+
+    if (getcwd(dir_path, sizeof(dir_path)) != NULL)
+      elog(INFO, "dump nodestring to: %s", dir_path);
+    else
+      elog(ERROR, "getcwd failed");
+//    const char *dir_path = "./postgres_plan";
     struct stat st = {0};
     if (stat(dir_path, &st) == -1) {
         if (mkdir(dir_path, 0700) != 0) {
-            printf("Error: create directory postgres_plan failed!!!");
+            printf("Error: fetch directory failed!!!");
             exit(-1);
         }
     }
@@ -908,7 +925,7 @@ static void Recon(char* query_string, char* commandTag, Node* pstmt, Query* ori_
     Oid temp_table_id[SUBQUERIES_NUM] = {0};
 	while (plannedstmt = QSOptimizer(global_query, graph, transfer_array, length))
 	{
-#if DumpSubQueryString
+#if DUMP_SUBQUERY_STRING
         FILE *file = fopen(file_name, "a");
         if (NULL == file) {
             printf("Error: failed to open file!!!");
@@ -923,6 +940,10 @@ static void Recon(char* query_string, char* commandTag, Node* pstmt, Query* ori_
         fputs("\n", file);
         fclose(file);
 //        printf("subquery optimized plan: %s\n", nodeToString(plannedstmt));
+#endif
+#if SERIALIZE_WITH_OID
+    /* Serialize plan with OID mapping for cross-database execution */
+    SerializePlanWithOidMap(plannedstmt, file_name);
 #endif
         queryId++;
 #if MERGE_SUB_PLANS
@@ -1016,7 +1037,9 @@ static void Recon(char* query_string, char* commandTag, Node* pstmt, Query* ori_
 		}
 
 		//Execute the subquery and do some change for next subquery creation
-		FKlist = QSExecutor(query_string, commandTag, pstmt, plannedstmt, mydest, relname, completionTag, global_query, transfer_array, FKlist, oldcontext);
+		FKlist = QSExecutor(query_string, commandTag, pstmt, plannedstmt,
+                                    mydest, relname, completionTag, global_query,
+                                    transfer_array, FKlist, oldcontext, false);
 		//finish_xact_command();
 		if (mydest == DestRemote)
 		{
@@ -1273,7 +1296,10 @@ static PlannedStmt* QSOptimizer(Query* global_query, bool* graph, Index* transfe
 }
 
 //Executor
-static List* QSExecutor(char* query_string, const char* commandTag, Node* pstmt, PlannedStmt* plannedstmt, CommandDest dest, char* relname, char* completionTag, Query* querytree, Index* transfer_array, List* FKlist, MemoryContext oldcontext)
+static List* QSExecutor(char* query_string, const char* commandTag, Node* pstmt,
+                        PlannedStmt* plannedstmt, CommandDest dest, char* relname,
+                        char* completionTag, Query* querytree, Index* transfer_array,
+                        List* FKlist, MemoryContext oldcontext, bool serialize_node_str)
 {
 	Oid relid;
 	int16 format;
@@ -1287,7 +1313,11 @@ static List* QSExecutor(char* query_string, const char* commandTag, Node* pstmt,
 	portal = CreatePortal("", true, true);
 	portal->visible = false;
 	PortalDefineQuery(portal, NULL, query_string, commandTag, plantree_list, NULL);
-	PortalStart(portal, NULL, 0, SnapshotAny);
+        if (serialize_node_str) {
+          PortalStart(portal, NULL, 0, InvalidSnapshot);
+        } else {
+          PortalStart(portal, NULL, 0, SnapshotAny);
+        }
 	format = 0;
 	PortalSetResultFormat(portal, 1, &format);
 	if (dest == DestRemote)
@@ -1360,7 +1390,11 @@ static List* QSExecutor(char* query_string, const char* commandTag, Node* pstmt,
 
 #endif
 
-        FKlist = Prepare4Next(querytree, transfer_array, (DR_intorel*)receiver, plannedstmt, relname, FKlist);
+        if (!serialize_node_str) {
+          FKlist =
+              Prepare4Next(querytree, transfer_array, (DR_intorel *)receiver,
+                           plannedstmt, relname, FKlist);
+        }
 
 #if MANUAL_ANALYZE
         #if DEBUG_TOTAL_SIZE
@@ -1372,7 +1406,9 @@ static List* QSExecutor(char* query_string, const char* commandTag, Node* pstmt,
     }
 	receiver->rDestroy(receiver);
 	PortalDrop(portal, false);
-//	EndCommand(completionTag, dest);
+        if (serialize_node_str) {
+          EndCommand(completionTag, dest);
+        }
 	return FKlist;
 }
 
@@ -1433,7 +1469,7 @@ static List* Prepare4Next(Query* global_query, Index* transfer_array, DR_intorel
 			prev = lc;
 		}
 	}
-	
+
 	Oid relid = RangeVarGetRelid(receiver->into->rel, NoLock, true);
 	Relation relation = table_open(relid, NoLock);
 	List* varlist = pull_var_clause((Node*)global_query->jointree, 0);
@@ -2537,4 +2573,535 @@ static double getMatSize(Oid relid)
             }
         }
     }
+}
+
+/*-------------------------------------------------------------------------
+ * OID Translation Implementation
+ *
+ * These functions handle serializing plans with OID mappings and
+ * translating OIDs when deserializing in a different database.
+ *-------------------------------------------------------------------------
+ */
+
+/*
+ * BuildOidMap - Extract all relation OIDs from a plan and map to names
+ *
+ * This should be called in the SOURCE database (where FKs exist)
+ */
+static void
+BuildOidMap(PlannedStmt *plan, OidMap *map)
+{
+    ListCell *lc;
+
+    map->num_entries = 0;
+
+    /* Extract OIDs from rtable */
+    foreach(lc, plan->rtable)
+    {
+        RangeTblEntry *rte = (RangeTblEntry *) lfirst(lc);
+
+        if (rte->rtekind == RTE_RELATION && OidIsValid(rte->relid))
+        {
+            /* Check if we already have this OID */
+            bool found = false;
+            for (int i = 0; i < map->num_entries; i++)
+            {
+                if (map->entries[i].old_oid == rte->relid)
+                {
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found && map->num_entries < MAX_PLAN_RELATIONS)
+            {
+                OidMapEntry *entry = &map->entries[map->num_entries];
+                entry->old_oid = rte->relid;
+
+                /* Get schema and table names */
+                Oid namespace_oid = get_rel_namespace(rte->relid);
+                char *schema = get_namespace_name(namespace_oid);
+                char *relname = get_rel_name(rte->relid);
+
+                if (schema && relname)
+                {
+                    strncpy(entry->schema_name, schema, NAMEDATALEN - 1);
+                    entry->schema_name[NAMEDATALEN - 1] = '\0';
+                    strncpy(entry->table_name, relname, NAMEDATALEN - 1);
+                    entry->table_name[NAMEDATALEN - 1] = '\0';
+                    map->num_entries++;
+                }
+            }
+        }
+    }
+}
+
+/*
+ * WriteOidMapToFile - Write OID mapping as first line of plan file
+ *
+ * Format: OID_MAP:oid1=schema1.table1,oid2=schema2.table2,...
+ */
+static void
+WriteOidMapToFile(FILE *file, OidMap *map)
+{
+    fprintf(file, "OID_MAP:");
+    for (int i = 0; i < map->num_entries; i++)
+    {
+        if (i > 0)
+            fprintf(file, ",");
+        fprintf(file, "%u=%s.%s",
+                map->entries[i].old_oid,
+                map->entries[i].schema_name,
+                map->entries[i].table_name);
+    }
+    fprintf(file, "\n");
+}
+
+/*
+ * ReadOidMapFromFile - Read OID mapping from first line and resolve new OIDs
+ *
+ * This should be called in the TARGET database (columnar)
+ * After reading, each entry's old_oid field will contain the NEW OID
+ * (we reuse the field since we don't need the old OID anymore)
+ */
+static bool
+ReadOidMapFromFile(FILE *file, OidMap *map)
+{
+    char line[4096];
+
+    if (!fgets(line, sizeof(line), file))
+    {
+        /* EOF is normal - no more plans to read */
+        return false;
+    }
+
+    /* Debug: show first 100 chars of line */
+    char debug_line[101];
+    strncpy(debug_line, line, 100);
+    debug_line[100] = '\0';
+    elog(INFO, "ReadOidMapFromFile: first line = '%s'", debug_line);
+
+    /* Check for OID_MAP prefix */
+    if (strncmp(line, "OID_MAP:", 8) != 0)
+    {
+        elog(INFO, "ReadOidMapFromFile: line does not start with 'OID_MAP:', got prefix '%.*s'", 8, line);
+        return false;
+    }
+
+    map->num_entries = 0;
+
+    char *ptr = line + 8;  /* Skip "OID_MAP:" */
+    char *token;
+    char *saveptr;
+
+    token = strtok_r(ptr, ",\n", &saveptr);
+    while (token != NULL && map->num_entries < MAX_PLAN_RELATIONS)
+    {
+        OidMapEntry *entry = &map->entries[map->num_entries];
+
+        /* Parse "oid=schema.table" */
+        Oid old_oid;
+        char schema[NAMEDATALEN];
+        char table[NAMEDATALEN];
+
+        if (sscanf(token, "%u=%[^.].%s", &old_oid, schema, table) == 3)
+        {
+            entry->old_oid = old_oid;  /* Store original OID for lookup */
+            strncpy(entry->schema_name, schema, NAMEDATALEN - 1);
+            entry->schema_name[NAMEDATALEN - 1] = '\0';
+            strncpy(entry->table_name, table, NAMEDATALEN - 1);
+            entry->table_name[NAMEDATALEN - 1] = '\0';
+
+            map->num_entries++;
+        }
+
+        token = strtok_r(NULL, ",\n", &saveptr);
+    }
+
+    return true;
+}
+
+/*
+ * LookupNewOid - Given an old OID, find the new OID in target database
+ *
+ * Returns InvalidOid if not found
+ *
+ * Special handling for temp tables: if schema starts with "pg_temp_",
+ * look up in current session's temp schema instead.
+ */
+static Oid
+LookupNewOid(OidMap *map, Oid old_oid)
+{
+    for (int i = 0; i < map->num_entries; i++)
+    {
+        if (map->entries[i].old_oid == old_oid)
+        {
+            char *schema_name = map->entries[i].schema_name;
+            char *table_name = map->entries[i].table_name;
+            RangeVar *rv;
+
+            /* Special handling for temp tables */
+            if (strncmp(schema_name, "pg_temp_", 8) == 0)
+            {
+                /* For temp tables, use NULL schema to let PostgreSQL
+                 * find it in the current session's temp schema */
+                rv = makeRangeVar(NULL, table_name, -1);
+                rv->relpersistence = RELPERSISTENCE_TEMP;
+                elog(INFO, "LookupNewOid: temp table %s.%s -> looking up %s in current temp schema",
+                     schema_name, table_name, table_name);
+            }
+            else
+            {
+                /* Normal table - use exact schema */
+                rv = makeRangeVar(schema_name, table_name, -1);
+            }
+
+            Oid new_oid = RangeVarGetRelid(rv, NoLock, true);
+
+            elog(INFO, "LookupNewOid: %s.%s old_oid=%u -> new_oid=%u",
+                 schema_name, table_name, old_oid, new_oid);
+
+            if (!OidIsValid(new_oid))
+            {
+                elog(WARNING, "Table %s.%s not found in target database",
+                     schema_name, table_name);
+            }
+            return new_oid;
+        }
+    }
+    return InvalidOid;
+}
+
+/*
+ * TranslateOidsInPlanTree - Recursively walk plan tree and translate OIDs
+ */
+static void
+TranslateOidsInPlanTree(Plan *plan, OidMap *map)
+{
+    if (plan == NULL)
+        return;
+
+    /* Handle scan nodes that reference relations */
+    switch (nodeTag(plan))
+    {
+        case T_SeqScan:
+        case T_SampleScan:
+        case T_IndexScan:
+        case T_IndexOnlyScan:
+        case T_BitmapIndexScan:
+        case T_BitmapHeapScan:
+        case T_TidScan:
+            /* These are Scan nodes - but scanrelid is an index into rtable,
+             * not an OID, so we don't need to translate it.
+             * The rtable translation handles the actual OIDs. */
+            break;
+        default:
+            break;
+    }
+
+    /* Recurse into child plans */
+    TranslateOidsInPlanTree(plan->lefttree, map);
+    TranslateOidsInPlanTree(plan->righttree, map);
+
+    /* Handle special plan types with subplans */
+    if (IsA(plan, SubqueryScan))
+    {
+        SubqueryScan *ss = (SubqueryScan *) plan;
+        TranslateOidsInPlanTree(ss->subplan, map);
+    }
+    else if (IsA(plan, Append))
+    {
+        Append *append = (Append *) plan;
+        ListCell *lc;
+        foreach(lc, append->appendplans)
+        {
+            TranslateOidsInPlanTree((Plan *) lfirst(lc), map);
+        }
+    }
+    else if (IsA(plan, MergeAppend))
+    {
+        MergeAppend *ma = (MergeAppend *) plan;
+        ListCell *lc;
+        foreach(lc, ma->mergeplans)
+        {
+            TranslateOidsInPlanTree((Plan *) lfirst(lc), map);
+        }
+    }
+}
+
+/*
+ * TranslateOidsInPlan - Translate all OIDs in a PlannedStmt
+ *
+ * This walks through rtable and relationOids and replaces old OIDs with new ones
+ */
+static void
+TranslateOidsInPlan(PlannedStmt *plan, OidMap *map)
+{
+    ListCell *lc;
+
+    /* Translate OIDs in rtable */
+    foreach(lc, plan->rtable)
+    {
+        RangeTblEntry *rte = (RangeTblEntry *) lfirst(lc);
+
+        if (rte->rtekind == RTE_RELATION && OidIsValid(rte->relid))
+        {
+            Oid new_oid = LookupNewOid(map, rte->relid);
+            if (OidIsValid(new_oid))
+            {
+                rte->relid = new_oid;
+            }
+        }
+    }
+
+    /* Translate OIDs in relationOids list */
+    foreach(lc, plan->relationOids)
+    {
+        Oid old_oid = lfirst_oid(lc);
+        Oid new_oid = LookupNewOid(map, old_oid);
+        if (OidIsValid(new_oid))
+        {
+            lfirst_oid(lc) = new_oid;
+        }
+    }
+
+    /* Walk the plan tree (mainly for verification, most OIDs are in rtable) */
+    TranslateOidsInPlanTree(plan->planTree, map);
+}
+
+/*
+ * SerializePlanWithOidMap - Serialize a plan with OID mapping for cross-database use
+ *
+ * Call this in the SOURCE database (with FK constraints)
+ */
+void
+SerializePlanWithOidMap(PlannedStmt *plan, const char *filepath)
+{
+    OidMap map;
+
+    /* Build the OID to name mapping */
+    BuildOidMap(plan, &map);
+
+    /* Write to file */
+    FILE *file = fopen(filepath, "a");
+    if (file == NULL)
+    {
+        elog(ERROR, "Could not open file %s for writing", filepath);
+        return;
+    }
+
+    /* Write OID map as first line */
+    WriteOidMapToFile(file, &map);
+
+    /* Write the plan as second line */
+    char *planstring = nodeToString(plan);
+    fputs(planstring, file);
+    fputs("\n", file);
+
+    fclose(file);
+    elog(INFO, "wrote planstring to %s", filepath);
+    pfree(planstring);
+}
+
+/*
+ * DeserializePlanWithOidTranslation - Load a plan and translate OIDs for target database
+ *
+ * Call this in the TARGET database (columnar, no FKs)
+ * Returns the PlannedStmt with translated OIDs, or NULL on error
+ */
+PlannedStmt *
+DeserializePlanWithOidTranslation(FILE *file)
+{
+    OidMap map;
+    char *planstring;
+    size_t len = 0;
+    ssize_t read;
+    PlannedStmt *plan;
+
+    /* Read OID map from first line - returns false on EOF (normal) or error */
+    if (!ReadOidMapFromFile(file, &map))
+    {
+        /* EOF is normal - no warning needed */
+        return NULL;
+    }
+
+    /* Read plan string from second line */
+    planstring = NULL;
+    read = getline(&planstring, &len, file);
+    if (read == -1)
+    {
+        elog(WARNING, "Failed to read plan string from file");
+        return NULL;
+    }
+
+    /* Remove trailing newline */
+    if (read > 0 && planstring[read - 1] == '\n')
+        planstring[read - 1] = '\0';
+
+    /* Deserialize the plan */
+    plan = (PlannedStmt *) stringToNode(planstring);
+    free(planstring);  /* getline uses malloc, not palloc */
+
+    if (plan == NULL || !IsA(plan, PlannedStmt))
+    {
+        elog(WARNING, "Failed to deserialize plan");
+        return NULL;
+    }
+
+    /* Translate OIDs to target database */
+    TranslateOidsInPlan(plan, &map);
+
+    return plan;
+}
+
+/*
+ * AcquireLocksForPlan - Acquire locks on all relations in a plan
+ *
+ * When executing a deserialized plan, we bypass the normal planning phase
+ * that acquires locks. This function acquires AccessShareLock on all
+ * relations referenced in the plan's rtable.
+ */
+static void
+AcquireLocksForPlan(PlannedStmt *plan)
+{
+    ListCell *lc;
+
+    foreach(lc, plan->rtable)
+    {
+        RangeTblEntry *rte = (RangeTblEntry *) lfirst(lc);
+
+        if (rte->rtekind == RTE_RELATION && OidIsValid(rte->relid))
+        {
+            /* Acquire AccessShareLock for SELECT operations */
+            LockRelationOid(rte->relid, AccessShareLock);
+        }
+    }
+}
+
+/*
+ * ExecuteSerializedPlans - Load and execute plans from a file
+ *
+ * This is the main entry point for executing pre-serialized plans
+ * in the target (columnar) database.
+ *
+ * Parameters:
+ *   filepath - Path to file containing serialized plans (with OID maps)
+ *   query_string - Original query string (for error messages)
+ *   commandTag - Command tag (e.g., "SELECT")
+ *   completionTag - Output: completion message
+ */
+void
+ExecuteSerializedPlans(const char *filepath,
+                       const char *query_string,
+                       const char *commandTag,
+                       char *completionTag)
+{
+    FILE *file;
+    PlannedStmt *plan;
+    int plan_num = 0;
+    MemoryContext oldcontext;
+
+    file = fopen(filepath, "r");
+    if (file == NULL)
+    {
+        elog(ERROR, "Could not open plan file %s", filepath);
+    }
+
+    oldcontext = MemoryContextSwitchTo(MessageContext);
+
+    /* Read and execute each plan */
+    while ((plan = DeserializePlanWithOidTranslation(file)) != NULL)
+    {
+        plan_num++;
+        char *relname = NULL;
+        CommandDest dest;
+
+        /* CRITICAL: Acquire locks on all relations before execution */
+        AcquireLocksForPlan(plan);
+
+        /* Check if there are more plans (peek ahead) */
+        long pos = ftell(file);
+        char peek[10];
+        bool has_more = (fgets(peek, sizeof(peek), file) != NULL &&
+                         strncmp(peek, "OID_MAP:", 8) == 0);
+        fseek(file, pos, SEEK_SET);
+
+        if (has_more)
+        {
+            /* Intermediate plan - store result in temp table */
+            dest = DestIntoRel;
+            relname = palloc(16);
+            sprintf(relname, "temp%d", plan_num);
+        }
+        else
+        {
+            /* Final plan - send results to client */
+            dest = DestRemote;
+        }
+
+        /* Execute using existing QSExecutor */
+        QSExecutor((char *)query_string, commandTag, NULL, plan,
+                   dest, relname, completionTag, NULL, NULL, NIL, oldcontext,
+                   true);
+
+        if (relname)
+            pfree(relname);
+
+        /*
+         * After intermediate plans that create temp tables, make the data
+         * visible to subsequent plans.
+         */
+        if (has_more)
+        {
+          CommandCounterIncrement();
+          PopActiveSnapshot();
+          PushActiveSnapshot(GetTransactionSnapshot());
+        }
+    }
+
+    fclose(file);
+    MemoryContextSwitchTo(oldcontext);
+
+    elog(INFO, "Executed %d plans from %s", plan_num, filepath);
+}
+
+/*
+ * SQL-callable function to execute serialized plans
+ *
+ * Usage from psql (after creating the function):
+ *   SELECT execute_serialized_plans('/path/to/postgres_plan');
+ *
+ * To register this function in PostgreSQL, run:
+ *   CREATE FUNCTION execute_serialized_plans(text) RETURNS text
+ *   AS 'MODULE_PATHNAME', 'execute_serialized_plans_sql'
+ *   LANGUAGE C STRICT;
+ *
+ * Or if built into the core (not as extension), it needs to be added
+ * to the system catalog via a different mechanism.
+ */
+PG_FUNCTION_INFO_V1(execute_serialized_plans_sql);
+
+Datum
+execute_serialized_plans_sql(PG_FUNCTION_ARGS)
+{
+    text *filepath_text = PG_GETARG_TEXT_PP(0);
+    char *filepath = text_to_cstring(filepath_text);
+    char completionTag[COMPLETION_TAG_BUFSIZE];
+
+    completionTag[0] = '\0';
+
+    PG_TRY();
+    {
+        ExecuteSerializedPlans(filepath, "", "SELECT", completionTag);
+    }
+    PG_CATCH();
+    {
+        pfree(filepath);
+        PG_RE_THROW();
+    }
+    PG_END_TRY();
+
+    pfree(filepath);
+
+    PG_RETURN_TEXT_P(cstring_to_text(completionTag));
 }
