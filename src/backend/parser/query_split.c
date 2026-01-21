@@ -283,7 +283,8 @@ static void rRj(Query* querytree)
 				return;
 			//expression list in the SQL where clause
 			List* where = expr->args;
-			//remove the redundant expression in expression list
+			//collect items to delete (safe pattern - don't modify list during iteration)
+			List* to_delete = NIL;
 			foreach(lc, where)
 			{
 				//is this expression a filter clause ?
@@ -291,14 +292,20 @@ static void rRj(Query* querytree)
 				{
 					continue;
 				}
-				//is this expression contian two relationship table ?
+				//is this expression contain two relationship table ?
 				if (is_2relationship(lc->data.ptr_value, is_relationship, length))
 				{
-					//if yes, remove it from expression list
-					where = list_delete(where, lfirst(lc));
-					continue;
+					//mark for deletion
+					to_delete = lappend(to_delete, lfirst(lc));
 				}
 			}
+			//now delete the collected items
+			foreach(lc, to_delete)
+			{
+				where = list_delete(where, lfirst(lc));
+			}
+			list_free(to_delete);
+			expr->args = where;
 			break;
 		}
 		case T_OpExpr:
@@ -1621,6 +1628,7 @@ static bool* List2Graph(bool* is_relationship, List* joinlist, List* FKlist, int
 			int x = fkOptInfo->con_relid - 1;
 			int y = fkOptInfo->ref_relid - 1;
 			ListCell* lc2;
+			List* to_delete = NIL;
 			foreach(lc2, joinlist)
 			{
 				Var* var1 = (Var*)lfirst(((OpExpr*)lfirst(lc2))->args->head);
@@ -1628,14 +1636,20 @@ static bool* List2Graph(bool* is_relationship, List* joinlist, List* FKlist, int
 				if (var1->varno - 1 == x && var2->varno - 1 == y)
 				{
 					flag = true;
-					joinlist = list_delete(joinlist, lfirst(lc2));
+					to_delete = lappend(to_delete, lfirst(lc2));
 				}
 				else if (var1->varno - 1 == y && var2->varno - 1 == x)
 				{
 					flag = true;
-					joinlist = list_delete(joinlist, lfirst(lc2));
+					to_delete = lappend(to_delete, lfirst(lc2));
 				}
 			}
+			/* Delete after iteration */
+			foreach(lc2, to_delete)
+			{
+				joinlist = list_delete(joinlist, lfirst(lc2));
+			}
+			list_free(to_delete);
 			if (!flag)
 				continue;
 			if (query_splitting_algorithm == RelationshipCenter)
@@ -1974,6 +1988,7 @@ static bool doScalarArrayOpExprTransfor(ScalarArrayOpExpr* expr, Index* transfer
 static List* setjoinlist(List* qualslist, CommandDest dest, Index* transfer_array, int length)
 {
 	ListCell* lc;
+	List* to_delete = NIL;
 	foreach(lc, qualslist)
 	{
 		Expr* expr = (Expr*)lfirst(lc);
@@ -2009,57 +2024,79 @@ static List* setjoinlist(List* qualslist, CommandDest dest, Index* transfer_arra
 		}
 		if (!flag)
 		{
-			qualslist = list_delete(qualslist, lfirst(lc));
+			to_delete = lappend(to_delete, expr);
 		}
 	}
+	/* Delete after iteration */
+	foreach(lc, to_delete)
+	{
+		qualslist = list_delete(qualslist, lfirst(lc));
+	}
+	list_free(to_delete);
 	return qualslist;
 }
 
 static List* simplifyjoinlist(List* list, CommandDest dest, Index* transfer_array, bool* graph, int length)
 {
 	ListCell* lc;
+	List* to_delete = NIL;
 	foreach(lc, list)
 	{
-		Expr* expr = (Expr*)lfirst(lc);
-		if (is_RC(expr))
-		{
-			List* varlist = pull_var_clause(expr, 0);
-			Var* var = (Var*)lfirst(varlist->head);
-			if (transfer_array[var->varno - 1] != 0)
-				list = list_delete(list, lfirst(lc));
-		}
-		else
-		{
-			bool flag = false;
-			Index X = 0, Y = 0;
-			OpExpr* opexpr = (OpExpr*)expr;
-			Var* var1 = (Var*)lfirst(opexpr->args->head);
-			Var* var2 = (Var*)lfirst(opexpr->args->head->next);
-			Assert(var1->varno != var2->varno);
-			X = var1->varno - 1;
-			Y = var2->varno - 1;
-			if (graph[X * length + Y] == false && graph[Y * length + X] == false)
-			{
-				list = list_delete(list, lfirst(lc));
-			}
-		}
+          Expr* expr = (Expr*)lfirst(lc);
+          if (is_RC(expr))
+          {
+            List* varlist = pull_var_clause(expr, 0);
+            Var* var = (Var*)lfirst(varlist->head);
+            if (transfer_array[var->varno - 1] != 0)
+              to_delete = lappend(to_delete, expr);
+          }
+          else
+          {
+            bool flag = false;
+            Index X = 0, Y = 0;
+            OpExpr* opexpr = (OpExpr*)expr;
+            Var* var1 = (Var*)lfirst(opexpr->args->head);
+            Var* var2 = (Var*)lfirst(opexpr->args->head->next);
+            Assert(var1->varno != var2->varno);
+            X = var1->varno - 1;
+            Y = var2->varno - 1;
+            if (graph[X * length + Y] == false && graph[Y * length + X] == false)
+            {
+              to_delete = lappend(to_delete, expr);
+            }
+          }
 	}
+	/* Delete after iteration */
+	foreach(lc, to_delete)
+	{
+          list = list_delete(list, lfirst(lc));
+	}
+	list_free(to_delete);
 	return list;
 }
 
 static List* setfromlist(List* fromlist, Index* transfer_array, int length)
 {
 	ListCell* lc;
+	List* to_delete = NIL;
 	foreach(lc, fromlist)
 	{
 		RangeTblRef* ref = (RangeTblRef*)lfirst(lc);
 		if (transfer_array[ref->rtindex - 1] == 0)
 		{
-			fromlist = list_delete(fromlist, lfirst(lc));
-			continue;
+			to_delete = lappend(to_delete, ref);
 		}
-		ref->rtindex = transfer_array[ref->rtindex - 1];
+		else
+		{
+			ref->rtindex = transfer_array[ref->rtindex - 1];
+		}
 	}
+	/* Delete after iteration */
+	foreach(lc, to_delete)
+	{
+		fromlist = list_delete(fromlist, lfirst(lc));
+	}
+	list_free(to_delete);
 	return fromlist;
 }
 
@@ -2071,6 +2108,7 @@ static List* settargetlist(const List* global_rtable, List* local_rtable, Comman
 	{
 		targetlist = removeAggref(targetlist);
 	}
+	List* to_delete = NIL;
 	foreach(lc, targetlist)
 	{
 		bool reserved = false;
@@ -2101,8 +2139,14 @@ static List* settargetlist(const List* global_rtable, List* local_rtable, Comman
 		}
 		if (reserved)
 			continue;
+		to_delete = lappend(to_delete, tar);
+	}
+	/* Delete after iteration */
+	foreach(lc, to_delete)
+	{
 		targetlist = list_delete(targetlist, lfirst(lc));
 	}
+	list_free(to_delete);
 	foreach(lc, varlist)
 	{
 		Var* var = (Var*)lfirst(lc);
@@ -2583,10 +2627,139 @@ static double getMatSize(Oid relid)
  *-------------------------------------------------------------------------
  */
 
+/* Forward declaration for recursive index extraction */
+static void ExtractIndexOidsFromPlan(Plan *plan, OidMap *map);
+
+/* Helper to add an OID to the map */
+static void
+AddOidToMap(OidMap *map, Oid relid)
+{
+    if (!OidIsValid(relid))
+        return;
+
+    /* Check if we already have this OID */
+    for (int i = 0; i < map->num_entries; i++)
+    {
+        if (map->entries[i].old_oid == relid)
+            return;  /* Already have it */
+    }
+
+    if (map->num_entries >= MAX_PLAN_RELATIONS)
+        return;  /* Map is full */
+
+    OidMapEntry *entry = &map->entries[map->num_entries];
+    entry->old_oid = relid;
+
+    /* Get relation info */
+    Oid namespace_oid = get_rel_namespace(relid);
+    char *schema = get_namespace_name(namespace_oid);
+    char *relname = get_rel_name(relid);
+    char relkind = get_rel_relkind(relid);
+
+    if (schema && relname)
+    {
+        strncpy(entry->schema_name, schema, NAMEDATALEN - 1);
+        entry->schema_name[NAMEDATALEN - 1] = '\0';
+
+        /* Check if it's an index */
+        if (relkind == RELKIND_INDEX)
+        {
+            entry->is_index = true;
+            strncpy(entry->index_name, relname, NAMEDATALEN - 1);
+            entry->index_name[NAMEDATALEN - 1] = '\0';
+            /* Get parent table name */
+            Oid table_oid = IndexGetRelation(relid, false);
+            char *table_name = get_rel_name(table_oid);
+            if (table_name)
+            {
+                strncpy(entry->table_name, table_name, NAMEDATALEN - 1);
+                entry->table_name[NAMEDATALEN - 1] = '\0';
+            }
+            elog(INFO, "BuildOidMap: added INDEX %s (OID %u) on table %s",
+                 relname, relid, table_name);
+        }
+        else
+        {
+            entry->is_index = false;
+            entry->index_name[0] = '\0';
+            strncpy(entry->table_name, relname, NAMEDATALEN - 1);
+            entry->table_name[NAMEDATALEN - 1] = '\0';
+            elog(INFO, "BuildOidMap: added TABLE %s.%s (OID %u)",
+                 schema, relname, relid);
+        }
+        map->num_entries++;
+    }
+}
+
+/*
+ * ExtractIndexOidsFromPlan - Walk plan tree to find index OIDs
+ */
+static void
+ExtractIndexOidsFromPlan(Plan *plan, OidMap *map)
+{
+    if (plan == NULL)
+        return;
+
+    /* Extract index OIDs from scan nodes */
+    switch (nodeTag(plan))
+    {
+        case T_IndexScan:
+        {
+            IndexScan *iscan = (IndexScan *) plan;
+            AddOidToMap(map, iscan->indexid);
+            break;
+        }
+        case T_IndexOnlyScan:
+        {
+            IndexOnlyScan *ioscan = (IndexOnlyScan *) plan;
+            AddOidToMap(map, ioscan->indexid);
+            break;
+        }
+        case T_BitmapIndexScan:
+        {
+            BitmapIndexScan *biscan = (BitmapIndexScan *) plan;
+            AddOidToMap(map, biscan->indexid);
+            break;
+        }
+        default:
+            break;
+    }
+
+    /* Recurse into child plans */
+    ExtractIndexOidsFromPlan(plan->lefttree, map);
+    ExtractIndexOidsFromPlan(plan->righttree, map);
+
+    /* Handle special plan types with subplans */
+    if (IsA(plan, SubqueryScan))
+    {
+        SubqueryScan *ss = (SubqueryScan *) plan;
+        ExtractIndexOidsFromPlan(ss->subplan, map);
+    }
+    else if (IsA(plan, Append))
+    {
+        Append *append = (Append *) plan;
+        ListCell *lc;
+        foreach(lc, append->appendplans)
+        {
+            ExtractIndexOidsFromPlan((Plan *) lfirst(lc), map);
+        }
+    }
+    else if (IsA(plan, MergeAppend))
+    {
+        MergeAppend *ma = (MergeAppend *) plan;
+        ListCell *lc;
+        foreach(lc, ma->mergeplans)
+        {
+            ExtractIndexOidsFromPlan((Plan *) lfirst(lc), map);
+        }
+    }
+}
+
 /*
  * BuildOidMap - Extract all relation OIDs from a plan and map to names
  *
  * This should be called in the SOURCE database (where FKs exist)
+ * Captures tables from relationOids and indexes from plan tree scan nodes
  */
 static void
 BuildOidMap(PlannedStmt *plan, OidMap *map)
@@ -2595,51 +2768,24 @@ BuildOidMap(PlannedStmt *plan, OidMap *map)
 
     map->num_entries = 0;
 
-    /* Extract OIDs from rtable */
-    foreach(lc, plan->rtable)
+    /* First, extract table OIDs from relationOids */
+    foreach(lc, plan->relationOids)
     {
-        RangeTblEntry *rte = (RangeTblEntry *) lfirst(lc);
-
-        if (rte->rtekind == RTE_RELATION && OidIsValid(rte->relid))
-        {
-            /* Check if we already have this OID */
-            bool found = false;
-            for (int i = 0; i < map->num_entries; i++)
-            {
-                if (map->entries[i].old_oid == rte->relid)
-                {
-                    found = true;
-                    break;
-                }
-            }
-
-            if (!found && map->num_entries < MAX_PLAN_RELATIONS)
-            {
-                OidMapEntry *entry = &map->entries[map->num_entries];
-                entry->old_oid = rte->relid;
-
-                /* Get schema and table names */
-                Oid namespace_oid = get_rel_namespace(rte->relid);
-                char *schema = get_namespace_name(namespace_oid);
-                char *relname = get_rel_name(rte->relid);
-
-                if (schema && relname)
-                {
-                    strncpy(entry->schema_name, schema, NAMEDATALEN - 1);
-                    entry->schema_name[NAMEDATALEN - 1] = '\0';
-                    strncpy(entry->table_name, relname, NAMEDATALEN - 1);
-                    entry->table_name[NAMEDATALEN - 1] = '\0';
-                    map->num_entries++;
-                }
-            }
-        }
+        Oid relid = lfirst_oid(lc);
+        AddOidToMap(map, relid);
     }
+
+    /* Then, walk the plan tree to extract index OIDs */
+    ExtractIndexOidsFromPlan(plan->planTree, map);
+
+    elog(INFO, "BuildOidMap: captured %d OIDs total", map->num_entries);
 }
 
 /*
  * WriteOidMapToFile - Write OID mapping as first line of plan file
  *
- * Format: OID_MAP:oid1=schema1.table1,oid2=schema2.table2,...
+ * Format for tables: OID_MAP:oid1=schema1.table1,oid2=schema2.table2,...
+ * Format for indexes: oid=schema.table:index_name
  */
 static void
 WriteOidMapToFile(FILE *file, OidMap *map)
@@ -2649,10 +2795,22 @@ WriteOidMapToFile(FILE *file, OidMap *map)
     {
         if (i > 0)
             fprintf(file, ",");
-        fprintf(file, "%u=%s.%s",
-                map->entries[i].old_oid,
-                map->entries[i].schema_name,
-                map->entries[i].table_name);
+        if (map->entries[i].is_index)
+        {
+            /* Format: oid=schema.table:index_name */
+            fprintf(file, "%u=%s.%s:%s",
+                    map->entries[i].old_oid,
+                    map->entries[i].schema_name,
+                    map->entries[i].table_name,
+                    map->entries[i].index_name);
+        }
+        else
+        {
+            fprintf(file, "%u=%s.%s",
+                    map->entries[i].old_oid,
+                    map->entries[i].schema_name,
+                    map->entries[i].table_name);
+        }
     }
     fprintf(file, "\n");
 }
@@ -2663,6 +2821,9 @@ WriteOidMapToFile(FILE *file, OidMap *map)
  * This should be called in the TARGET database (columnar)
  * After reading, each entry's old_oid field will contain the NEW OID
  * (we reuse the field since we don't need the old OID anymore)
+ *
+ * Format for tables: oid=schema.table
+ * Format for indexes: oid=schema.table:index_name
  */
 static bool
 ReadOidMapFromFile(FILE *file, OidMap *map)
@@ -2699,19 +2860,35 @@ ReadOidMapFromFile(FILE *file, OidMap *map)
     {
         OidMapEntry *entry = &map->entries[map->num_entries];
 
-        /* Parse "oid=schema.table" */
+        /* Try parsing as index first: "oid=schema.table:index_name" */
         Oid old_oid;
         char schema[NAMEDATALEN];
         char table[NAMEDATALEN];
+        char index[NAMEDATALEN];
 
-        if (sscanf(token, "%u=%[^.].%s", &old_oid, schema, table) == 3)
+        if (sscanf(token, "%u=%[^.].%[^:]:%s", &old_oid, schema, table, index) == 4)
         {
-            entry->old_oid = old_oid;  /* Store original OID for lookup */
+            /* This is an index entry */
+            entry->old_oid = old_oid;
             strncpy(entry->schema_name, schema, NAMEDATALEN - 1);
             entry->schema_name[NAMEDATALEN - 1] = '\0';
             strncpy(entry->table_name, table, NAMEDATALEN - 1);
             entry->table_name[NAMEDATALEN - 1] = '\0';
-
+            strncpy(entry->index_name, index, NAMEDATALEN - 1);
+            entry->index_name[NAMEDATALEN - 1] = '\0';
+            entry->is_index = true;
+            map->num_entries++;
+        }
+        else if (sscanf(token, "%u=%[^.].%s", &old_oid, schema, table) == 3)
+        {
+            /* This is a table entry */
+            entry->old_oid = old_oid;
+            strncpy(entry->schema_name, schema, NAMEDATALEN - 1);
+            entry->schema_name[NAMEDATALEN - 1] = '\0';
+            strncpy(entry->table_name, table, NAMEDATALEN - 1);
+            entry->table_name[NAMEDATALEN - 1] = '\0';
+            entry->index_name[0] = '\0';
+            entry->is_index = false;
             map->num_entries++;
         }
 
@@ -2728,6 +2905,8 @@ ReadOidMapFromFile(FILE *file, OidMap *map)
  *
  * Special handling for temp tables: if schema starts with "pg_temp_",
  * look up in current session's temp schema instead.
+ *
+ * For indexes: look up the parent table first, then find the index by name.
  */
 static Oid
 LookupNewOid(OidMap *map, Oid old_oid)
@@ -2739,6 +2918,7 @@ LookupNewOid(OidMap *map, Oid old_oid)
             char *schema_name = map->entries[i].schema_name;
             char *table_name = map->entries[i].table_name;
             RangeVar *rv;
+            Oid new_oid;
 
             /* Special handling for temp tables */
             if (strncmp(schema_name, "pg_temp_", 8) == 0)
@@ -2756,17 +2936,42 @@ LookupNewOid(OidMap *map, Oid old_oid)
                 rv = makeRangeVar(schema_name, table_name, -1);
             }
 
-            Oid new_oid = RangeVarGetRelid(rv, NoLock, true);
-
-            elog(INFO, "LookupNewOid: %s.%s old_oid=%u -> new_oid=%u",
-                 schema_name, table_name, old_oid, new_oid);
-
-            if (!OidIsValid(new_oid))
+            if (map->entries[i].is_index)
             {
-                elog(WARNING, "Table %s.%s not found in target database",
-                     schema_name, table_name);
+                /* For indexes: find parent table first, then find index by name */
+                Oid table_oid = RangeVarGetRelid(rv, NoLock, true);
+                if (OidIsValid(table_oid))
+                {
+                    /* Look up index by name in the table's namespace */
+                    Oid namespace_oid = get_rel_namespace(table_oid);
+                    new_oid = get_relname_relid(map->entries[i].index_name, namespace_oid);
+                    elog(INFO, "LookupNewOid: index %s.%s:%s old_oid=%u -> new_oid=%u",
+                         schema_name, table_name, map->entries[i].index_name,
+                         old_oid, new_oid);
+                    if (!OidIsValid(new_oid))
+                    {
+                        elog(WARNING, "Index %s on table %s.%s not found in target database",
+                             map->entries[i].index_name, schema_name, table_name);
+                    }
+                    return new_oid;
+                }
+                elog(WARNING, "Parent table %s.%s for index %s not found",
+                     schema_name, table_name, map->entries[i].index_name);
+                return InvalidOid;
             }
-            return new_oid;
+            else
+            {
+                /* For tables: direct lookup */
+                new_oid = RangeVarGetRelid(rv, NoLock, true);
+                elog(INFO, "LookupNewOid: %s.%s old_oid=%u -> new_oid=%u",
+                     schema_name, table_name, old_oid, new_oid);
+                if (!OidIsValid(new_oid))
+                {
+                    elog(WARNING, "Table %s.%s not found in target database",
+                         schema_name, table_name);
+                }
+                return new_oid;
+            }
         }
     }
     return InvalidOid;
@@ -2774,6 +2979,8 @@ LookupNewOid(OidMap *map, Oid old_oid)
 
 /*
  * TranslateOidsInPlanTree - Recursively walk plan tree and translate OIDs
+ *
+ * This handles index OIDs in IndexScan, IndexOnlyScan, and BitmapIndexScan nodes.
  */
 static void
 TranslateOidsInPlanTree(Plan *plan, OidMap *map)
@@ -2781,20 +2988,33 @@ TranslateOidsInPlanTree(Plan *plan, OidMap *map)
     if (plan == NULL)
         return;
 
-    /* Handle scan nodes that reference relations */
+    /* Handle scan nodes that have index OIDs */
     switch (nodeTag(plan))
     {
-        case T_SeqScan:
-        case T_SampleScan:
         case T_IndexScan:
-        case T_IndexOnlyScan:
-        case T_BitmapIndexScan:
-        case T_BitmapHeapScan:
-        case T_TidScan:
-            /* These are Scan nodes - but scanrelid is an index into rtable,
-             * not an OID, so we don't need to translate it.
-             * The rtable translation handles the actual OIDs. */
+        {
+            IndexScan *iscan = (IndexScan *) plan;
+            Oid new_oid = LookupNewOid(map, iscan->indexid);
+            if (OidIsValid(new_oid))
+                iscan->indexid = new_oid;
             break;
+        }
+        case T_IndexOnlyScan:
+        {
+            IndexOnlyScan *ioscan = (IndexOnlyScan *) plan;
+            Oid new_oid = LookupNewOid(map, ioscan->indexid);
+            if (OidIsValid(new_oid))
+                ioscan->indexid = new_oid;
+            break;
+        }
+        case T_BitmapIndexScan:
+        {
+            BitmapIndexScan *biscan = (BitmapIndexScan *) plan;
+            Oid new_oid = LookupNewOid(map, biscan->indexid);
+            if (OidIsValid(new_oid))
+                biscan->indexid = new_oid;
+            break;
+        }
         default:
             break;
     }
@@ -2854,16 +3074,17 @@ TranslateOidsInPlan(PlannedStmt *plan, OidMap *map)
         }
     }
 
-    /* Translate OIDs in relationOids list */
+    List *new_relationOids = NIL;
     foreach(lc, plan->relationOids)
     {
         Oid old_oid = lfirst_oid(lc);
         Oid new_oid = LookupNewOid(map, old_oid);
         if (OidIsValid(new_oid))
         {
-            lfirst_oid(lc) = new_oid;
+          new_relationOids = lappend_oid(new_relationOids, new_oid);
         }
     }
+    plan->relationOids = new_relationOids;
 
     /* Walk the plan tree (mainly for verification, most OIDs are in rtable) */
     TranslateOidsInPlanTree(plan->planTree, map);

@@ -97,6 +97,7 @@ void doQSparse(const char* query_string, const char* commandTag, Node* pstmt, Qu
 // SERIALIZE_WITH_OID
 #include "utils/lsyscache.h"
 #include "catalog/namespace.h"
+#include "catalog/index.h"       /* For IndexGetRelation */
 /*-------------------------------------------------------------------------
  * OID Translation Support
  *
@@ -108,12 +109,14 @@ void doQSparse(const char* query_string, const char* commandTag, Node* pstmt, Qu
 /* Maximum number of relations in a single plan */
 #define MAX_PLAN_RELATIONS 64
 
-/* OID mapping entry: maps old OID to schema.table name */
+/* OID mapping entry: maps old OID to schema.table name (or index) */
 typedef struct OidMapEntry
 {
   Oid         old_oid;
   char        schema_name[NAMEDATALEN];
   char        table_name[NAMEDATALEN];
+  bool        is_index;                    /* true if this is an index */
+  char        index_name[NAMEDATALEN];     /* index name if is_index */
 } OidMapEntry;
 
 /* OID mapping for a plan */
