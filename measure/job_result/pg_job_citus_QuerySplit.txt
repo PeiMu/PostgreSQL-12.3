@@ -1,0 +1,1008 @@
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/10c.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/10c.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/10c.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/10c.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/12a.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/12a.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/12a.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/12a.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/12b.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/12b.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/12b.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/12b.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/12c.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/12c.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/12c.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/12c.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/13a.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/13a.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/13a.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/13a.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/13b.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/13b.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/13b.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/13b.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/13c.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/13c.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/13c.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/13c.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/13d.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/13d.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/13d.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/13d.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/14a.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/14a.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/14a.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/14a.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/14b.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/14b.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/14b.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/14b.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/14c.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/14c.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/14c.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/14c.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/15a.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/15a.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/15a.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/15a.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/15b.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/15b.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/15b.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/15b.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/15c.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/15c.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/15c.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/15c.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/15d.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/15d.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/15d.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/15d.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/16b.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/16b.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/16b.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/16b.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/16c.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/16c.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/16c.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/16c.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/16d.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/16d.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/16d.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/16d.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/18a.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/18a.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/18a.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/18a.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/18b.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/18b.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/18b.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/18b.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/18c.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/18c.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/18c.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/18c.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/1a.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/1a.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/1a.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/1a.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/1b.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/1b.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/1b.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/1b.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/1c.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/1c.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/1c.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/1c.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/1d.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/1d.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/1d.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/1d.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/20b.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/20b.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/20b.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/20b.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/20c.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/20c.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/20c.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/20c.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/22d.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/22d.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/22d.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/22d.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/23a.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/23a.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/23a.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/23a.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/23b.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/23b.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/23b.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/23b.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/23c.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/23c.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/23c.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/23c.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/25a.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/25a.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/25a.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/25a.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/25b.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/25b.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/25b.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/25b.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/25c.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/25c.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/25c.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/25c.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/26a.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/26a.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/26a.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/26a.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/2a.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/2a.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/2a.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/2a.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/2b.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/2b.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/2b.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/2b.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/2d.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/2d.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/2d.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/2d.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/30a.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/30a.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/30a.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/30a.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/30b.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/30b.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/30b.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/30b.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/30c.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/30c.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/30c.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/30c.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/31a.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/31a.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/31a.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/31a.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/31b.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/31b.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/31b.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/31b.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/31c.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/31c.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/31c.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/31c.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/3a.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/3a.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/3a.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/3a.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/3b.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/3b.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/3b.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/3b.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/3c.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/3c.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/3c.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/3c.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/4a.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/4a.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/4a.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/4a.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/4b.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/4b.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/4b.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/4b.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/4c.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/4c.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/4c.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/4c.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/6a.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/6a.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/6a.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/6a.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/6b.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/6b.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/6b.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/6b.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/6c.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/6c.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/6c.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/6c.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/6d.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/6d.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/6d.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/6d.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/6e.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/6e.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/6e.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/6e.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/6f.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/6f.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/6f.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/6f.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/8a.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/8a.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/8a.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/8a.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/8b.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/8b.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/8b.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/8b.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/8c.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/8c.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/8c.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/8c.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/8d.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/8d.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/8d.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/8d.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/9a.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/9a.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/9a.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/9a.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/9b.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/9b.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/9b.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/9b.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/9c.sql
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/9c.sql:2: ERROR:  syntax error at or near "switch"
+LINE 1: switch to c_r;
+        ^
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/9c.sql:3: ERROR:  syntax error at or near "switch"
+LINE 1: switch to relationshipcenter;
+        ^
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_QuerySplit_subset/9c.sql:7: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+

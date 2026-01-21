@@ -1,0 +1,1033 @@
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/10c.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/10c.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/10c.sql:30: ERROR:  canceling statement due to statement timeout
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/12a.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/12a.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/12a.sql:40: ERROR:  canceling statement due to statement timeout
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/12b.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/12b.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+ budget  |    unsuccsessful_movie     
+---------+----------------------------
+ $10,000 | Birdemic: Shock and Terror
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/12c.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/12c.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/12c.sql:42: ERROR:  canceling statement due to statement timeout
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/13a.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/13a.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/13a.sql:39: ERROR:  canceling statement due to statement timeout
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/13b.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/13b.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+ producing_company | rating | movie_about_winning 
+-------------------+--------+---------------------
+ 501audio          | 1.8    | 5 Time Champion
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/13c.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/13c.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+ producing_company | rating | movie_about_winning 
+-------------------+--------+---------------------
+ DL Sites          | 1.8    | Champion
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/13d.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/13d.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+ producing_company | rating | movie 
+-------------------+--------+-------
+ 01 Entertainment  | 1.0    | ****
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/14a.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/14a.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+ rating | northern_dark_movie 
+--------+---------------------
+ 1.0    | $lowdown
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/14b.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/14b.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+ rating | western_dark_production 
+--------+-------------------------
+ 6.4    | Of Dolls and Murder
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/14c.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/14c.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+ rating | north_european_dark_production 
+--------+--------------------------------
+ 1.0    | $lowdown
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/15a.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/15a.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/15a.sql:43: ERROR:  canceling statement due to statement timeout
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/15b.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/15b.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/15b.sql:44: ERROR:  canceling statement due to statement timeout
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/15c.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/15c.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+   release_date    | modern_american_internet_movie 
+-------------------+--------------------------------
+ USA:10 April 2001 | 24: Day Six - Debrief
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/15d.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/15d.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/15d.sql:40: ERROR:  could not load library "/home/pei/Project/project_bins/lib/postgresql/llvmjit.so": /home/pei/Project/project_bins/lib/postgresql/llvmjit.so: undefined symbol: errstart_cold
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/16b.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/16b.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/16b.sql:34: ERROR:  could not load library "/home/pei/Project/project_bins/lib/postgresql/llvmjit.so": /home/pei/Project/project_bins/lib/postgresql/llvmjit.so: undefined symbol: errstart_cold
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/16c.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/16c.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/16c.sql:35: ERROR:  could not load library "/home/pei/Project/project_bins/lib/postgresql/llvmjit.so": /home/pei/Project/project_bins/lib/postgresql/llvmjit.so: undefined symbol: errstart_cold
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/16d.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/16d.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/16d.sql:36: ERROR:  could not load library "/home/pei/Project/project_bins/lib/postgresql/llvmjit.so": /home/pei/Project/project_bins/lib/postgresql/llvmjit.so: undefined symbol: errstart_cold
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/18a.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/18a.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/18a.sql:36: ERROR:  could not load library "/home/pei/Project/project_bins/lib/postgresql/llvmjit.so": /home/pei/Project/project_bins/lib/postgresql/llvmjit.so: undefined symbol: errstart_cold
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/18b.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/18b.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/18c.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/18c.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/1a.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/1a.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/1b.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/1b.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/1c.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/1c.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/1d.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/1d.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/20b.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/20b.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/20b.sql:50: ERROR:  could not load library "/home/pei/Project/project_bins/lib/postgresql/llvmjit.so": /home/pei/Project/project_bins/lib/postgresql/llvmjit.so: undefined symbol: errstart_cold
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/20c.sql
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/10c.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/10c.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/10c.sql:30: ERROR:  canceling statement due to statement timeout
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/12a.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/12a.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/12a.sql:40: ERROR:  canceling statement due to statement timeout
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/12b.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/12b.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+ budget  |    unsuccsessful_movie     
+---------+----------------------------
+ $10,000 | Birdemic: Shock and Terror
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/12c.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/12c.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/12c.sql:42: ERROR:  canceling statement due to statement timeout
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/13a.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/13a.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/13a.sql:39: ERROR:  canceling statement due to statement timeout
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/13b.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/13b.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+ producing_company | rating | movie_about_winning 
+-------------------+--------+---------------------
+ 501audio          | 1.8    | 5 Time Champion
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/13c.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/13c.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+ producing_company | rating | movie_about_winning 
+-------------------+--------+---------------------
+ DL Sites          | 1.8    | Champion
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/13d.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/13d.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+ producing_company | rating | movie 
+-------------------+--------+-------
+ 01 Entertainment  | 1.0    | ****
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/14a.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/14a.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+ rating | northern_dark_movie 
+--------+---------------------
+ 1.0    | $lowdown
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/14b.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/14b.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+ rating | western_dark_production 
+--------+-------------------------
+ 6.4    | Of Dolls and Murder
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/14c.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/14c.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+ rating | north_european_dark_production 
+--------+--------------------------------
+ 1.0    | $lowdown
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/15a.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/15a.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/15a.sql:43: ERROR:  canceling statement due to statement timeout
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/15b.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/15b.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/15b.sql:44: ERROR:  canceling statement due to statement timeout
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/15c.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/15c.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+   release_date    | modern_american_internet_movie 
+-------------------+--------------------------------
+ USA:10 April 2001 | 24: Day Six - Debrief
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/15d.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/15d.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/15d.sql:40: ERROR:  could not load library "/home/pei/Project/project_bins/lib/postgresql/llvmjit.so": /home/pei/Project/project_bins/lib/postgresql/llvmjit.so: undefined symbol: errstart_cold
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/16b.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/16b.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/16b.sql:34: ERROR:  could not load library "/home/pei/Project/project_bins/lib/postgresql/llvmjit.so": /home/pei/Project/project_bins/lib/postgresql/llvmjit.so: undefined symbol: errstart_cold
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/16c.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/16c.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/16c.sql:35: ERROR:  could not load library "/home/pei/Project/project_bins/lib/postgresql/llvmjit.so": /home/pei/Project/project_bins/lib/postgresql/llvmjit.so: undefined symbol: errstart_cold
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/16d.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/16d.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/16d.sql:36: ERROR:  could not load library "/home/pei/Project/project_bins/lib/postgresql/llvmjit.so": /home/pei/Project/project_bins/lib/postgresql/llvmjit.so: undefined symbol: errstart_cold
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/18a.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/18a.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/18a.sql:36: ERROR:  could not load library "/home/pei/Project/project_bins/lib/postgresql/llvmjit.so": /home/pei/Project/project_bins/lib/postgresql/llvmjit.so: undefined symbol: errstart_cold
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/18b.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/18b.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/18b.sql:44: ERROR:  canceling statement due to statement timeout
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/18c.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/18c.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+ movie_budget | movie_votes | movie_title 
+--------------+-------------+-------------
+ Action       | 10          | ?
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/1a.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/1a.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+             production_note             |    movie_title     | movie_year 
+-----------------------------------------+--------------------+------------
+ (as Indo-British Films Ltd.) (presents) | A Clockwork Orange |       1934
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/1b.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/1b.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+        production_note         |  movie_title   | movie_year 
+--------------------------------+----------------+------------
+ (as Grosvenor Park) (presents) | Disaster Movie |       2008
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/1c.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/1c.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+ production_note | movie_title  | movie_year 
+-----------------+--------------+------------
+ (co-production) | Intouchables |       2011
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/1d.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/1d.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+ production_note  |  movie_title   | movie_year 
+------------------+----------------+------------
+ (as ApolloMedia) | Disaster Movie |       2004
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/20b.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/20b.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/20b.sql:50: ERROR:  could not load library "/home/pei/Project/project_bins/lib/postgresql/llvmjit.so": /home/pei/Project/project_bins/lib/postgresql/llvmjit.so: undefined symbol: errstart_cold
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/20c.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/20c.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/20c.sql:52: ERROR:  could not load library "/home/pei/Project/project_bins/lib/postgresql/llvmjit.so": /home/pei/Project/project_bins/lib/postgresql/llvmjit.so: undefined symbol: errstart_cold
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/22d.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/22d.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/22d.sql:62: ERROR:  could not load library "/home/pei/Project/project_bins/lib/postgresql/llvmjit.so": /home/pei/Project/project_bins/lib/postgresql/llvmjit.so: undefined symbol: errstart_cold
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/23a.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/23a.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+ movie_kind | complete_us_internet_movie 
+------------+----------------------------
+ movie      | The Analysts
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/23b.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/23b.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+ movie_kind | complete_nerdy_internet_movie 
+------------+-------------------------------
+ movie      | The Big Mope
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/23c.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/23c.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/23c.sql:52: ERROR:  canceling statement due to statement timeout
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/25a.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/25a.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/25a.sql:52: ERROR:  could not load library "/home/pei/Project/project_bins/lib/postgresql/llvmjit.so": /home/pei/Project/project_bins/lib/postgresql/llvmjit.so: undefined symbol: errstart_cold
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/25b.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/25b.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+ movie_budget | movie_votes |    male_writer     | violent_movie_title 
+--------------+-------------+--------------------+---------------------
+ Horror       | 138         | Campbell, Jeremiah | Vampire Boys
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/25c.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/25c.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/25c.sql:59: ERROR:  could not load library "/home/pei/Project/project_bins/lib/postgresql/llvmjit.so": /home/pei/Project/project_bins/lib/postgresql/llvmjit.so: undefined symbol: errstart_cold
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/26a.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/26a.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/26a.sql:63: ERROR:  could not load library "/home/pei/Project/project_bins/lib/postgresql/llvmjit.so": /home/pei/Project/project_bins/lib/postgresql/llvmjit.so: undefined symbol: errstart_cold
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/2a.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/2a.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+       movie_title        
+--------------------------
+ 008 - Agent wider Willen
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/2b.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/2b.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+ movie_title 
+-------------
+ 007 in Rio
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/2d.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/2d.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+       movie_title       
+-------------------------
+ 002 agenti segretissimi
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/30a.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/30a.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/30a.sql:69: ERROR:  canceling statement due to statement timeout
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/30b.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/30b.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+ movie_budget | movie_votes |     writer      | complete_gore_movie 
+--------------+-------------+-----------------+---------------------
+ Horror       | 194782      | Shannon, Damian | Freddy vs. Jason
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/30c.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/30c.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/30c.sql:71: ERROR:  canceling statement due to statement timeout
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/31a.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/31a.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/31a.sql:64: ERROR:  could not load library "/home/pei/Project/project_bins/lib/postgresql/llvmjit.so": /home/pei/Project/project_bins/lib/postgresql/llvmjit.so: undefined symbol: errstart_cold
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/31b.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/31b.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+ movie_budget | movie_votes |        writer        | violent_liongate_movie 
+--------------+-------------+----------------------+------------------------
+ Horror       | 129755      | Bousman, Darren Lynn | Saw
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/31c.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/31c.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/31c.sql:67: ERROR:  could not load library "/home/pei/Project/project_bins/lib/postgresql/llvmjit.so": /home/pei/Project/project_bins/lib/postgresql/llvmjit.so: undefined symbol: errstart_cold
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/3a.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/3a.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+    movie_title     
+--------------------
+ 2 Days in New York
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/3b.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/3b.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+      movie_title       
+------------------------
+ 300: Rise of an Empire
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/3c.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/3c.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+             movie_title              
+--------------------------------------
+ 00 Schneider - Jagd auf Nihil Baxter
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/4a.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/4a.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+ rating |                movie_title                 
+--------+--------------------------------------------
+ 5.1    | 20-seiki shônen: Dai 2 shô - Saigo no kibô
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/4b.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/4b.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+ rating |     movie_title     
+--------+---------------------
+ 9.1    | Batman: Arkham City
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/4c.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/4c.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+ rating |             movie_title              
+--------+--------------------------------------
+ 2.1    | 00 Schneider - Jagd auf Nihil Baxter
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/6a.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/6a.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/6a.sql:27: ERROR:  could not load library "/home/pei/Project/project_bins/lib/postgresql/llvmjit.so": /home/pei/Project/project_bins/lib/postgresql/llvmjit.so: undefined symbol: errstart_cold
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/6b.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/6b.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/6b.sql:34: ERROR:  could not load library "/home/pei/Project/project_bins/lib/postgresql/llvmjit.so": /home/pei/Project/project_bins/lib/postgresql/llvmjit.so: undefined symbol: errstart_cold
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/6c.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/6c.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/6c.sql:27: ERROR:  could not load library "/home/pei/Project/project_bins/lib/postgresql/llvmjit.so": /home/pei/Project/project_bins/lib/postgresql/llvmjit.so: undefined symbol: errstart_cold
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/6d.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/6d.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/6d.sql:34: ERROR:  could not load library "/home/pei/Project/project_bins/lib/postgresql/llvmjit.so": /home/pei/Project/project_bins/lib/postgresql/llvmjit.so: undefined symbol: errstart_cold
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/6e.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/6e.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/6e.sql:27: ERROR:  could not load library "/home/pei/Project/project_bins/lib/postgresql/llvmjit.so": /home/pei/Project/project_bins/lib/postgresql/llvmjit.so: undefined symbol: errstart_cold
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/6f.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/6f.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/6f.sql:33: ERROR:  could not load library "/home/pei/Project/project_bins/lib/postgresql/llvmjit.so": /home/pei/Project/project_bins/lib/postgresql/llvmjit.so: undefined symbol: errstart_cold
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/8a.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/8a.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/8a.sql:35: ERROR:  canceling statement due to statement timeout
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/8b.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/8b.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+ acress_pseudonym |    japanese_anime_movie     
+------------------+-----------------------------
+ Chambers, Linda  | Dragon Ball Z: Shin Budokai
+(1 row)
+
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/8c.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/8c.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/8c.sql:30: ERROR:  could not load library "/home/pei/Project/project_bins/lib/postgresql/llvmjit.so": /home/pei/Project/project_bins/lib/postgresql/llvmjit.so: undefined symbol: errstart_cold
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/8d.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/8d.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/8d.sql:30: ERROR:  could not load library "/home/pei/Project/project_bins/lib/postgresql/llvmjit.so": /home/pei/Project/project_bins/lib/postgresql/llvmjit.so: undefined symbol: errstart_cold
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/9a.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/9a.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/9a.sql:43: ERROR:  canceling statement due to statement timeout
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/9b.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/9b.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/9b.sql:41: ERROR:  canceling statement due to statement timeout
+execute /home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/9c.sql
+SET
+SET
+psql:/home/pei/Project/benchmarks/imdb_job-postgres/QuerySplit/queries_new_settings_Official_subset/9c.sql:4: ERROR:  parameter "shared_buffers" cannot be changed without restarting the server
+SET
+SET
+SET
+SET
+SET
+ alternative_name | voiced_character_name |  voicing_actress   | american_movie 
+------------------+-----------------------+--------------------+----------------
+ A.B.             | 2nd Balladeer         | Alborg, Ana Esther | (1975-01-20)
+(1 row)
+
