@@ -66,6 +66,7 @@
 #include "utils/snapmgr.h"
 
 #include "optimizer/lfh.h"
+#include "parser/query_split.h"
 
 #define PrintResult false
 
@@ -1640,6 +1641,11 @@ char *tuple_to_string(HeapTuple tuple)
 }
 #endif
 
+#if MEASURE_TIME || MERGE_SUB_PLANS
+timespec exec_timer;
+uint64 total_exec_ns = 0;
+#endif
+
 /* ----------------------------------------------------------------
  *		ExecutePlan
  *
@@ -1666,6 +1672,9 @@ ExecutePlan(EState *estate,
 	TupleTableSlot *slot;
 	uint64		current_tuple_count;
 
+#if MEASURE_TIME || MERGE_SUB_PLANS
+        total_exec_ns = 0;
+#endif
 	/*
 	 * initialize local variables
 	 */
@@ -1698,7 +1707,16 @@ ExecutePlan(EState *estate,
 		/*
 		 * Execute the plan and obtain a tuple
 		 */
+#if MEASURE_TIME || MERGE_SUB_PLANS
+                exec_timer = tic();
+#endif
 		slot = ExecProcNode(planstate);
+#if MEASURE_TIME || MERGE_SUB_PLANS
+                if (execute_plan_timer) {
+                  timespec exe_time = toc(&exec_timer, "ExecProcNode time is", false);
+                  total_exec_ns += exe_time.tv_sec * NS_PER_SEC + exe_time.tv_nsec;
+                }
+#endif
 #if PrintResult
         if (!TupIsNull(slot))
         {

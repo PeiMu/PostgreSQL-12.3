@@ -1296,8 +1296,8 @@ exec_simple_query(const char *query_string)
 			snapshot_set = true;
 		}
 
-        timespec original_pg_timer = tic();
-        bool execute_plan_timer = T_SelectStmt==parsetree->stmt->type;
+                timespec original_pg_timer = tic();
+                execute_plan_timer = T_SelectStmt==parsetree->stmt->type;
 
 		if(query_splitting_algorithm == None || query_splitting_algorithm == Optimal)
 		{
@@ -1411,13 +1411,21 @@ exec_simple_query(const char *query_string)
 #ifdef MEASURE_TIME
         if (execute_plan_timer) {
             timespec execute_time = toc(&original_pg_timer, "Original Postgres portal run time is", false);
+            uint64 exec_sec = total_exec_ns / NS_PER_SEC;
+            uint64 exec_nsec = total_exec_ns % NS_PER_SEC;
             // save time to a file
             FILE *file = fopen("time_log.csv", "a");
             if (NULL == file) {
                 printf("Error opening file\n");
                 exit(-1);
             }
-            fprintf(file, "%d.%09d\n", (int)execute_time.tv_sec, (int)execute_time.tv_nsec);
+            fprintf(file, "%d.%09d, ", (int)exec_sec, (int)exec_nsec);
+            uint64 portal_run_time = execute_time.tv_sec * NS_PER_SEC + execute_time.tv_nsec;
+            uint64 materialize_time = 0;
+            if (portal_run_time > total_exec_ns) {
+              materialize_time = portal_run_time - total_exec_ns;
+            }
+            fprintf(file, "%d.%09d\n", (int)materialize_time / NS_PER_SEC, (int)materialize_time % NS_PER_SEC);
             fclose(file);
         }
 #endif

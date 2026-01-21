@@ -1316,13 +1316,21 @@ static List* QSExecutor(char* query_string, const char* commandTag, Node* pstmt,
 #if MEASURE_TIME || MERGE_SUB_PLANS
     if (execute_plan_timer) {
         timespec exe_time = toc(&aqp_timer, "Execution time is", false);
+        uint64 exec_sec = total_exec_ns / NS_PER_SEC;
+        uint64 exec_nsec = total_exec_ns % NS_PER_SEC;
         // save time to a file
         FILE *file = fopen("time_log.csv", "a");
         if (NULL == file) {
             printf("Error opening file\n");
             exit(-1);
         }
-        fprintf(file, "%d.%09d, ", (int)exe_time.tv_sec, (int)exe_time.tv_nsec);
+        fprintf(file, "%d.%09d, ", (int)exec_sec, (int)exec_nsec);
+        uint64 portal_run_time = exe_time.tv_sec * NS_PER_SEC + exe_time.tv_nsec;
+        uint64 materialize_time = 0;
+        if (portal_run_time > total_exec_ns) {
+          materialize_time = portal_run_time - total_exec_ns;
+        }
+        fprintf(file, "%d.%09d, ", (int)materialize_time / NS_PER_SEC, (int)materialize_time % NS_PER_SEC);
         fclose(file);
         aqp_timer = tic();
     }
