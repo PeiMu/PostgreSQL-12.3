@@ -916,7 +916,7 @@ static void Recon(char* query_string, char* commandTag, Node* pstmt, Query* ori_
 	//value start from 1, index start from 0
 	transfer_array = (Index*)palloc(length * sizeof(Index));
 #if DumpSubQueryString
-    const char *dir_path = "/home/pei/Project/duckdb/measure/postgres_plan";
+    const char *dir_path = "postgres_plan";
     struct stat st = {0};
     if (stat(dir_path, &st) == -1) {
         if (mkdir(dir_path, 0700) != 0) {

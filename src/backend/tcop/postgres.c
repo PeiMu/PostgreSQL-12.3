@@ -893,7 +893,7 @@ pg_plan_query(Query *querytree, int cursorOptions, ParamListInfo boundParams)
 	plan = planner(querytree, cursorOptions, boundParams);
 
 #if DumpQueryString
-    const char *dir_path = "/home/pei/Project/duckdb/measure/postgres_plan";
+    const char *dir_path = "postgres_plan";
     struct stat st = {0};
     if (stat(dir_path, &st) == -1) {
         if (mkdir(dir_path, 0700) != 0) {
@@ -962,7 +962,7 @@ pg_plan_query(Query *querytree, int cursorOptions, ParamListInfo boundParams)
 
 #if ReadQueryString
 //    elog(INFO, "start ReadQueryString");
-    const char *dir_path = "/home/pei/Project/duckdb/measure/postgres_plan";
+    const char *dir_path = "postgres_plan";
     char file_name[100];
     sprintf(file_name, "%s%s", dir_path, "/postgres_plan");
     FILE *file = fopen(file_name, "r");
