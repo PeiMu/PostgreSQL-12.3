@@ -3,6 +3,7 @@
 log_name=pg_$1.csv
 
 rm -rf ${log_name}
+rm -rf temp.csv
 
 dir_name=$1
 if [ ${dir_name} = "QuerySplit_with_stats" ]; then
@@ -19,4 +20,4 @@ for sql in $(find "$dir_1" "$dir_2" -type f -name "*.sql"); do
 done
 
 mv ${log_name} dsb_$2_result/.
-rm temp.csv
+rm -rf temp.csv

@@ -3,6 +3,7 @@
 log_name=pg_$1.csv
 
 rm -rf pg_$1.csv
+rm -rf temp.csv
 
 dir_name=$1
 if [ "$dir_name" = "QuerySplit_with_stats" ] || \
@@ -20,4 +21,4 @@ for sql in "${dir}"/*.sql; do
 done
 
 mv pg_$1.csv job_result/.
-rm temp.csv
+rm -rf temp.csv
