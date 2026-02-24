@@ -1169,6 +1169,15 @@ static void Recon(char* query_string, char* commandTag, Node* pstmt, Query* ori_
 		length = query_for_next_iteration->rtable->length;
 
 		graph = List2Graph(is_relationship, Joinlist, FKlist, length);
+#if DEBUG_QUERY_SPLIT
+                printf("print join graph:\n");
+                for (int i = 0; i < length; i++) {
+                  for (int j = 0; j < length; j++) {
+                    printf("%d, ", graph[i*length+j]);
+                  }
+                  printf("\n");
+                }
+#endif
 #if MEASURE_TIME
         if (execute_plan_timer) {
             timespec post_aqp_time = toc(&aqp_timer, "post-AQP time is", false);
