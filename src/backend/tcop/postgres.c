@@ -1322,7 +1322,7 @@ exec_simple_query(const char *query_string)
 		/* If we got a cancel signal in analysis or planning, quit */
 		CHECK_FOR_INTERRUPTS();
 
-#ifdef MEASURE_TIME
+#if MEASURE_TIME
         if (execute_plan_timer) {
             timespec opt_time = toc(&original_pg_timer, "Original optimization time is", false);
             // save time to a file
@@ -1393,11 +1393,11 @@ exec_simple_query(const char *query_string)
 		 * Switch back to transaction context for execution.
 		 */
 		MemoryContextSwitchTo(oldcontext);
-//#ifdef MEASURE_TIME
+#if MEASURE_TIME
         if (execute_plan_timer) {
             original_pg_timer = tic();
         }
-//#endif
+#endif
 		/*
 		 * Run the portal to completion, and then drop it (and the receiver).
 		 */
@@ -1408,7 +1408,7 @@ exec_simple_query(const char *query_string)
 						 receiver,
 						 receiver,
 						 completionTag);
-#ifdef MEASURE_TIME
+#if MEASURE_TIME
         if (execute_plan_timer) {
             timespec execute_time = toc(&original_pg_timer, "Original Postgres portal run time is", false);
             uint64 exec_sec = total_exec_ns / NS_PER_SEC;
@@ -1438,7 +1438,7 @@ exec_simple_query(const char *query_string)
 		else
 		{
 			querytree_list = pg_analyze_and_rewrite(parsetree, query_string, NULL, 0, NULL);
-#ifdef MEASURE_TIME
+#if MEASURE_TIME
             if (execute_plan_timer) {
                 timespec opt_time = toc(&original_pg_timer, "AQP pre-optimization time is", false);
                 // save time to a file

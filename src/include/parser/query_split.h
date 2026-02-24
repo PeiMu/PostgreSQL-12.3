@@ -97,7 +97,9 @@ timespec toc( timespec* start_time, const char* prefix, bool print );
 
 extern timespec aqp_timer;
 extern bool execute_plan_timer;
+#if MEASURE_TIME || MERGE_SUB_PLANS
 extern uint64 total_exec_ns;
+#endif
 #define NS_PER_SEC 1000000000ULL
 
 #endif
